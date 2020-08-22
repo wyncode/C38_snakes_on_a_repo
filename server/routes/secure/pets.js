@@ -1,59 +1,66 @@
 const router = require('express').Router();
 const Pet = require('../../db/models/pet');
 
-router.get('/pets', (req, res) => {
-  Pet.find((err, pets) => {
-    if (err) {
-      console.log(err);
-      res.status(400).json(err);
+// Get All Pets
+router.get('/pets', async (req, res) => {
+  try {
+    const pets = await Pet.find();
+    if (!pets) {
+      res.sendStatus(410);
     } else {
-      if (!pets) {
-        res.sendStatus(410);
-      } else {
-        res.status(200).json(pets);
-      }
+      res.status(200).json(pets);
     }
-  });
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
-router.post('/pets', (req, res) => {
-  const newPet = new Pet(req.body);
-  newPet
-    .save()
-    .then((res) => res.json('added new pet!'))
-    .catch((err) => res.status(400).json(err));
+// Create New Pet
+router.post('/pets', async (req, res) => {
+  try {
+    const newPet = new Pet(req.body);
+    await newPet.save();
+    res.status(201).json(newPet);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
-router.get('/pets/:id', (req, res) => {
-  Pet.findById(req.params.id, (err, pet) => {
-    if (err) {
-      console.log(err);
-      res.status(400).json(err);
+// Get Pet by ID
+router.get('/pets/:id', async (req, res) => {
+  try {
+    const pet = await Pet.findById(req.params.id);
+    if (!pet) {
+      res.sendStatus(410);
     } else {
-      if (!pet) {
-        res.sendStatus(410);
-      } else {
-        res.status(200).json(pet);
-      }
+      res.status(200).json(pet);
     }
-  });
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
-router.delete('/pets/:id', (req, res) => {
-  Pet.findByIdAndDelete(req.params.id)
-    .then((res) => res.json('Pet deleted'))
-    .catch((err) => res.status(400).json(err));
+// Delete User by ID
+router.delete('/pets/:id', async (req, res) => {
+  try {
+    await Pet.findByIdAndDelete(req.params.id);
+    res.json('Pet deleted');
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
-router.put('/pets/:id', (req, res) => {
-  Pet.findById(req.params.id)
-    .then((pet) => {
-      pet
-        .save()
-        .then(() => res.json('Pet updated!'))
-        .catch((err) => res.status(400).json(err));
-    })
-    .catch((err) => res.status(400).json(err));
+// Update Pet by ID
+router.put('/pets/:id', async (req, res) => {
+  try {
+    const pet = await Pet.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true
+    });
+    res.status(200).json(pet);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;

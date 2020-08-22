@@ -1,59 +1,66 @@
 const router = require('express').Router();
 const User = require('../../db/models/user');
 
-router.get('/users', (req, res) => {
-  User.find((err, users) => {
-    if (err) {
-      console.log(err);
-      res.status(400).json(err);
+// Get All Users
+router.get('/users', async (req, res) => {
+  try {
+    const users = await User.find();
+    if (!users) {
+      res.sendStatus(410);
     } else {
-      if (!users) {
-        res.sendStatus(410);
-      } else {
-        res.status(200).json(users);
-      }
+      res.status(200).json(users);
     }
-  });
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
-router.post('/users', (req, res) => {
-  const newUser = new User(req.body);
-  newUser
-    .save()
-    .then((res) => res.json('added new user!'))
-    .catch((err) => res.status(400).json(err));
+// Create New User
+router.post('/users', async (req, res) => {
+  try {
+    const newUser = new User(req.body);
+    await newUser.save();
+    res.status(201).json(user);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
-router.get('/users/:id', (req, res) => {
-  User.findById(req.params.id, (err, user) => {
-    if (err) {
-      console.log(err);
-      res.status(400).json(err);
+// Get User by ID
+router.get('/users/:id', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      res.sendStatus(410);
     } else {
-      if (!user) {
-        res.sendStatus(410);
-      } else {
-        res.status(200).json(user);
-      }
+      res.status(200).json(user);
     }
-  });
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
-router.delete('/users/:id', (req, res) => {
-  User.findByIdAndDelete(req.params.id)
-    .then((res) => res.json('User deleted'))
-    .catch((err) => res.status(400).json(err));
+// Delete User by ID
+router.delete('/users/:id', async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.json('User deleted');
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
-router.put('/users/:id', (req, res) => {
-  User.findById(req.params.id)
-    .then((user) => {
-      user
-        .save()
-        .then(() => res.json('User updated!'))
-        .catch((err) => res.status(400).json('Error: ' + err));
-    })
-    .catch((err) => res.status(400).json(err));
+// Update User by ID
+router.put('/users/:id', async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true
+    });
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;

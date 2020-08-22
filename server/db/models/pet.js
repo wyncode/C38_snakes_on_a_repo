@@ -11,7 +11,15 @@ const petSchema = new mongoose.Schema(
     type: {
       type: String,
       required: true,
-      enum: ['reptile', 'bird', 'fish', 'mammal', 'amphibian', 'other']
+      enum: [
+        'reptile',
+        'bird',
+        'fish',
+        'mammal',
+        'amphibian',
+        'insect/arachnid',
+        'other'
+      ]
     },
     description: {
       type: String,
@@ -38,9 +46,7 @@ const petSchema = new mongoose.Schema(
     emergency: {
       type: String
     },
-    links: {
-      type: []
-    },
+    links: [{ text: String, url: String }],
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
