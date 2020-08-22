@@ -4,12 +4,16 @@ const express = require('express'),
   openRoutes = require('./routes/open');
 
 const app = express();
+const usersRouter = require('./routes/secure/users');
+const petsRouter = require('./routes/secure/pets');
 
 //Middleware
 app.use(express.json());
 
 // Unauthenticated routes
 app.use(openRoutes);
+app.use(usersRouter);
+app.use(petsRouter);
 
 // Serve any static files
 if (process.env.NODE_ENV === 'production') {
