@@ -1,0 +1,13 @@
+#navbar {
+  margin-bottom: 20px;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 60px;
+  z-index: 1400;
+}
+
+#login-icon {
+  position: absolute;
+  right: 10px;
+}

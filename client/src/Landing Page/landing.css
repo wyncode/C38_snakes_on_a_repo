@@ -1,0 +1,157 @@
+@import url("https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap");
+
+#home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+}
+
+/*TOP SECTION*/
+#top-container {
+  background-image: url("../Images/snake.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+#landing-title-container {
+  width: 100%;
+  padding-top: 20px;
+}
+
+#landing-title-container .lt-title {
+  font-size: 50px;
+  font-family: "Rowdies";
+}
+
+#landing-title-container .lt-subtitle {
+  font-size: 20px;
+  font-family: "Rowdies";
+  font-weight: 300;
+}
+
+#landing-title-container .home-btn {
+  margin: 30px 15px;
+  padding: 15px 60px;
+  font-weight: 300;
+  font-family: "Rowdies";
+}
+
+/*ARROW*/
+
+/*ARROW*/
+.arrow-container {
+  position: absolute;
+  bottom: 0;
+  left: 45%;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 100%;
+  width: 70px;
+  height: 70px;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+.arrow {
+  position: absolute;
+  left: 20px;
+  top: 15px;
+  border: solid white;
+  border-width: 0 10px 10px 0;
+  display: inline-block;
+  padding: 10px;
+}
+
+.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+/* BOTTOM SECTION */
+#landing-bottom {
+  margin-top: 10vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#lb-title {
+  text-align: right;
+}
+
+#lb-title,
+#lb-info,
+#lb-one,
+#lb-two {
+  padding: 30px;
+}
+
+@media only screen and (min-width: 750px) {
+  /*TOP*/
+
+  #landing-title-container {
+    max-width: 30vw;
+    padding: 30px;
+    margin-top: 20vh;
+    margin-left: 5vw;
+    border-radius: 20px;
+  }
+
+  #landing-title-container .lt-title {
+    font-size: 80px;
+  }
+
+  #landing-title-container .home-btn {
+    margin: 30px 15px;
+    padding: 15px 60px;
+    width: 150px;
+  }
+
+  /*ARROW*/
+
+  .arrow-container {
+    left: 50%;
+  }
+
+  /*BOTTOM*/
+  #landing-bottom {
+    width: 100%;
+    min-height: 70vh;
+    display: grid;
+    align-items: flex-start;
+    justify-content: center;
+    grid-gap: 20px;
+    grid-template: repeat(2, 30%) / repeat(2, 50%);
+    grid-template-areas:
+      "title info"
+      "one two";
+  }
+
+  #lb-title {
+    grid-area: title;
+    padding: 10px 10px 10px 20px;
+    text-align: right;
+  }
+
+  #lb-info {
+    grid-area: info;
+    padding: 10px;
+  }
+
+  #lb-one,
+  #lb-two {
+    margin-top: 100px;
+    padding: 40px;
+  }
+
+  #lb-one {
+    grid-area: one;
+  }
+
+  #lb-two {
+    grid-area: two;
+  }
+}

@@ -1,0 +1,205 @@
+#profile-container {
+  white-space: pre-wrap;
+  display: grid;
+  grid-gap: 5vw;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 20vw 70vw;
+  grid-template-areas:
+    "topleft right"
+    ". cal";
+}
+
+/* TOP LEFT */
+#topleft {
+  position: fixed;
+  top: 120px;
+  left: 10vw;
+  max-width: 200px;
+  grid-area: topleft;
+  display: grid;
+  gap: 20px;
+  grid-template-rows: repeat(3, auto) / repeat(2, auto);
+  grid-template-areas:
+    "img"
+    "name"
+    "btns";
+}
+
+/*TOP LEFT ITEMS */
+
+#pro-img {
+  grid-area: img;
+  height: 200px;
+  width: 200px;
+  border-radius: 10%;
+}
+
+#pro-name {
+  margin-top: 10px;
+  grid-area: name;
+  min-height: 40px;
+}
+
+#pro-btn-wrapper {
+  grid-area: btns;
+}
+
+#btn1 {
+  margin-right: 10px;
+}
+
+#btn1,
+#btn2 {
+  margin-top: 10px;
+}
+
+/* RIGHT */
+#right {
+  margin: 100px 0 0 50px;
+  grid-area: right;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#right h6 {
+  text-decoration: underline;
+}
+
+/*RIGHT ITEMS */
+#right-flex {
+  margin: 50px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 95%;
+}
+
+.pet-card {
+  margin: 0 10px 20px;
+  width: 250px;
+}
+
+.pet-card-img {
+  height: 200px;
+}
+
+.pet-card-btns {
+  display: flex;
+  justify-content: center;
+}
+
+#about,
+#pet-info,
+#sitter-info {
+  text-align: left;
+  margin: 20px auto;
+  min-height: 40px;
+  height: auto;
+  width: 80%;
+}
+
+/*CALENDAR */
+#calendar {
+  grid-area: cal;
+  display: flex;
+  justify-content: center;
+  align-content: flex-start;
+}
+
+#calbox {
+  margin-top: 40px;
+  width: 400px;
+  height: 400px;
+  background: antiquewhite;
+}
+
+/*MEDIA QUERIES*/
+
+@media only screen and (max-width: 950px) {
+  #profile-container {
+    grid-template-rows: repeat(3, auto);
+    grid-template-columns: 100vw;
+    grid-template-areas: "topleft" "right" "cal";
+  }
+
+  #topleft {
+    position: relative;
+    top: 100px;
+    left: auto;
+    grid-area: topleft;
+    max-width: 90vw;
+    display: grid;
+    grid-gap: 0px;
+    justify-items: center;
+    align-items: center;
+    grid-template-rows: repeat(3, auto);
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "img name"
+      "img btns"
+      "info info";
+  }
+
+  #pro-img {
+    grid-area: img;
+  }
+
+  #pro-name {
+    grid-area: name;
+    width: 100%;
+  }
+
+  #pro-btn-wrapper {
+    grid-area: btns;
+    align-self: flex-start;
+  }
+
+  #about {
+    grid-area: info;
+    width: 80%;
+  }
+}
+
+@media only screen and (max-width: 630px) {
+  #profile-container {
+    grid-template-rows: repeat(3, auto);
+    grid-template-columns: 100vw;
+    grid-template-areas: "topleft" "right" "cal";
+  }
+
+  #topleft {
+    position: relative;
+    margin: 30px auto auto;
+    position: relative;
+    padding: 0;
+    top: 60px;
+    left: 0;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #pro-name {
+    max-width: 80vw;
+    margin-top: 20px;
+  }
+
+  #pro-btn-wrapper {
+    align-self: center;
+  }
+
+  #btn1,
+  #btn2 {
+    margin-top: 40px;
+  }
+
+  #right-flex {
+    margin-top: 0;
+  }
+
+  #about {
+    margin-top: -30px;
+  }
+}
