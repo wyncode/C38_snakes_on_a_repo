@@ -7,7 +7,8 @@
     "concurrently": "^5.2.0",
     "express": "^4.17.1",
     "mongodb": "^3.5.8",
-    "mongoose": "^5.9.16"
+    "mongoose": "^5.9.16",
+    "nodemailer": "^6.4.11"
   },
   "devDependencies": {
     "dotenv": "^8.2.0",
