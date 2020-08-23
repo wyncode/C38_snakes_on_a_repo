@@ -8,7 +8,7 @@ import SitterProfilePage from './Profiles/SitterProfile/SitterProfilePage';
 import PetProfilePage from './Profiles/PetProfile/PetProfilePage';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-function App() {
+const App = () => {
   return (
     <Router>
       <Nav />
@@ -23,6 +23,6 @@ function App() {
       </Switch>
     </Router>
   );
-}
+};
 
 export default App;

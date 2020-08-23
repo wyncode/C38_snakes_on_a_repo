@@ -40,7 +40,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function Nav() {
+const Nav = () => {
   //Required for conditional logic to hide Navbar on homepage
   const { pathname } = useLocation();
 
@@ -206,4 +206,6 @@ export default function Nav() {
   } else {
     return null;
   }
-}
+};
+
+export default Nav;

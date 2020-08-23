@@ -1,9 +1,9 @@
-import React from "react";
-import "./profiles.css";
-import "../../colors.css";
-import { Typography, Card, CardContent } from "@material-ui/core";
+import React from 'react';
+import './profiles.css';
+import '../../colors.css';
+import { Typography, Card, CardContent } from '@material-ui/core';
 
-export default function About(props) {
+const About = (props) => {
   return (
     <Card elevation="3" className="gradient-border" id="about">
       <CardContent className="card-inside">
@@ -24,4 +24,6 @@ export default function About(props) {
       </CardContent>
     </Card>
   );
-}
+};
+
+export default About;

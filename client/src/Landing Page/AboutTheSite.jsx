@@ -1,9 +1,9 @@
-import React from "react";
-import "./landing.css";
-import "../index.css";
-import Typography from "@material-ui/core/Typography";
+import React from 'react';
+import './landing.css';
+import '../index.css';
+import Typography from '@material-ui/core/Typography';
 
-function AboutTheSite() {
+const AboutTheSite = () => {
   return (
     // Must wrap component in fragment
     // so that CSS selectors target elements correctly
@@ -30,6 +30,6 @@ function AboutTheSite() {
       </div>
     </>
   );
-}
+};
 
 export default AboutTheSite;
