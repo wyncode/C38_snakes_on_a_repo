@@ -7,7 +7,7 @@ const ProfileImg = ({ imgURL }) => {
   return (
     <Card
       elevation="3"
-      id="pro-img"
+      id="profile-image"
       style={{
         backgroundImage: `url('${imgURL}')`,
         backgroundSize: 'cover',

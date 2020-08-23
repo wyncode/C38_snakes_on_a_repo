@@ -5,7 +5,7 @@ import '../../colors.css';
 const Calendar = () => {
   return (
     <div id="calendar">
-      <div id="calbox">calendar component</div>
+      <div id="calendar-placeholder">calendar component</div>
     </div>
   );
 };

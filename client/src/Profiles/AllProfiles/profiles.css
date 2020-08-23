@@ -9,7 +9,6 @@
     'topleft right'
     '. cal';
 }
-
 /* TOP LEFT */
 #topleft {
   position: fixed;
@@ -25,35 +24,28 @@
     'name'
     'btns';
 }
-
 /*TOP LEFT ITEMS */
-
-#pro-img {
+#profile-image {
   grid-area: img;
   height: 200px;
   width: 200px;
   border-radius: 10%;
 }
-
-#pro-name {
+#profile-name {
   margin-top: 10px;
   grid-area: name;
   min-height: 40px;
 }
-
-#pro-btn-wrapper {
+#profile-btn-wrapper {
   grid-area: btns;
 }
-
 #btn1 {
   margin-right: 10px;
 }
-
 #btn1,
 #btn2 {
   margin-top: 10px;
 }
-
 /* RIGHT */
 #right {
   margin: -20px 0 0 50px;
@@ -62,11 +54,9 @@
   flex-wrap: wrap;
   justify-content: center;
 }
-
 #right h6 {
   text-decoration: underline;
 }
-
 /*RIGHT ITEMS */
 #right-flex {
   margin: 50px 0 0;
@@ -75,21 +65,17 @@
   justify-content: center;
   width: 95%;
 }
-
 .pet-card {
   margin: 0 10px 20px;
   width: 250px;
 }
-
 .pet-card-img {
   height: 200px;
 }
-
 .pet-card-btns {
   display: flex;
   justify-content: center;
 }
-
 #about,
 #pet-info,
 #sitter-info {
@@ -99,7 +85,6 @@
   height: auto;
   width: 80%;
 }
-
 /*CALENDAR */
 #calendar {
   grid-area: cal;
@@ -107,23 +92,19 @@
   justify-content: center;
   align-content: flex-start;
 }
-
-#calbox {
+#calendar-placeholder {
   margin-top: 40px;
   width: 400px;
   height: 400px;
   background: antiquewhite;
 }
-
 /*MEDIA QUERIES*/
-
 @media only screen and (max-width: 950px) {
   #profile-container {
     grid-template-rows: repeat(3, auto);
     grid-template-columns: 100vw;
     grid-template-areas: 'topleft' 'right' 'cal';
   }
-
   #topleft {
     position: relative;
     top: 100px;
@@ -141,21 +122,17 @@
       'img btns'
       'info info';
   }
-
-  #pro-img {
+  #profile-image {
     grid-area: img;
   }
-
-  #pro-name {
+  #profile-name {
     grid-area: name;
     width: 100%;
   }
-
-  #pro-btn-wrapper {
+  #profile-btn-wrapper {
     grid-area: btns;
     align-self: flex-start;
   }
-
   #about {
     grid-area: info;
     width: 80%;
@@ -168,7 +145,6 @@
     grid-template-columns: 100vw;
     grid-template-areas: 'topleft' 'right' 'cal';
   }
-
   #topleft {
     position: relative;
     margin: 30px auto auto;
@@ -181,25 +157,20 @@
     flex-direction: column;
     align-items: center;
   }
-
-  #pro-name {
+  #profile-name {
     max-width: 80vw;
     margin-top: 20px;
   }
-
-  #pro-btn-wrapper {
+  #profile-btn-wrapper {
     align-self: center;
   }
-
   #btn1,
   #btn2 {
     margin-top: 40px;
   }
-
   #right-flex {
     margin-top: 0;
   }
-
   #about {
     margin-top: -30px;
   }

@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 
 const ProfileButton = (props) => {
   return (
-    <div id="pro-btn-wrapper">
+    <div id="profile-btn-wrapper">
       <Button variant="contained" className="pro-btn" id="btn1">
         {props.leftLink}
       </Button>
