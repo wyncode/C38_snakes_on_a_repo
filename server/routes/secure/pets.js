@@ -1,5 +1,7 @@
 const router = require('express').Router();
+const cloudinary = require('cloudinary').v2;
 const Pet = require('../../db/models/pet');
+const User = require('../../db/models/user');
 
 // Get All Pets
 router.get('/pets', async (req, res) => {
@@ -11,18 +13,55 @@ router.get('/pets', async (req, res) => {
       res.status(200).json(pets);
     }
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({ err: err.toString() });
   }
 });
 
 // Create New Pet
 router.post('/pets', async (req, res) => {
+  const {
+    name,
+    type,
+    avatar,
+    description,
+    feeding,
+    cleaning,
+    exercise,
+    medical,
+    additional,
+    emergency,
+    links,
+    owner //REMOVE once passport is running
+  } = req.body;
   try {
-    const newPet = new Pet(req.body);
+    const newPet = new Pet({
+      name,
+      type,
+      avatar,
+      description,
+      feeding,
+      cleaning,
+      exercise,
+      medical,
+      additional,
+      emergency,
+      links,
+      owner
+      // USE THIS once passport is running: owner: req.user._id
+    });
     await newPet.save();
+    // once passport is up and running, test without the following
+    //3 lines; they might not be necessary
+    const newPetOwner = await User.findById(newPet.owner);
+    newPetOwner.ownedPets.push(newPet._id);
+    await newPetOwner.save();
     res.status(201).json(newPet);
   } catch (err) {
-    res.status(500).json(err);
+    if (err.errors.type.kind === 'enum') {
+      res.status(500).json({ err: 'not a valid pet type' });
+    } else {
+      res.status(500).json({ err: err.toString() });
+    }
   }
 });
 
@@ -36,22 +75,41 @@ router.get('/pets/:id', async (req, res) => {
       res.status(200).json(pet);
     }
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({ err: err.toString() });
   }
 });
 
-// Delete User by ID
+// Delete Pet by ID
 router.delete('/pets/:id', async (req, res) => {
   try {
     await Pet.findByIdAndDelete(req.params.id);
     res.json('Pet deleted');
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({ err: err.toString() });
   }
 });
 
 // Update Pet by ID
 router.put('/pets/:id', async (req, res) => {
+  const updates = Object.keys(req.body);
+  const allowedUpdates = [
+    'name',
+    'type',
+    'description',
+    'feeding',
+    'cleaning',
+    'exercise',
+    'medical',
+    'additional',
+    'emergency',
+    'links'
+  ];
+  const isValidOperation = updates.every((update) =>
+    allowedUpdates.includes(update)
+  );
+  if (!isValidOperation) {
+    return res.status(400).send({ error: 'Invalid updates!' });
+  }
   try {
     const pet = await Pet.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -59,7 +117,27 @@ router.put('/pets/:id', async (req, res) => {
     });
     res.status(200).json(pet);
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({ err: err.toString() });
+  }
+});
+
+// Upload Pet Avatar
+router.post('/pets/:id/avatar', async (req, res) => {
+  console.log(req.files);
+  try {
+    const pet = await Pet.findById(req.params.id);
+    if (!pet) {
+      res.sendStatus(410);
+    } else {
+      const response = await cloudinary.uploader.upload(
+        req.files.avatar.tempFilePath
+      );
+      pet.avatar = response.secure_url;
+      await pet.save();
+      res.json(pet);
+    }
+  } catch (err) {
+    res.status(400).json({ err: err.toString() });
   }
 });
 
