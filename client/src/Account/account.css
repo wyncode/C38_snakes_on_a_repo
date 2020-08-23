@@ -1,0 +1,16 @@
+#acct-container {
+  margin: 100px 0 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#account-header-links {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  padding-top: 15px;
+  margin-top: 15px;
+}
+.account-card {
+  margin: 30px;
+}

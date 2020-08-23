@@ -110,7 +110,9 @@ const Nav = () => {
               to={el.link}
               component={Link}
             >
-              <ListItemIcon>{iconList(el.text)}</ListItemIcon>
+              <ListItemIcon className="drawer-icon">
+                {iconList(el.text)}
+              </ListItemIcon>
               <ListItemText primary={el.text} />
             </ListItem>
           ))}

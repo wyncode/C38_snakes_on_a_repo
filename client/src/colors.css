@@ -89,6 +89,9 @@ a:hover {
   color: var(--mid-darker);
   transition: all 0.3s;
 }
+.drawer-icon:first-child {
+  color: var(--dark);
+}
 /*PET CARDS*/
 .pet-card {
   border: 1px solid #eee;
@@ -144,4 +147,11 @@ form .login-btn:hover {
 .login-title {
   padding-bottom: 15px;
   border-bottom: 2px solid var(--mid);
+}
+/* ACCOUNT */
+#account-header-links {
+  border-top: 2px solid var(--mid);
+}
+#account-header-subtitle {
+  color: var(--dark);
 }

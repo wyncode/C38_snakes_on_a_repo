@@ -1,13 +1,13 @@
-import React from "react";
-import "./login.css";
-import { Link } from "react-router-dom";
+import React from 'react';
+import './login.css';
+import { Link } from 'react-router-dom';
 import {
   Typography,
   TextField,
   Button,
   Card,
-  CardContent,
-} from "@material-ui/core";
+  CardContent
+} from '@material-ui/core';
 
 const LoginPage = () => {
   return (
@@ -43,12 +43,24 @@ const LoginPage = () => {
               variant="contained"
               size="large"
               style={{
-                alignSelf: "center",
-                marginTop: "30px",
+                alignSelf: 'center',
+                marginTop: '30px'
               }}
               className="login-btn"
             >
               Login
+            </Button>
+            <Button
+              variant="contained"
+              size="large"
+              style={{
+                alignSelf: 'center',
+                marginTop: '30px'
+              }}
+              className="login-btn"
+            >
+              <div className="google-logo"></div>
+              Sign In With Google
             </Button>
           </form>
         </CardContent>
