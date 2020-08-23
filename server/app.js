@@ -7,6 +7,7 @@ const express = require('express'),
   cookieParser = require('cookie-parser'),
   fileUpload = require('express-fileupload');
 
+
 const app = express();
 
 //Middleware
@@ -24,7 +25,7 @@ app.use(openRoutes);
 
 // Serve any static files
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/build')));
+	app.use(express.static(path.join(__dirname, '../client/build')));
 }
 
 // Any authentication middleware and related routing would be here.
@@ -35,8 +36,8 @@ app.use(petsRoutes);
 
 // Handle React routing, return all requests to React app
 if (process.env.NODE_ENV === 'production') {
-  app.get('*', (request, response) => {
-    response.sendFile(path.join(__dirname, '../client/build', 'index.html'));
-  });
+	app.get('*', (request, response) => {
+		response.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+	});
 }
 module.exports = app;
