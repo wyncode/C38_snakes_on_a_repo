@@ -25,9 +25,15 @@ const dbReset = async () => {
   for (let i = 0; i < 1000; i++) {
     const me = new User({
       name: `${faker.name.firstName()} ${faker.name.lastName()}`,
-      owner: Boolean(Math.round(Math.random())),
       email: faker.internet.email(),
-      password: faker.internet.password()
+      password: faker.internet.password(),
+      owner: Boolean(Math.round(Math.random())),
+      description: faker.lorem.paragraph(), 
+      favUsers:,
+      favPets:
+      ownedPets:
+      
+      
     });
     await me.generateAuthToken();
     userIdArray.push(me._id);
@@ -35,11 +41,18 @@ const dbReset = async () => {
 
   for (let i = 0; i < 1000; i++) {
     const pet = new Pet({
+      name: `${faker.name.firstName()} ${faker.name.lastName()}`,  
+      type: faker.
       description: faker.lorem.paragraph(),
-      completed: Boolean(Math.round(Math.random())),
-      dueDate: faker.date.future(),
+      feeding: faker.lorem.paragraph(),
+      cleaning: faker.lorem.paragraph(),
+      exercise: faker.lorem.paragraph(),
+      medical: faker. lorem.paragraph(),
+      additional: faker.lorem.paragraph(),
+      emergency: faker.phone.phoneNumber(),
+      links: faker.internet.url(),
       owner: userIdArray[Math.floor(Math.random() * userIdArray.length)]
-      // Line 41 could be used for fav. sitters/pets
+      
     });
     await task.save();
   }
