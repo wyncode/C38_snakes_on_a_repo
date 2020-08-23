@@ -1,18 +1,19 @@
 #profile-container {
+  margin-top: 100px;
   white-space: pre-wrap;
   display: grid;
   grid-gap: 5vw;
   grid-template-rows: 1fr 1fr;
   grid-template-columns: 20vw 70vw;
   grid-template-areas:
-    "topleft right"
-    ". cal";
+    'topleft right'
+    '. cal';
 }
 
 /* TOP LEFT */
 #topleft {
   position: fixed;
-  top: 120px;
+  top: 100px;
   left: 10vw;
   max-width: 200px;
   grid-area: topleft;
@@ -20,9 +21,9 @@
   gap: 20px;
   grid-template-rows: repeat(3, auto) / repeat(2, auto);
   grid-template-areas:
-    "img"
-    "name"
-    "btns";
+    'img'
+    'name'
+    'btns';
 }
 
 /*TOP LEFT ITEMS */
@@ -55,7 +56,7 @@
 
 /* RIGHT */
 #right {
-  margin: 100px 0 0 50px;
+  margin: -20px 0 0 50px;
   grid-area: right;
   display: flex;
   flex-wrap: wrap;
@@ -120,7 +121,7 @@
   #profile-container {
     grid-template-rows: repeat(3, auto);
     grid-template-columns: 100vw;
-    grid-template-areas: "topleft" "right" "cal";
+    grid-template-areas: 'topleft' 'right' 'cal';
   }
 
   #topleft {
@@ -136,9 +137,9 @@
     grid-template-rows: repeat(3, auto);
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
-      "img name"
-      "img btns"
-      "info info";
+      'img name'
+      'img btns'
+      'info info';
   }
 
   #pro-img {
@@ -165,7 +166,7 @@
   #profile-container {
     grid-template-rows: repeat(3, auto);
     grid-template-columns: 100vw;
-    grid-template-areas: "topleft" "right" "cal";
+    grid-template-areas: 'topleft' 'right' 'cal';
   }
 
   #topleft {

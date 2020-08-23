@@ -103,7 +103,7 @@ const Nav = () => {
             { text: 'Home', link: '/' },
             { text: 'Login', link: '/login' },
             { text: 'Search', link: '/search' },
-            { text: 'Location Search', link: '/search' },
+            { text: 'Location Search', link: '/map' },
             { text: 'Owner Profile', link: '/ownerprofile' },
             { text: 'Pet Profile', link: '/petprofile/7' },
             { text: 'Sitter Profile', link: '/sitterprofile' }
