@@ -1,9 +1,9 @@
-import React from "react";
-import "../AllProfiles/profiles.css";
-import "../../colors.css";
-import { Typography, Card, CardContent } from "@material-ui/core";
+import React from 'react';
+import '../AllProfiles/profiles.css';
+import '../../colors.css';
+import { Typography, Card, CardContent } from '@material-ui/core';
 
-export default function SitterInfo() {
+const SitterInfo = () => {
   return (
     <Card elevation="3" className="gradient-border" id="sitter-info">
       <CardContent className="card-inside">
@@ -24,4 +24,5 @@ export default function SitterInfo() {
       </CardContent>
     </Card>
   );
-}
+};
+export default SitterInfo;

@@ -1,17 +1,17 @@
-import React from "react";
-import "../AllProfiles/profiles.css";
-import "../../colors.css";
+import React from 'react';
+import '../AllProfiles/profiles.css';
+import '../../colors.css';
 import {
   CardMedia,
   Card,
   CardActions,
   CardContent,
   Button,
-  Typography,
-} from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+  Typography
+} from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 
-export default function PetCard(props) {
+const PetCard = (props) => {
   const history = useHistory();
 
   return (
@@ -39,4 +39,6 @@ export default function PetCard(props) {
       </CardActions>
     </Card>
   );
-}
+};
+
+export default PetCard;

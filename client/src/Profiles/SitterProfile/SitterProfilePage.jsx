@@ -1,16 +1,16 @@
-import React from "react";
-import "../AllProfiles/profiles.css";
-import Calendar from "../AllProfiles/Calendar";
-import ProfileImg from "../AllProfiles/ProfileImg";
-import ProfileName from "../AllProfiles/ProfileName";
-import ProfileButtons from "../AllProfiles/ProfileButtons";
-import About from "../AllProfiles/About";
-import SitterInfo from "./SitterInfo";
+import React from 'react';
+import '../AllProfiles/profiles.css';
+import Calendar from '../AllProfiles/Calendar';
+import ProfileImg from '../AllProfiles/ProfileImg';
+import ProfileName from '../AllProfiles/ProfileName';
+import ProfileButtons from '../AllProfiles/ProfileButtons';
+import About from '../AllProfiles/About';
+import SitterInfo from './SitterInfo';
 
-/// FAKE IMAGE DATA
-import sitter from "../../Images/man4.jpg";
+/// PLACEHOLDER IMAGE DATA
+import sitter from '../../Images/man4.jpg';
 
-export default function SitterProfilePage() {
+const SitterProfilePage = () => {
   return (
     <div id="profile-container">
       <div id="topleft">
@@ -29,4 +29,5 @@ export default function SitterProfilePage() {
       <Calendar />
     </div>
   );
-}
+};
+export default SitterProfilePage;

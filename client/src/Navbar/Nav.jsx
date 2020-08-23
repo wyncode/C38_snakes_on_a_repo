@@ -26,17 +26,12 @@ import {
   IconButton
 } from '@material-ui/core';
 
-const drawerWidth = 240;
-
 const useStyles = makeStyles({
   list: {
     width: 250
   },
-  fullList: {
-    width: 'auto'
-  },
   drawer: {
-    width: drawerWidth
+    width: 250
   }
 });
 
@@ -105,23 +100,26 @@ const Nav = () => {
             { text: 'Search', link: '/search' },
             { text: 'Location Search', link: '/map' },
             { text: 'Owner Profile', link: '/ownerprofile' },
-            { text: 'Pet Profile', link: '/petprofile/7' },
+            { text: 'Pet Profile', link: '/petprofile/2' },
             { text: 'Sitter Profile', link: '/sitterprofile' }
           ].map((el) => (
-            <Link key={el.text} className="drawer-text" to={el.link}>
-              <ListItem button key={el.text}>
-                <ListItemIcon>{iconList(el.text)}</ListItemIcon>
-                <ListItemText primary={el.text} />
-              </ListItem>
-            </Link>
+            <ListItem
+              button
+              key={el.text}
+              className="drawer-text"
+              to={el.link}
+              component={Link}
+            >
+              <ListItemIcon>{iconList(el.text)}</ListItemIcon>
+              <ListItemText primary={el.text} />
+            </ListItem>
           ))}
         </List>
       </div>
     </>
   );
 
-  // Wrapped Navbar Return in If/Else
-  //so that it does NOT display on landing page
+  // Wrapped Navbar Return in If/Else so that it does NOT display on landing page
   if (pathname !== '/') {
     return (
       <div>
@@ -139,17 +137,27 @@ const Nav = () => {
             </IconButton>
 
             {/* HOME BUTTON */}
-            <IconButton edge="start" color="inherit" aria-label="menu">
-              <Link className="navbar-menu" to="/">
-                <HomeIcon />
-              </Link>
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              className="navbar-menu"
+              to="/"
+              component={Link}
+            >
+              <HomeIcon />
             </IconButton>
 
             {/* SEARCH BUTTON */}
-            <IconButton edge="start" color="inherit" aria-label="menu">
-              <Link className="navbar-menu" to="/search">
-                <SearchIcon />
-              </Link>
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              className="navbar-menu"
+              to="/"
+              component={Link}
+            >
+              <SearchIcon />
             </IconButton>
 
             {/* LOGIN BUTTON */}

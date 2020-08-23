@@ -1,47 +1,30 @@
-import React from "react";
-import "../AllProfiles/profiles.css";
-import Calendar from "../AllProfiles/Calendar";
-import ProfileImg from "../AllProfiles/ProfileImg";
-import ProfileName from "../AllProfiles/ProfileName";
-import ProfileButtons from "../AllProfiles/ProfileButtons";
-import About from "../AllProfiles/About";
-import PetInfo from "./PetInfo";
+import React from 'react';
+import '../AllProfiles/profiles.css';
+import Calendar from '../AllProfiles/Calendar';
+import ProfileImg from '../AllProfiles/ProfileImg';
+import ProfileName from '../AllProfiles/ProfileName';
+import ProfileButtons from '../AllProfiles/ProfileButtons';
+import About from '../AllProfiles/About';
+import PetInfo from './PetInfo';
 
-/// FAKE IMAGE DATA
-import bird from "../../Images/bird.jpg";
-import bird2 from "../../Images/bird2.jpg";
-import banana1 from "../../Images/banana1.jpg";
-import banana2 from "../../Images/banana2.jpg";
-import fish from "../../Images/fish.jpg";
-import hamster from "../../Images/hamster.jpg";
-import rabbit from "../../Images/rabbit.jpg";
-import snake from "../../Images/snake.jpg";
-import spider from "../../Images/spider.jpg";
+/// PLACEHOLDER  IMAGE DATA
+import snake from '../../Images/snake.jpg';
+import spider from '../../Images/spider.jpg';
 
-export default function PetProfilePage(props) {
+const PetProfilePage = (props) => {
   const { id } = props.match.params;
-
-  const pets = [
-    { img: snake, name: "Snake1 Name", role: "snake", id: 1 },
-    { img: bird2, name: "Bird Name", role: "bird", id: 2 },
-    { img: banana1, name: "Snake2 Name", role: "snake", id: 3 },
-    { img: hamster, name: "Hamster Name", role: "hamster", id: 4 },
-    { img: fish, name: "Fish Name", role: "fish", id: 5 },
-    { img: rabbit, name: "Rabbit Name", role: "rabbit", id: 6 },
-    { img: spider, name: "Spider Name", role: "spider", id: 7 },
-    { img: bird, name: "Bird Name", role: "bird", id: 8 },
-    { img: banana2, name: "Snake3 Name", role: "snake", id: 9 },
-  ];
-
   let index = id;
 
-  const instructions = `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam. \n\n Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam.  \n\n Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam.`;
+  const pets = [
+    { img: snake, name: 'Snake1 Name', role: 'snake', id: 1 },
+    { img: spider, name: 'Spider Name', role: 'spider', id: 2 }
+  ];
+
+  const instructions = `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam.`;
 
   const links = [
-    { url: "google.com", text: "google" },
-    { url: "youtube.com", text: "youtube" },
-    { url: "google.com", text: "google" },
-    { url: "youtube.com", text: "youtube" },
+    { url: 'google.com', text: 'google' },
+    { url: 'youtube.com', text: 'youtube' }
   ];
 
   return (
@@ -64,4 +47,5 @@ export default function PetProfilePage(props) {
       <Calendar />
     </div>
   );
-}
+};
+export default PetProfilePage;

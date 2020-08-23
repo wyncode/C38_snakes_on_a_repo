@@ -3,7 +3,7 @@ import '../AllProfiles/profiles.css';
 import '../../colors.css';
 import { Typography, Card, CardContent } from '@material-ui/core';
 
-export default function PetInfo({ title, instructions, links }) {
+const PetInfo = ({ title, instructions, links }) => {
   return (
     <Card elevation={3} className="gradient-border" id="pet-info">
       <CardContent className="card-inside">
@@ -29,4 +29,5 @@ export default function PetInfo({ title, instructions, links }) {
       </CardContent>
     </Card>
   );
-}
+};
+export default PetInfo;
