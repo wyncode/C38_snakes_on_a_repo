@@ -1,28 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { AppContextProvider } from './context/AppContext';
-import ContextDemo from './components/ContextDemo';
-
-import './App.css';
+import React from 'react';
+import Nav from './Navbar/Nav';
+import Landing from './Landing Page/Landing';
+import LoginPage from './Login/LoginPage';
+import RegisterPage from './Login/RegisterPage';
+import AccountPage from './Account/AccountPage';
+import LocationSearchPage from './SearchMap/LocationSearchPage';
+import SearchPage from './SearchMap/SearchPage';
+import OwnerProfilePage from './Profiles/OwnerProfile/OwnerProfilePage';
+import SitterProfilePage from './Profiles/SitterProfile/SitterProfilePage';
+import PetProfilePage from './Profiles/PetProfile/PetProfilePage';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 const App = () => {
-  const [serverMessage, setServerMessage] = useState('');
-
-  const fetchDemoData = () => {
-    fetch('/api/demo')
-      .then((response) => response.json())
-      .then((data) => setServerMessage(data.message));
-  };
-
-  useEffect(fetchDemoData, []);
-
   return (
-    <AppContextProvider>
-      <div id="demo">
-        <h3>Hello from client/src/App.js</h3>
-        <ContextDemo />
-        <h3>{serverMessage}</h3>
-      </div>
-    </AppContextProvider>
+    <Router>
+      <Nav />
+      <Switch>
+        <Route exact path="/" component={Landing} />
+        <Route exact path="/search" component={SearchPage} />
+        <Route exact path="/map" component={LocationSearchPage} />
+        <Route exact path="/ownerprofile" component={OwnerProfilePage} />
+        <Route exact path="/sitterprofile" component={SitterProfilePage} />
+        <Route exact path="/petprofile/:id" component={PetProfilePage} />
+        <Route exact path="/login" component={LoginPage} />
+        <Route exact path="/register" component={RegisterPage} />
+        <Route exact path="/account" component={AccountPage} />
+      </Switch>
+    </Router>
   );
 };
 
