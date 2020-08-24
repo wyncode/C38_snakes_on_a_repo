@@ -10,7 +10,7 @@ const Landing = () => {
       <div id="top-container">
         <TitleContainer />
       </div>
-      <div class="arrow-container">
+      <div className="arrow-container">
         <div className="arrow down"></div>
       </div>
       <div id="landing-bottom">

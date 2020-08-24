@@ -85,6 +85,9 @@ a:hover {
 #navbar .navbar-menu:hover {
   color: var(--light);
 }
+.drawer-text a:visited {
+  color: var(--mid);
+}
 .drawer-text:hover {
   color: var(--mid-darker);
   transition: all 0.3s;
@@ -129,10 +132,23 @@ a:hover {
   border-top: 2px solid var(--mid);
   padding-top: 5px;
 }
+/* CALENDAR */
+#calendar {
+  background: white;
+  color: var(--dark);
+}
+#calendar button {
+  background: var(--mid-darker);
+  border: none;
+  transition: all .3s;
+}
+#calendar button:hover, #calendar button:focus {
+  background: var(--mid);
+}
 /*BUTTON PAIR UNDERNEATH PROFILE NAME + LOGIN BUTTONS*/
 #btn1,
 #btn2,
-form .login-btn {
+form .login-btn{
   color: var(--less-white);
   background: var(--mid);
   transition: all 0.3s ease-in;

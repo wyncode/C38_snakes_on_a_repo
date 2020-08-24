@@ -12,7 +12,7 @@ import {
 const LoginPage = () => {
   return (
     <div id="login-container">
-      <Card elevation="3" className="gradient-border">
+      <Card elevation={3} className="gradient-border">
         <CardContent className="card-inside">
           <Typography variant="h2" className="login-title">
             Login
