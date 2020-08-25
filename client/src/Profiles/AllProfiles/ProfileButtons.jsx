@@ -2,8 +2,10 @@ import React from 'react';
 import './profiles.css';
 import '../../colors.css';
 import Button from '@material-ui/core/Button';
+import {useHistory} from 'react-router-dom';
 
-const ProfileButton = ({history, role, ownerID}) => {
+const ProfileButton = ({role, ownerID}) => {
+  const history = useHistory();
   const leftButtonText = () => {
     switch (role) {
       case "owner":
