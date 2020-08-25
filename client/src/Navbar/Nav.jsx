@@ -6,7 +6,6 @@ import HomeIcon from '@material-ui/icons/Home';
 import SearchIcon from '@material-ui/icons/Search';
 import PetsIcon from '@material-ui/icons/Pets';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import DirectionsWalkIcon from '@material-ui/icons/DirectionsWalk';
 import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
 import PersonPinCircleIcon from '@material-ui/icons/PersonPinCircle';
 import { Link } from 'react-router-dom';
@@ -73,12 +72,10 @@ const Nav = () => {
         return <PersonPinCircleIcon />;
       case 'Login':
         return <AccountCircle />;
-      case 'Owner Profile':
+      case 'User Profile':
         return <EmojiPeopleIcon />;
       case 'Pet Profile':
         return <PetsIcon />;
-      case 'Sitter Profile':
-        return <DirectionsWalkIcon />;
       default:
         return null;
     }
@@ -99,9 +96,8 @@ const Nav = () => {
             { text: 'Login', link: '/login' },
             { text: 'Search', link: '/search' },
             { text: 'Location Search', link: '/map' },
-            { text: 'Owner Profile', link: '/ownerprofile' },
-            { text: 'Pet Profile', link: '/petprofile/2' },
-            { text: 'Sitter Profile', link: '/sitterprofile' }
+            { text: 'User Profile', link: '/userprofile' },
+            { text: 'Pet Profile', link: '/petprofile' },
           ].map((el) => (
             <ListItem
               button
@@ -182,7 +178,7 @@ const Nav = () => {
                 onClose={handleClose}
               >
                 {[
-                  { text: 'Profile', route: '/ownerprofile' },
+                  { text: 'Profile', route: '/userprofile' },
                   { text: 'Account', route: '/account' },
                   { text: 'Login', route: '/login' },
                   { text: 'Sign Up', route: '/register' }
