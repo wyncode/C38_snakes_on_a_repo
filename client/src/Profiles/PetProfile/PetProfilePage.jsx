@@ -28,6 +28,7 @@ const PetProfilePage = ({match}) => {
         <ProfileButtons ownerID={pet.owner} owner={pet.owner} />
       </div>
       <div id="right">
+        <div id="right-flex">
         <About profileUser="The Pet" description={pet.description}/>
         <PetInfo title="Links" links={pet.links} />
         <PetInfo title="Feeding Instructions" instructions={pet.feeding} />
@@ -36,6 +37,7 @@ const PetProfilePage = ({match}) => {
         <PetInfo title="Medical Instructions" instructions={pet.medical} />
         <PetInfo title="Additional Instructions" instructions={pet.additional} />
         <PetInfo title="Emergency Instructions" instructions={pet.emergency} />
+        </div>
       </div>
       <Calendar />
     </div>
