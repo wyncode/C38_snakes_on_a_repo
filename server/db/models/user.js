@@ -105,13 +105,17 @@ userSchema.virtual('pets', {
 // };
 
 // add token to user
-userSchema.methods.generateAuthToken = async function() {
+userSchema.methods.generateAuthToken = async function () {
 	const user = this;
-	const token = Math.random();
+	const token = jwt.sign(
+	  { _id: user._id.toString(), name: user.name },
+	  process.env.JWT_SECRET,
+	  { expiresIn: '24h' },
+	);
 	user.tokens = user.tokens.concat({ token });
 	await user.save();
 	return token;
-};
+  };
 
 // find user by email and password
 userSchema.statics.findByCredentials = async (email, password) => {
