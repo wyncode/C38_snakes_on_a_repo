@@ -102,7 +102,8 @@ router.put('/pets/:id', async (req, res) => {
     'medical',
     'additional',
     'emergency',
-    'links'
+    'links',
+    'avatar'
   ];
   const isValidOperation = updates.every((update) =>
     allowedUpdates.includes(update)

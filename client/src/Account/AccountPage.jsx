@@ -15,7 +15,7 @@ const AccountPage = () => {
             Manage your account information here.
           </Typography>
           <Typography variant="button" id="account-header-links">
-            <Link to="/ownerprofile">View Your Profile</Link>
+            <Link to="/userprofile">View Your Profile</Link>
             <Link to="/">Logout</Link>
           </Typography>
         </CardContent>

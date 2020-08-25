@@ -3,15 +3,26 @@ import './profiles.css';
 import '../../colors.css';
 import Button from '@material-ui/core/Button';
 
-const ProfileButton = (props) => {
+const ProfileButton = ({history, role, ownerID}) => {
+  const leftButtonText = () => {
+    switch (role) {
+      case "owner":
+        return "Video Call";
+      case "sitter":
+        return "Tip Me!";
+      default:
+        return "Share";
+    }
+  }
+
   return (
     <div id="profile-btn-wrapper">
-      <Button variant="contained" className="pro-btn" id="btn1">
-        {props.leftLink}
+      <Button variant="contained" id="btn1">
+        {leftButtonText()}
       </Button>
-      <Button variant="contained" className="pro-btn" id="btn2">
-        {props.rightLink}
-      </Button>
+      {
+        ownerID ? <Button onClick={() => history.push(`/userprofile/${ownerID}`)} variant="contained" id="btn2">Owner</Button> : <Button variant="contained" id="btn2">Chat</Button>
+      }
     </div>
   );
 };

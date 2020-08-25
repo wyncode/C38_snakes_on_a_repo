@@ -34,7 +34,8 @@ const dbReset = async () => {
       email: faker.internet.email(),
       password: faker.internet.password(),
       owner: Boolean(Math.round(Math.random())),
-      description: faker.lorem.paragraph()
+      description: faker.lorem.paragraph(),
+      avatar: faker.internet.avatar(),
     });
     await user.generateAuthToken();
     userIdArray.push(user._id);
@@ -50,6 +51,9 @@ const dbReset = async () => {
     'other'
   ];
 
+  const randomUser =
+  userIdArray[Math.floor(Math.random() * userIdArray.length)];
+
   for (let i = 0; i < 100; i++) {
     const randomIndex = Math.floor(Math.random() * allowedTypes.length);
     const randomType = allowedTypes[randomIndex];
@@ -58,8 +62,9 @@ const dbReset = async () => {
       userIdArray[Math.floor(Math.random() * userIdArray.length)];
 
     const pet = new Pet({
-      name: `${faker.name.firstName()} ${faker.name.lastName()}`,
+      name: `${faker.name.firstName()}`,
       type: randomType,
+      avatar: faker.image.animals(),
       description: faker.lorem.paragraph(),
       feeding: faker.lorem.paragraph(),
       cleaning: faker.lorem.paragraph(),
@@ -74,6 +79,24 @@ const dbReset = async () => {
 
     petArray.push(pet);
   }
+
+  const randomNum = (arr) => {
+   return Math.floor(Math.random() * arr.length + 1);
+  } 
+
+  const queryAllUsers = () => {
+    //Where User is you mongoose user model
+    User.find({} , (err, users) => {
+        if(err) {console.log(err)}
+        users.map(user => {
+            user.ownedPets = [petArray[randomNum(petArray)],petArray[randomNum(petArray)],petArray[randomNum(petArray)]];
+            user.favPets = [petArray[randomNum(petArray)],petArray[randomNum(petArray)],petArray[randomNum(petArray)]];
+            user.favUsers = [userIdArray[randomNum(userIdArray)],userIdArray[randomNum(userIdArray)],userIdArray[randomNum(userIdArray)]]
+            user.save()
+        })
+    })
+}
+queryAllUsers();
 
   await User.countDocuments({}, function (err, count) {
     console.log('Number of users:', count);
