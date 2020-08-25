@@ -21,10 +21,6 @@ const SitterProfilePage = () => {
       <div id="right">
         <About profileUser="Me" />
         <SitterInfo />
-        <SitterInfo />
-        <SitterInfo />
-        <SitterInfo />
-        <SitterInfo />
       </div>
       <Calendar />
     </div>

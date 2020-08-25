@@ -5,7 +5,7 @@ import { Typography, Card, CardContent } from '@material-ui/core';
 
 const About = (props) => {
   return (
-    <Card elevation="3" className="gradient-border" id="about">
+    <Card elevation={3} className="gradient-border" id="about">
       <CardContent className="card-inside">
         <Typography
           className="card-title"

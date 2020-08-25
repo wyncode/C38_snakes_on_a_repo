@@ -15,7 +15,7 @@ const PetCard = (props) => {
   const history = useHistory();
 
   return (
-    <Card elevation="3" className="pet-card gradient-border">
+    <Card elevation={3} className="pet-card gradient-border">
       <CardMedia
         className="pet-card-img"
         component="img"

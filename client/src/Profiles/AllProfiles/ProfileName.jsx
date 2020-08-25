@@ -5,7 +5,7 @@ import { Typography, Card, CardContent } from '@material-ui/core/';
 
 const ProfileName = (props) => {
   return (
-    <Card className="gradient-border" id="profile-name" elevation="3">
+    <Card className="gradient-border" id="profile-name" elevation={3}>
       <CardContent className="card-inside">
         <Typography
           gutterBottom

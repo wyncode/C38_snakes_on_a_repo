@@ -6,7 +6,7 @@ import Card from '@material-ui/core/Card';
 const ProfileImg = ({ imgURL }) => {
   return (
     <Card
-      elevation="3"
+      elevation={3}
       id="profile-image"
       style={{
         backgroundImage: `url('${imgURL}')`,
