@@ -3,21 +3,7 @@ const cloudinary = require('cloudinary').v2;
 const Pet = require('../../db/models/pet');
 const User = require('../../db/models/user');
 
-// Get All Pets
-router.get('/pets', async (req, res) => {
-  try {
-    const pets = await Pet.find();
-    if (!pets) {
-      res.sendStatus(410);
-    } else {
-      res.status(200).json(pets);
-    }
-  } catch (err) {
-    res.status(500).json({ err: err.toString() });
-  }
-});
-
-// Create New Pet
+// Create New Pet For Current User
 router.post('/pets', async (req, res) => {
   const {
     name,
@@ -30,8 +16,7 @@ router.post('/pets', async (req, res) => {
     medical,
     additional,
     emergency,
-    links,
-    owner //REMOVE once passport is running
+    links
   } = req.body;
   try {
     const newPet = new Pet({
@@ -46,8 +31,7 @@ router.post('/pets', async (req, res) => {
       additional,
       emergency,
       links,
-      owner
-      // USE THIS once passport is running: owner: req.user._id
+     owner: req.user._id
     });
     await newPet.save();
     // once passport is up and running, test without the following
@@ -62,20 +46,6 @@ router.post('/pets', async (req, res) => {
     } else {
       res.status(500).json({ err: err.toString() });
     }
-  }
-});
-
-// Get Pet by ID
-router.get('/pets/:id', async (req, res) => {
-  try {
-    const pet = await Pet.findById(req.params.id);
-    if (!pet) {
-      res.sendStatus(410);
-    } else {
-      res.status(200).json(pet);
-    }
-  } catch (err) {
-    res.status(500).json({ err: err.toString() });
   }
 });
 
@@ -124,7 +94,6 @@ router.put('/pets/:id', async (req, res) => {
 
 // Upload Pet Avatar
 router.post('/pets/:id/avatar', async (req, res) => {
-  console.log(req.files);
   try {
     const pet = await Pet.findById(req.params.id);
     if (!pet) {

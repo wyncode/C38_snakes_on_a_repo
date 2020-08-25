@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const User = require('../../db/models/user');
+const Pet = require('../../db/models/pet');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
@@ -51,6 +52,63 @@ router.get('/auth/google/users', passport.authenticate('google', { failureRedire
 	res.redirect('/users');
 });
 
+// Get All Pets
+router.get('/pets', async (req, res) => {
+	try {
+	  const pets = await Pet.find();
+	  if (!pets) {
+		res.sendStatus(410);
+	  } else {
+		res.status(200).json(pets);
+	  }
+	} catch (err) {
+	  res.status(500).json({ err: err.toString() });
+	}
+  });
+
+
+  // Get Pet by ID
+router.get('/pets/:id', async (req, res) => {
+	try {
+	  const pet = await Pet.findById(req.params.id);
+	  if (!pet) {
+		res.sendStatus(410);
+	  } else {
+		res.status(200).json(pet);
+	  }
+	} catch (err) {
+	  res.status(500).json({ err: err.toString() });
+	}
+  });
+
+  // Get All Users
+router.get('/users', async (req, res) => {
+	try {
+		const users = await User.find();
+		if (!users) {
+			res.sendStatus(410);
+		} else {
+			res.status(200).json(users);
+		}
+	} catch (err) {
+		res.status(500).json({ err: err.toString() });
+	}
+});
+
+// Get User by ID
+router.get('/users/:id', async (req, res) => {
+	try {
+		const user = await User.findById(req.params.id);
+		if (!user) {
+			res.sendStatus(410);
+		} else {
+			res.status(200).json(user);
+		}
+	} catch (err) {
+		res.status(500).json({ err: err.toString() });
+	}
+});
+
 // Create New User
 router.post('/users', async (req, res) => {
 	const { email } = req.body;
@@ -89,41 +147,42 @@ router.post('/users/login', async (req, res) => {
 	}
 });
 
-// remove once jwt added
-let testToken = 'faketoken';
-
 // Password Reset
 router.get('/password', async (req, res) => {
 	try {
 		const { email } = req.query,
-			user = await User.findOne({ email });
+		  user = await User.findOne({ email });
 		if (!user) throw new Error("account doesn't exist");
-		testToken = Math.random().toString();
-		res.json({ message: 'reset password email sent', token: testToken });
-	} catch (err) {
-		res.status(500).json({ err: err.toString() });
-	}
-});
+		const token = jwt.sign(
+		  { _id: user._id.toString(), name: user.name },
+		  process.env.JWT_SECRET,
+		  {
+			expiresIn: '10m',
+		  },
+		);
+		forgotPasswordEmail(email, token);
+		res.json({ message: 'reset password email sent' });
+	  } catch (error) {
+		res.status(500).json({ error: error.toString() });
+	  }
+	});
 
 // Password Redirect
 router.get('/password/:token', (req, res) => {
 	const { token } = req.params;
 	try {
-		// REPLACE FOLLOWING WITH JWT
-		if (testToken === token) {
-			res.cookie('jwt', token, {
-				httpOnly: true,
-				maxAge: 600000,
-				sameSite: 'Strict'
-			});
-			res.redirect(process.env.URL + '/update-password');
-			// console.log('redirecting...');
-		} else {
-			throw new Error('tokens do not match');
-		}
-	} catch (err) {
-		res.status(401).json({ err: err.toString() });
+	  jwt.verify(token, process.env.JWT_SECRET, function (err, decoded) {
+		if (err) throw new Error(err.message);
+	  });
+	  res.cookie('jwt', token, {
+		httpOnly: true,
+		maxAge: 600000,
+		sameSite: 'Strict',
+	  });
+	  res.redirect(process.env.URL + '/update-password');
+	} catch (error) {
+	  res.status(401).json({ error: error.toString() });
 	}
-});
+  });
 
 module.exports = router;

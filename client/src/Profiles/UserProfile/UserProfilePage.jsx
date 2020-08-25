@@ -27,9 +27,9 @@ const [petOwner, setPetOwner] = useState({owner: false, ownedPets: [], descripti
         <ProfileName name={petOwner.name} role={petOwner.owner ? 'pet owner' : 'pet sitter'} />
         <ProfileButtons role={petOwner.owner === true ? "owner" : "sitter"} />
       </div>
-      <div id="right">
-        <About profileUser="Me" description={petOwner.description} />
+      <div id="right"> 
         <div id="right-flex">
+        <About profileUser="Me" description={petOwner.description} />
           {petOwner.owner === true && petOwner.ownedPets.map((id) => {
             return (
               <PetCard
