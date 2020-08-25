@@ -1,0 +1,173 @@
+/*VARIABLES*/
+* {
+  --black: black;
+  --white: white;
+  --less-white: #eee;
+  --dark: rgb(53, 87, 167);
+  --mid: rgb(12, 176, 151);
+  --mid-darker: rgb(9, 94, 81);
+  --light: rgb(159, 255, 0);
+  --yellow: rgb(255, 233, 32);
+  --side-gradient: linear-gradient(
+    90deg,
+    var(--dark) 0%,
+    var(--mid) 54%,
+    var(--light) 100%
+  );
+  --btn-gradient: linear-gradient(
+    45deg,
+    var(--dark) 0%,
+    var(--mid) 50%,
+    var(--light) 100%
+  );
+}
+/*GENERAL CLASSES*/
+a,
+a:visited,
+a:focus {
+  text-decoration: none;
+  color: var(--mid);
+  transition: all 0.3s ease-in-out;
+}
+a:hover {
+  color: var(--dark);
+}
+.gradient-border {
+  background: var(--side-gradient);
+  padding: 5px 0 0;
+}
+.card-inside {
+  background: var(--white);
+}
+/*LANDING PAGE*/
+#top-container {
+  border-bottom: 3px solid var(--dark);
+}
+#landing-title-container {
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+}
+#landing-title-container .lt-title {
+  color: var(--white);
+  text-shadow: 3px 3px var(--black);
+}
+#landing-title-container .home-btn:first-of-type {
+  background: var(--btn-gradient);
+  color: var(--white);
+  transition: all 0.5s ease-in-out;
+}
+#landing-title-container .home-btn:first-of-type:hover {
+  transform: scale(1.2) rotate(-10deg);
+}
+#landing-title-container .home-btn:nth-of-type(2) {
+  background: rgba(0, 0, 0, 0.3);
+  border: 2px solid var(--white);
+  color: var(--white);
+  transition: all 0.5s ease-in-out;
+}
+#landing-title-container .home-btn:nth-of-type(2):hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+/*NAVBAR*/
+#navbar {
+  background: var(--mid-darker);
+}
+.navbar-menu a,
+.navbar-menu a:visited,
+.navbar-menu a:focus {
+  color: var(--black);
+}
+#navbar .navbar-menu {
+  color: var(--white);
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+}
+#navbar .navbar-menu:hover {
+  color: var(--light);
+}
+.drawer-text a:visited {
+  color: var(--mid);
+}
+.drawer-text:hover {
+  color: var(--mid-darker);
+  transition: all 0.3s;
+}
+.drawer-icon:first-child {
+  color: var(--dark);
+}
+/*PET CARDS*/
+.pet-card {
+  border: 1px solid #eee;
+  /* border-top: 10px solid var(--dark); */
+}
+.pet-card-img {
+  border-bottom: 2px solid var(--mid);
+  background: white;
+}
+.pet-card-title {
+  color: var(--black);
+}
+.pet-card-btns .card-btn {
+  color: var(--less-white);
+  background: var(--mid);
+  transition: all 0.3s ease-in;
+}
+.pet-card-btns .card-btn:hover {
+  color: var(--yellow);
+  background: var(--mid);
+}
+/*PROFILE NAME & IMAGE */
+#profile-image {
+  border: 2px solid var(--mid);
+}
+#profile-name .card-inside {
+  padding-bottom: 10px;
+}
+.name-title {
+  height: 100%;
+  background: var(--white);
+}
+.role-title {
+  color: var(--dark);
+  border-top: 2px solid var(--mid);
+  padding-top: 5px;
+}
+/* CALENDAR */
+#calendar {
+  background: white;
+  color: var(--dark);
+}
+#calendar button {
+  background: var(--mid-darker);
+  border: none;
+  transition: all .3s;
+}
+#calendar button:hover, #calendar button:focus {
+  background: var(--mid);
+}
+/*BUTTON PAIR UNDERNEATH PROFILE NAME + LOGIN BUTTONS*/
+#btn1,
+#btn2,
+form .login-btn{
+  color: var(--less-white);
+  background: var(--mid);
+  transition: all 0.3s ease-in;
+}
+#btn1:hover,
+#btn2:hover,
+form .login-btn:hover {
+  color: var(--yellow);
+  background: var(--mid);
+}
+/* LOGIN, SIGNUP */
+.login-title {
+  padding-bottom: 15px;
+  border-bottom: 2px solid var(--mid);
+}
+/* ACCOUNT */
+#account-header-links {
+  border-top: 2px solid var(--mid);
+}
+#account-header-subtitle {
+  color: var(--dark);
+}
