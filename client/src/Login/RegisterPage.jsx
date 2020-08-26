@@ -14,7 +14,7 @@ const RegisterPage = () => {
     <div id="login-container">
       <Card elevation={3} className="gradient-border">
         <CardContent className="card-inside">
-          <Typography variant="h2" className="login-title">
+          <Typography variant="h2" className="header-card-title">
             Register
           </Typography>
           <form autoComplete="off">
@@ -51,7 +51,7 @@ const RegisterPage = () => {
                 alignSelf: 'center',
                 marginTop: '30px'
               }}
-              className="login-btn"
+              className="header-card-btn"
             >
               Register
             </Button>
@@ -62,7 +62,7 @@ const RegisterPage = () => {
                 alignSelf: 'center',
                 marginTop: '30px'
               }}
-              className="login-btn"
+              className="header-card-btn"
             >
               <div className="google-logo"></div>
               Sign Up With Google

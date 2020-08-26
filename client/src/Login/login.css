@@ -14,16 +14,16 @@ form {
 form .text-field {
   margin: 10px 0;
 }
-.login-btn {
+.header-card-btn {
   position: relative;
   width: 70%;
 }
-.login-btn:nth-of-type(2) {
+.header-card-btn:nth-of-type(2) {
   background: #4285f4;
   color: white;
 }
-.login-btn:nth-of-type(2):hover,
-.login-btn:nth-of-type(2):focus {
+.header-card-btn:nth-of-type(2):hover,
+.header-card-btn:nth-of-type(2):focus {
   background: #3a78db;
   color: white;
 }

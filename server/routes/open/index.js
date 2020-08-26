@@ -52,6 +52,66 @@ router.get('/auth/google/users', passport.authenticate('google', { failureRedire
 	res.redirect('/users');
 });
 
+// Search Pet by Name OR Description
+router.get('/search/pet', async (req, res) => {
+	const { query } = req.query;
+	try {
+	  const pets = await Pet.find({
+		$or: [
+		  {
+			name: {
+			  $regex: `${query}`,
+			  $options: "i",
+			},
+		  },
+		  {
+			description: {
+			  $regex: `${query}`,
+			  $options: "i",
+			},
+		  },
+		],
+	  });
+	  if (!pets) {
+		res.sendStatus(410).json('nothing found');
+	  } else {
+		res.status(200).json(pets);
+	  }
+	} catch (err) {
+	  res.status(500).json({ err: err.toString() });
+	}
+  });
+
+// Search User by Name OR Description
+router.get('/search/user', async (req, res) => {
+	const { query } = req.query;
+	try {
+	  const users = await User.find({
+		$or: [
+		  {
+			name: {
+			  $regex: `${query}`,
+			  $options: "i",
+			},
+		  },
+		  {
+			description: {
+			  $regex: `${query}`,
+			  $options: "i",
+			},
+		  },
+		],
+	  });
+	  if (!users) {
+		res.sendStatus(410).json('nothing found');
+	  } else {
+		res.status(200).json(users);
+	  }
+	} catch (err) {
+	  res.status(500).json({ err: err.toString() });
+	}
+  });
+
 // Get All Pets
 router.get('/pets', async (req, res) => {
 	try {

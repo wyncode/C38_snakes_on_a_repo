@@ -15,11 +15,11 @@ const PetInfo = ({ title, instructions, links }) => {
         >
           {title}
         </Typography>
-        <Typography variant="body1" gutterBottom>
+        <Typography variant="body1" component="div" gutterBottom>
           {links &&
             links.map((el) => {
               return (
-                <div>
+                <div key={el.text} >
                   <a href={el.url}>&#10686; {el.text}</a>
                 </div>
               );
