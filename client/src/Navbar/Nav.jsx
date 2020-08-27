@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import { AppContext } from '../Context/AppContext';
+import Logout from '../Login/Logout'
 import './nav.css';
 import '../colors.css';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -35,6 +37,8 @@ const useStyles = makeStyles({
 });
 
 const Nav = () => {
+  const { currentUser } = useContext(AppContext);
+
   //Required for conditional logic to hide Navbar on homepage
   const { pathname } = useLocation();
 
@@ -152,7 +156,7 @@ const Nav = () => {
               color="inherit"
               aria-label="menu"
               className="navbar-menu"
-              to="/"
+              to="/search"
               component={Link}
             >
               <SearchIcon />
@@ -171,28 +175,34 @@ const Nav = () => {
                 <AccountCircle />
               </IconButton>
               <Menu
-                style={{ zIndex: '1500' }}
+                style={{ zIndex: '1500'}}
                 anchorEl={anchorEl}
                 keepMounted
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                {[
-                  { text: 'Profile', route: '/userprofile' },
-                  { text: 'Account', route: '/account' },
-                  { text: 'Login', route: '/login' },
-                  { text: 'Sign Up', route: '/register' }
-                ].map((el) => {
-                  return (
-                    <Link
-                      key={el.text}
-                      to={el.route}
-                      style={{ color: 'black' }}
-                    >
-                      <MenuItem onClick={handleClose}>{el.text}</MenuItem>
-                    </Link>
-                  );
-                })}
+                {currentUser ? (
+                  <span>
+                    <MenuItem style={{color: "black"}} component={Link} to="/account" onClick={handleClose}>
+                      Account
+                    </MenuItem>
+                    <MenuItem style={{color: "black"}} component={Link} to="/profile" onClick={handleClose}>
+                      Profile
+                    </MenuItem>
+                    <MenuItem onClick={handleClose}>
+                      <Logout styleType={{textTransform: "capitalize", padding: "0", marginLeft: "-5px", color: "black", fontSize: "1em"}} />
+                    </MenuItem>
+                </span>
+                ) : (
+                  <span>
+                    <MenuItem component={Link} to="/login" onClick={handleClose}>
+                      Login
+                    </MenuItem>
+                    <MenuItem component={Link} to="/register" onClick={handleClose}>
+                      Sign Up
+                    </MenuItem>
+                  </span>
+                )}         
               </Menu>
             </div>
           </Toolbar>

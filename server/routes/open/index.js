@@ -191,7 +191,7 @@ router.post('/users', async (req, res) => {
 });
 
 // User Login
-router.post('/users/login', async (req, res) => {
+router.post('/user/login', async (req, res) => {
 	const { email, password } = req.body;
 	try {
 		const user = await User.findByCredentials(email, password);
@@ -201,7 +201,7 @@ router.post('/users/login', async (req, res) => {
 			sameSite: 'Strict',
 			secure: process.env.NODE_ENV !== 'production' ? false : true
 		});
-		res.status(200).json('Logged in!');
+		res.status(200).json({message: 'Logged in!', data: user});
 	} catch (err) {
 		res.status(500).json({ err: err.toString() });
 	}
