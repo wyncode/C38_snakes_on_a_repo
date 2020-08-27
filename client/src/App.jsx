@@ -8,10 +8,14 @@ import LocationSearchPage from './SearchMap/LocationSearchPage';
 import SearchPage from './SearchMap/SearchPage';
 import UserProfilePage from './Profiles/UserProfile/UserProfilePage';
 import PetProfilePage from './Profiles/PetProfile/PetProfilePage';
+import SecureRoute from './Account/SecureRoute'
+import LoggedInRoute from './Account/LoggedInRoute'
+import { AppContextProvider } from './Context/AppContext';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 const App = () => {
   return (
+    <AppContextProvider>
     <Router>
       <Nav />
       <Switch>
@@ -20,11 +24,12 @@ const App = () => {
         <Route exact path="/map" component={LocationSearchPage} />
         <Route exact path="/userprofile/:id" component={UserProfilePage} />
         <Route exact path="/petprofile/:id" component={PetProfilePage} />
-        <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/register" component={RegisterPage} />
-        <Route exact path="/account" component={AccountPage} />
+        <LoggedInRoute exact path="/login" component={LoginPage} />
+        <LoggedInRoute exact path="/register" component={RegisterPage} />
+        <SecureRoute exact path="/account" component={AccountPage} />
       </Switch>
     </Router>
+    </AppContextProvider>
   );
 };
 

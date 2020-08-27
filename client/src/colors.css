@@ -168,6 +168,12 @@ form .header-card-btn:hover {
 #account-header-links {
   border-top: 2px solid var(--mid);
 }
+#account-header-links button {
+  color: var(--mid);
+}
+#account-header-links button:hover, #account-header-links button:focus {
+  color: var(--dark);
+}
 #account-header-subtitle {
   color: var(--dark);
 }
