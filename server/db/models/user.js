@@ -76,7 +76,15 @@ const userSchema = new mongoose.Schema(
 				type: mongoose.Schema.Types.ObjectId,
 				ref: 'Pet'
 			}
-		]
+		],
+		latitude: {
+			type: Number,
+			default: Math.random() * 26
+		},
+		longitude: {
+			type: Number,
+			default: Math.random() * -81
+		}
 	},
 	{
 		googleId: {
