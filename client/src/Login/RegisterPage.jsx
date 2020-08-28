@@ -20,7 +20,6 @@ const RegisterPage = ({history}) => {
     axios
     .post('/users/', formData)
     .then((response) => {
-      console.log(response)
       sessionStorage.setItem('user', response.data);
       setCurrentUser(response.data);
       if (response.data) {

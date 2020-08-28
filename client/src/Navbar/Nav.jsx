@@ -186,7 +186,7 @@ const Nav = () => {
                     <MenuItem style={{color: "black"}} component={Link} to="/account" onClick={handleClose}>
                       Account
                     </MenuItem>
-                    <MenuItem style={{color: "black"}} component={Link} to="/profile" onClick={handleClose}>
+                    <MenuItem style={{color: "black"}} component={Link} to={`/userprofile/${currentUser && currentUser._id}`} onClick={handleClose}>
                       Profile
                     </MenuItem>
                     <MenuItem onClick={handleClose}>

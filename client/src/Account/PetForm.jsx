@@ -1,10 +1,13 @@
-import React, {useState} from 'react'
-import './account.css'
-import '../colors.css'
-import {TextField, Button, FormControl, InputLabel, Select, MenuItem} from '@material-ui/core'
+import React, {useState, useContext} from 'react';
+import './account.css';
+import '../colors.css';
+import { AppContext } from '../Context/AppContext';
+import {TextField, Button, FormControl, InputLabel, Select, MenuItem} from '@material-ui/core';
 
 const PetForm = () => {
+    const [formData, setFormData] = useState(null);
     const [type, setType] = useState('');
+    const { currentUser } = useContext(AppContext);
 
     const handleSubmit = (e) => {
      e.preventDefault();
@@ -24,6 +27,7 @@ const PetForm = () => {
             </div>
             <div className="tab-grid">
                 <TextField
+                onChange={((e) => setFormData({ ...formData, [e.target.name]: e.target.value }))}
                 className="tab-input"
                 variant="outlined"
                 id="name"
@@ -53,19 +57,20 @@ const PetForm = () => {
                 </FormControl>
                 
                 <TextField
-                className="tab-input"
-                variant="outlined"
-                id="description"
-                label="description"
-                type="text"
-                name="description"
-                multiline
-                rows="5"
+                    onChange={((e) => setFormData({ ...formData, [e.target.name]: e.target.value }))}
+                    className="tab-input"
+                    variant="outlined"
+                    id="description"
+                    label="description"
+                    type="text"
+                    name="description"
+                    multiline
+                    rows="5"
                 />
 
-                {links.map(el => {
+                {links.map((el, index) => {
                     return (
-                        <>
+                        <span key={index}>
                         <TextField
                             className="tab-input"
                             variant="outlined"
@@ -82,7 +87,7 @@ const PetForm = () => {
                             type="text"
                             name={`${el.url}URL`}
                             />
-                         </>
+                         </span>
                     )
                 })}
                 
@@ -91,6 +96,7 @@ const PetForm = () => {
                 {instructions.map(el => {
                     return (
                         <TextField
+                            onChange={((e) => setFormData({ ...formData, [e.target.name]: e.target.value }))}
                             key={el}
                             className="tab-input"
                             variant="outlined"

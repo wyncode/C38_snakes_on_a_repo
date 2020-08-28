@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import {Typography} from '@material-ui/core'
-import UpdateAccount from './UpdateAccount'
-import PetForm from './PetForm'
+import {Typography} from '@material-ui/core';
+import UpdateAccount from './UpdateAccount';
+import PetForm from './PetForm';
 
 const TabPane = () => {
     return (
