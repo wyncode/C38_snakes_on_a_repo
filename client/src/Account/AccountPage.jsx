@@ -1,14 +1,13 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import Logout from '../Login/Logout'
+import Logout from '../Login/Logout';
 import './account.css';
 import { Typography, Card, CardContent } from '@material-ui/core';
 import TabPane from './TabPane';
-import {AppContext} from '../Context/AppContext';
-import axios from 'axios';
+import { AppContext } from '../Context/AppContext';
 
 const AccountPage = () => {
-  const {currentUser} = useContext(AppContext)
+  const { currentUser } = useContext(AppContext);
 
   return (
     <div id="acct-container">
@@ -21,13 +20,15 @@ const AccountPage = () => {
             Manage your account information here.
           </Typography>
           <Typography variant="button" id="account-header-links">
-            <Link to={`/userprofile/${currentUser && currentUser._id}`}>View Your Profile</Link>
-            <Logout styleType={{fontWeight: "bold", padding: "0"}} />
+            <Link to={`/userprofile/${currentUser && currentUser._id}`}>
+              View Your Profile
+            </Link>
+            <Logout styleType={{ fontWeight: 'bold', padding: '0' }} />
           </Typography>
         </CardContent>
       </Card>
 
-      <TabPane/>
+      <TabPane />
     </div>
   );
 };

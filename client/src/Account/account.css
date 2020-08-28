@@ -39,10 +39,11 @@
   align-self: flex-start;
 }
 .avatar-preview {
-  background: green;
   height: 200px;
   width: 200px;
   border-radius: 10%;
+  background-size: cover;
+  background-position: center;
 }
 .tab-grid .tab-input {
   margin-bottom: 20px;
