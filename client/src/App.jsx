@@ -8,23 +8,28 @@ import LocationSearchPage from './SearchMap/LocationSearchPage';
 import SearchPage from './SearchMap/SearchPage';
 import UserProfilePage from './Profiles/UserProfile/UserProfilePage';
 import PetProfilePage from './Profiles/PetProfile/PetProfilePage';
+import SecureRoute from './Routes/SecureRoute';
+import LoggedInRoute from './Routes/LoggedInRoute';
+import { AppContextProvider } from './context/AppContext';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 const App = () => {
   return (
-    <Router>
-      <Nav />
-      <Switch>
-        <Route exact path="/" component={Landing} />
-        <Route exact path="/search" component={SearchPage} />
-        <Route exact path="/map" component={LocationSearchPage} />
-        <Route exact path="/userprofile/:id" component={UserProfilePage} />
-        <Route exact path="/petprofile/:id" component={PetProfilePage} />
-        <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/register" component={RegisterPage} />
-        <Route exact path="/account" component={AccountPage} />
-      </Switch>
-    </Router>
+    <AppContextProvider>
+      <Router>
+        <Nav />
+        <Switch>
+          <Route exact path="/" component={Landing} />
+          <Route exact path="/search" component={SearchPage} />
+          <Route exact path="/map" component={LocationSearchPage} />
+          <Route exact path="/userprofile/:id" component={UserProfilePage} />
+          <Route exact path="/petprofile/:id" component={PetProfilePage} />
+          <LoggedInRoute exact path="/login" component={LoginPage} />
+          <LoggedInRoute exact path="/register" component={RegisterPage} />
+          <SecureRoute exact path="/account" component={AccountPage} />
+        </Switch>
+      </Router>
+    </AppContextProvider>
   );
 };
 

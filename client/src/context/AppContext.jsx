@@ -1,22 +1,40 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
+import axios from 'axios';
+const AppContext = createContext();
 
-export const AppContext = createContext();
+const AppContextProvider = ({ children }) => {
+  const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const user = sessionStorage.getItem('user');
+  const [currentPets, setCurrentPets] = useState(null);
 
-export const AppContextProvider = ({ children }) => {
-  const [contextMessage, setContextMessage] = useState('');
-
-  const contextMethod = () => {
-    setContextMessage('Hello from client/src/context/AppContext.jsx');
-  };
+  useEffect(() => {
+    if (user && !currentUser) {
+      axios
+        .get('/user/me', { withCredentials: true })
+        .then((res) => {
+          setCurrentUser(res.data);
+          setCurrentPets(res.data.ownedPets);
+        })
+        .catch((error) => console.log(error));
+    }
+  }, [currentUser, user, currentPets, setCurrentUser, setLoading]);
 
   return (
     <AppContext.Provider
       value={{
-        contextMessage,
-        contextMethod
+        currentUser,
+        setCurrentUser,
+        user,
+        loading,
+        setLoading,
+        currentPets,
+        setCurrentPets
       }}
     >
       {children}
     </AppContext.Provider>
   );
 };
+
+export { AppContext, AppContextProvider };
