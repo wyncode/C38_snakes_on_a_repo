@@ -8,12 +8,12 @@ import {
   Card,
   CardContent
 } from '@material-ui/core';
-import { AppContext } from '../Context/AppContext';
-import axios from 'axios'
+import { AppContext } from '../context/AppContext';
+import axios from 'axios';
 
 const LoginPage = ({history}) => {
   const [formData, setFormData] = useState(null);
-  const { setCurrentUser } = useContext(AppContext);
+  const { setCurrentUser, setCurrentPets } = useContext(AppContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -24,15 +24,14 @@ const LoginPage = ({history}) => {
     }).then(({data}) => {
         sessionStorage.setItem('user', data.data);
         setCurrentUser(data.data);
+        setCurrentPets(data.data.ownedPets);
         if (data){
           history.push('/account');
-        }
-        
-      })
-      .catch((error) => {
-        console.log(error);
-        alert("Problem logging in; check your email and password");
-      });
+        }      
+    }).catch((error) => {
+      console.log(error);
+      alert("Problem logging in; check your email and password");
+    });
   };
 
 
@@ -68,7 +67,7 @@ const LoginPage = ({history}) => {
               <Link to="/register">Register?</Link>
             </Typography>
             <Button
-            type="submit"
+              type="submit"
               variant="contained"
               size="large"
               style={{

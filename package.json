@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "engines": {
+    "node": "14.x"
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.22.0",

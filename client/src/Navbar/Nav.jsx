@@ -1,19 +1,5 @@
-import React, {useContext} from 'react';
-import { AppContext } from '../Context/AppContext';
-import Logout from '../Login/Logout'
-import './nav.css';
-import '../colors.css';
-import MenuIcon from '@material-ui/icons/Menu';
-import HomeIcon from '@material-ui/icons/Home';
-import SearchIcon from '@material-ui/icons/Search';
-import PetsIcon from '@material-ui/icons/Pets';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
-import PersonPinCircleIcon from '@material-ui/icons/PersonPinCircle';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
 import {
   Drawer,
   List,
@@ -26,6 +12,20 @@ import {
   AppBar,
   IconButton
 } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+import HomeIcon from '@material-ui/icons/Home';
+import SearchIcon from '@material-ui/icons/Search';
+import PetsIcon from '@material-ui/icons/Pets';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
+import PersonPinCircleIcon from '@material-ui/icons/PersonPinCircle';
+import { makeStyles } from '@material-ui/core/styles';
+import { useLocation } from 'react-router-dom';
+import clsx from 'clsx';
+import { AppContext } from '../context/AppContext';
+import Logout from '../Login/Logout';
+import './nav.css';
+import '../colors.css';
 
 const useStyles = makeStyles({
   list: {
@@ -101,7 +101,7 @@ const Nav = () => {
             { text: 'Search', link: '/search' },
             { text: 'Location Search', link: '/map' },
             { text: 'User Profile', link: '/userprofile' },
-            { text: 'Pet Profile', link: '/petprofile' },
+            { text: 'Pet Profile', link: '/petprofile' }
           ].map((el) => (
             <ListItem
               button
@@ -175,7 +175,7 @@ const Nav = () => {
                 <AccountCircle />
               </IconButton>
               <Menu
-                style={{ zIndex: '1500'}}
+                style={{ zIndex: '1500' }}
                 anchorEl={anchorEl}
                 keepMounted
                 open={Boolean(anchorEl)}
@@ -183,26 +183,52 @@ const Nav = () => {
               >
                 {currentUser ? (
                   <span>
-                    <MenuItem style={{color: "black"}} component={Link} to="/account" onClick={handleClose}>
+                    <MenuItem
+                      style={{ color: 'black' }}
+                      component={Link}
+                      to="/account"
+                      onClick={handleClose}
+                    >
                       Account
                     </MenuItem>
-                    <MenuItem style={{color: "black"}} component={Link} to="/profile" onClick={handleClose}>
+                    <MenuItem
+                      style={{ color: 'black' }}
+                      component={Link}
+                      to={`/userprofile/${currentUser && currentUser._id}`}
+                      onClick={handleClose}
+                    >
                       Profile
                     </MenuItem>
                     <MenuItem onClick={handleClose}>
-                      <Logout styleType={{textTransform: "capitalize", padding: "0", marginLeft: "-5px", color: "black", fontSize: "1em"}} />
+                      <Logout
+                        styleType={{
+                          textTransform: 'capitalize',
+                          padding: '0',
+                          marginLeft: '-5px',
+                          color: 'black',
+                          fontSize: '1em'
+                        }}
+                      />
                     </MenuItem>
-                </span>
+                  </span>
                 ) : (
                   <span>
-                    <MenuItem component={Link} to="/login" onClick={handleClose}>
+                    <MenuItem
+                      component={Link}
+                      to="/login"
+                      onClick={handleClose}
+                    >
                       Login
                     </MenuItem>
-                    <MenuItem component={Link} to="/register" onClick={handleClose}>
+                    <MenuItem
+                      component={Link}
+                      to="/register"
+                      onClick={handleClose}
+                    >
                       Sign Up
                     </MenuItem>
                   </span>
-                )}         
+                )}
               </Menu>
             </div>
           </Toolbar>
