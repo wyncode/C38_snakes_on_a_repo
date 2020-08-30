@@ -3,7 +3,7 @@ import '../account.css';
 import '../../colors.css';
 import { TextField, Button } from '@material-ui/core';
 import axios from 'axios';
-import { AppContext } from '../../Context/AppContext';
+import { AppContext } from '../../context/AppContext';
 import Avatar from '../Avatar';
 import { useHistory } from 'react-router-dom';
 
@@ -35,20 +35,20 @@ const UpdateAccount = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    if (formData && formData.password) {
+    if (formData?.password) {
       return checkPasswords();
     }
     axios
       .put('/user/me', formData)
       .then((response) => {
         setCurrentUser(response.data);
-        setLoading(false);
         alert('Successfully updated account');
       })
       .catch((error) => {
         console.log(error);
         alert('Something went wrong...');
-      });
+      })
+      .finally(() => setLoading(false);
   };
 
   const handleDelete = () => {
