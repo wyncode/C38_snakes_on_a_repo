@@ -1,6 +1,7 @@
 import React from 'react';
 import Nav from './Navbar/Nav';
 import Landing from './Landing Page/Landing';
+import ForgotPasswordPage from './Login/ForgotPasswordPage';
 import LoginPage from './Login/LoginPage';
 import RegisterPage from './Login/RegisterPage';
 import AccountPage from './Account/AccountPage';
@@ -21,6 +22,7 @@ const App = () => {
         <Route exact path="/userprofile/:id" component={UserProfilePage} />
         <Route exact path="/petprofile/:id" component={PetProfilePage} />
         <Route exact path="/login" component={LoginPage} />
+        <Route exact path="/forgotpassword" component={ForgotPasswordPage} />
         <Route exact path="/register" component={RegisterPage} />
         <Route exact path="/account" component={AccountPage} />
       </Switch>

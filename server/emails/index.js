@@ -1,51 +1,53 @@
-const nodemailer = require('nodemailer');
-let transport = nodemailer.createTransport({
-	host: 'smtp.mailtrap.io',
-	port: 2525,
-	auth: {
-		user: `${process.env.MAILTRAP_USERNAME}`,
-		pass: `${process.env.MAILTRAP_PASSWORD}`
-	}
-});
+const sgMail = require('@sendgrid/mail');
+const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
+const sendEmail1 = require('./welcomeEmail')
+const cancelEmail = require('./cancellationEmail')
+const passwordEmail = require('./forgotPassword')
 
-const welcomeMessage = {
-	from: 'snakes-0fd529@inbox.mailtrap.io',
-	to: 'snakes-0fd529@inbox.mailtrap.io',
-	subject: 'Welcome to Pet-Xotic',
-	text: 'Get the best sitters to take care of your exotics companions!'
-};
-transport.sendMail(welcomeMessage, (err, info) => {
-	if (err) {
-		console.log(err);
-	} else {
-		console.log('Email sent', info);
-	}
-});
+sgMail.setApiKey(SENDGRID_API_KEY);
 
-const cancellationMessage = {
-	from: 'snakes-0fd529@inbox.mailtrap.io',
-	to: 'snakes-0fd529@inbox.mailtrap.io',
-	subject: 'Welcome to Pet-Xotic',
-	text: 'Get the best sitters to take care of your exotics companions!'
-};
-transport.sendMail(cancellationMessage, (err, info) => {
-	if (err) {
-		console.log(err);
-	} else {
-		console.log('Email sent', info);
-	}
-});
+// make sure your export function appropriatly
+// make sure your importing appropriately
+// call email body
 
-const forgotPassword = {
-	from: 'snakes-0fd529@inbox.mailtrap.io',
-	to: 'snakes-0fd529@inbox.mailtrap.io',
-	subject: 'Welcome to Pet-Xotic',
-	text: 'Get the best sitters to take care of your exotics companions!'
+const WelcomeEmail = (email, sendEmail1) => {
+  sgMail.send({
+    to: email,
+    from: `${process.env.FROM_EMAIL}`,
+    subject: 'Welcome to the Petster Exotic family ✨.',
+    // text: `
+    // <div>
+    // 	<h1>Welcome to Petster Exotic!</h1>
+    // 	<h3>The number 1 source to find sitters for your exotic pets in your area! 😎</h3>
+    // 	<button type="button">Find Pet Sitters!</button>
+    // </div>`
+    html: sendEmail1
+  });
 };
-transport.sendMail(forgotPassword, (err, info) => {
-	if (err) {
-		console.log(err);
-	} else {
-		console.log('Email sent', info);
-	}
-});
+
+const CancellationEmail = (email, cancelEmail) => {
+  sgMail.send({
+    to: email,
+    from: `${process.env.FROM_EMAIL}`,
+    subject: 'Sorry to see you go. 🥺',
+    html: cancelEmail
+    //text: `Bye ${name}. Hope to see you soon.`
+  });
+};
+
+const ForgotPassword = (email, passwordEmail) => {
+  sgMail.send({
+    to: email,
+    from: `${process.env.FROM_EMAIL}`,
+    subject: 'Reset Password.',
+    html: passwordEmail
+    //text: `Bye ${name}. Hope to see you soon.`
+  });
+};
+
+module.exports = {
+  WelcomeEmail,
+  CancellationEmail,
+  ForgotPassword
+};
+
