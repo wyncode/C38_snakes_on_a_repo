@@ -31,7 +31,7 @@ const PetCard = ({ petID }) => {
         className="pet-card-img"
         component="img"
         alt="pet-img"
-        image={petCard.avatar ? petCard.avatar : defaultPet}
+        image={petCard.avatar || defaultPet}
         title="pet-img"
       />
       <CardContent className="card-inside">
