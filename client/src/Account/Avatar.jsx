@@ -3,7 +3,7 @@ import './account.css';
 import '../colors.css';
 import defaultAvatar from '../Images/defaultUser.png';
 import defaultPetAvatar from '../Images/defaultPet.png';
-import { AppContext } from '../Context/AppContext';
+import { AppContext } from '../context/AppContext';
 import axios from 'axios';
 import { Button, Typography } from '@material-ui/core';
 
