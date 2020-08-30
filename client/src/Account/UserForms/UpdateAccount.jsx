@@ -5,8 +5,10 @@ import { TextField, Button } from '@material-ui/core';
 import axios from 'axios';
 import { AppContext } from '../../Context/AppContext';
 import Avatar from '../Avatar';
+import { useHistory } from 'react-router-dom';
 
 const UpdateAccount = () => {
+  const history = useHistory();
   const [formData, setFormData] = useState(null);
   const { currentUser, setCurrentUser, setLoading } = useContext(AppContext);
 
@@ -47,7 +49,22 @@ const UpdateAccount = () => {
         console.log(error);
         alert('Something went wrong...');
       });
-    
+  };
+
+  const handleDelete = () => {
+    window.confirm(
+      'Warning: this action is permanent. Are you SURE you want to delete your account forever?'
+    );
+    axios
+      .delete(`/user/me`)
+      .then(() => {
+        setCurrentUser(null);
+        sessionStorage.removeItem('user');
+        history.push('/login');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -56,31 +73,32 @@ const UpdateAccount = () => {
         <Avatar role={'user'} />
       </div>
       <div className="user-tab-grid">
-        {currentUser && ['name', 'email', 'password', 'confirmPassword'].map((el) => {
-          return (
-            <TextField
-              key={el}
-              onChange={(e) =>
-                setFormData({ ...formData, [e.target.name]: e.target.value })
-              }
-              defaultValue={
-                el === 'name'
-                  ? currentUser?.name
-                  : el === 'email'
-                  ? currentUser?.email
-                  : ''
-              }
-              className="tab-input"
-              variant="outlined"
-              id={el}
-              label={el}
-              type={
-                el === 'name' ? 'text' : el === 'email' ? 'email' : 'password'
-              }
-              name={el}
-            />
-          );
-        })}
+        {currentUser &&
+          ['name', 'email', 'password', 'confirmPassword'].map((el) => {
+            return (
+              <TextField
+                key={el}
+                onChange={(e) =>
+                  setFormData({ ...formData, [e.target.name]: e.target.value })
+                }
+                defaultValue={
+                  el === 'name'
+                    ? currentUser?.name
+                    : el === 'email'
+                    ? currentUser?.email
+                    : ''
+                }
+                className="tab-input"
+                variant="outlined"
+                id={el}
+                label={el}
+                type={
+                  el === 'name' ? 'text' : el === 'email' ? 'email' : 'password'
+                }
+                name={el}
+              />
+            );
+          })}
       </div>
       <form onSubmit={handleSubmit}>
         <div className="user-tab-grid" key={currentUser?._id}>
@@ -106,6 +124,13 @@ const UpdateAccount = () => {
             style={{ width: '100%', height: '50px' }}
           >
             Submit Changes
+          </Button>
+          <Button
+            onClick={handleDelete}
+            className="header-card-btn"
+            style={{ width: '100%', height: '50px', background: 'red' }}
+          >
+            Delete Account
           </Button>
         </div>
       </form>

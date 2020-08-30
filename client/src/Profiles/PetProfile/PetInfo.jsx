@@ -4,7 +4,6 @@ import '../../colors.css';
 import { Typography, Card, CardContent } from '@material-ui/core';
 
 const PetInfo = ({ title, instructions, links }) => {
-
   // Hide Empty Info Cards
   if (instructions || links) {
     return (
@@ -22,7 +21,7 @@ const PetInfo = ({ title, instructions, links }) => {
             {links &&
               links.map((el) => {
                 return (
-                  <div key={el._id} >
+                  <div key={el._id}>
                     <a href={el.url}>&#10686; {el.text}</a>
                   </div>
                 );
@@ -32,6 +31,8 @@ const PetInfo = ({ title, instructions, links }) => {
         </CardContent>
       </Card>
     );
-  } else { return null }
+  } else {
+    return null;
+  }
 };
 export default PetInfo;

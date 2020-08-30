@@ -63,7 +63,9 @@
   flex-direction: column;
   align-items: center;
 }
-.pet-select-id .tab-input, .tab-input, .pet-info-form .tab-input {
+.pet-select-id .tab-input,
+.tab-input,
+.pet-info-form .tab-input {
   margin: 15px auto;
   width: 100%;
 }
@@ -76,7 +78,7 @@
   width: 70%;
   border-bottom: 3px solid darkgray;
 }
-.pet-select-id .tab-input{
+.pet-select-id .tab-input {
   max-width: 600px;
 }
 .pet-info-form {
@@ -84,15 +86,23 @@
   border-top: 3px solid darkgray;
   text-align: center;
 }
+.pet-form-links.links-add {
+  display: none;
+}
+.pet-info-submit .pet-btn {
+  margin: 20px;
+  width: 30%;
+  height: 50px;
+}
 
 @media only screen and (min-width: 830px) {
   #pet-forms-container {
     display: grid;
     gap: 25px;
     grid-template-areas:
-    "select select"
-    "avatar links"
-    "form form";
+      'select select'
+      'avatar links'
+      'form form';
   }
   .pet-select-id {
     grid-area: select;
@@ -103,9 +113,6 @@
   }
   .pet-form-links {
     grid-area: links;
-  }
-  .pet-form-links.links-add {
-    display: none;
   }
   .pet-info-form .tab-input {
     width: 45%;
@@ -130,7 +137,8 @@
   display: flex;
   width: 100%;
 }
-.links-btns .edit-btn, .links-btns .delete-btn {
+.links-btns .edit-btn,
+.links-btns .delete-btn {
   color: white;
   font-weight: bold;
   height: 30px;
@@ -148,7 +156,8 @@
 .links-btns .delete-btn {
   background: red;
 }
-.links-text, .links-btns{
+.links-text,
+.links-btns {
   margin: 5px;
   display: flex;
   flex-direction: column;

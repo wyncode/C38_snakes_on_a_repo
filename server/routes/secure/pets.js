@@ -31,11 +31,9 @@ router.post('/pets', async (req, res) => {
       additional,
       emergency,
       links,
-     owner: req.user._id
+      owner: req.user._id
     });
     await newPet.save();
-    // once passport is up and running, test without the following
-    //3 lines; they might not be necessary
     const newPetOwner = await User.findById(newPet.owner);
     newPetOwner.ownedPets.push(newPet._id);
     await newPetOwner.save();
@@ -52,8 +50,12 @@ router.post('/pets', async (req, res) => {
 // Delete Pet by ID
 router.delete('/pets/:id', async (req, res) => {
   try {
-    await Pet.findByIdAndDelete(req.params.id);
-    res.json('Pet deleted');
+    let pet = await Pet.findById(req.params.id);
+    let owner = await User.findByIdAndUpdate(req.user._id, {
+      $pull: { ownedPets: { $in: [req.params.id] } }
+    });
+    pet.remove();
+    res.json(pet);
   } catch (err) {
     res.status(500).json({ err: err.toString() });
   }
@@ -96,8 +98,8 @@ router.put('/pets/:id', async (req, res) => {
 router.post('/pets/:id/link', async (req, res) => {
   try {
     const pet = await Pet.findById(req.params.id);
-    const {links} = pet;
-    links.push(req.body)
+    const { links } = pet;
+    links.push(req.body);
     pet.save();
     res.status(201).json(pet);
   } catch (err) {
@@ -109,7 +111,7 @@ router.post('/pets/:id/link', async (req, res) => {
 router.put('/pets/:id/link/:linkID', async (req, res) => {
   try {
     const pet = await Pet.findById(req.params.id);
-    const {links} = pet;
+    const { links } = pet;
     const link = await pet.links.id(req.params.linkID);
     link.remove();
     links.push(req.body);

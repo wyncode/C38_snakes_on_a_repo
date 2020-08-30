@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, { useState, useContext } from 'react';
 import './login.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -7,29 +7,44 @@ import {
   TextField,
   Button,
   Card,
-  CardContent
+  CardContent,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem
 } from '@material-ui/core';
 import { AppContext } from '../Context/AppContext';
 
-const RegisterPage = ({history}) => {
+const RegisterPage = ({ history }) => {
   const [formData, setFormData] = useState(null);
+  const [accountType, setAccountType] = useState('select');
   const { setCurrentUser } = useContext(AppContext);
+
+  const handleSelect = (e) => {
+    setAccountType(e.target.value);
+    setFormData({ ...formData, owner: Boolean(e.target.value) });
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (accountType === 'select') {
+      return alert('Please select an account type!');
+    }
     axios
-    .post('/users/', formData)
-    .then((response) => {
-      sessionStorage.setItem('user', response.data);
-      setCurrentUser(response.data);
-      if (response.data) {
-        history.push('/account');
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-      alert("Something went wrong... please make sure you are not using a duplicate email and are entering correct information.")
-    });
+      .post('/users/', formData)
+      .then((response) => {
+        sessionStorage.setItem('user', response.data);
+        setCurrentUser(response.data);
+        if (response.data) {
+          history.push('/account');
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        alert(
+          'Something went wrong... please make sure you are not using a duplicate email and are entering correct information.'
+        );
+      });
   };
 
   return (
@@ -40,8 +55,45 @@ const RegisterPage = ({history}) => {
             Register
           </Typography>
           <form onSubmit={handleSubmit} autoComplete="off">
+            <FormControl variant="outlined">
+              <InputLabel id="type">Account Type</InputLabel>
+              <Select
+                style={{ textAlign: 'left' }}
+                value={accountType}
+                name="owner"
+                onChange={handleSelect}
+                label="Account Type"
+              >
+                <MenuItem disabled value="select">
+                  Select an Account Type
+                </MenuItem>
+                <MenuItem value="true">Pet Owner</MenuItem>
+                <MenuItem value="">Pet Sitter</MenuItem>
+              </Select>
+            </FormControl>
+
+            <Typography
+              variant="body1"
+              style={{
+                textAlign: 'left',
+                marginTop: '20px',
+                marginBottom: '15px'
+              }}
+            >
+              You have chosen to register as...
+              <b>
+                {accountType === ''
+                  ? ' a pet sitter!'
+                  : accountType === 'true'
+                  ? ' a pet owner!'
+                  : ''}
+              </b>
+            </Typography>
+
             <TextField
-            onChange={((e) => setFormData({ ...formData, [e.target.name]: e.target.value }))}
+              onChange={(e) =>
+                setFormData({ ...formData, [e.target.name]: e.target.value })
+              }
               className="text-field"
               variant="outlined"
               id="name"
@@ -49,7 +101,9 @@ const RegisterPage = ({history}) => {
               name="name"
             />
             <TextField
-            onChange={((e) => setFormData({ ...formData, [e.target.name]: e.target.value }))}
+              onChange={(e) =>
+                setFormData({ ...formData, [e.target.name]: e.target.value })
+              }
               className="text-field"
               variant="outlined"
               id="email"
@@ -58,7 +112,9 @@ const RegisterPage = ({history}) => {
               name="email"
             />
             <TextField
-            onChange={((e) => setFormData({ ...formData, [e.target.name]: e.target.value }))}
+              onChange={(e) =>
+                setFormData({ ...formData, [e.target.name]: e.target.value })
+              }
               className="text-field"
               variant="outlined"
               id="password"
@@ -70,7 +126,7 @@ const RegisterPage = ({history}) => {
               <Link to="/login">Login?</Link>
             </Typography>
             <Button
-            type="submit"
+              type="submit"
               variant="contained"
               size="large"
               style={{

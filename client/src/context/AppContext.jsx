@@ -6,6 +6,7 @@ const AppContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const user = sessionStorage.getItem('user');
+  const [currentPets, setCurrentPets] = useState(null);
 
   useEffect(() => {
     if (user && !currentUser) {
@@ -13,10 +14,11 @@ const AppContextProvider = ({ children }) => {
         .get('/user/me', { withCredentials: true })
         .then((res) => {
           setCurrentUser(res.data);
+          setCurrentPets(res.data.ownedPets);
         })
         .catch((error) => console.log(error));
     }
-  }, [currentUser, user, setCurrentUser, setLoading]);
+  }, [currentUser, user, currentPets, setCurrentUser, setLoading]);
 
   return (
     <AppContext.Provider
@@ -25,7 +27,9 @@ const AppContextProvider = ({ children }) => {
         setCurrentUser,
         user,
         loading,
-        setLoading
+        setLoading,
+        currentPets,
+        setCurrentPets
       }}
     >
       {children}

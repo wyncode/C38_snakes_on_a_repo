@@ -7,7 +7,7 @@ import { AppContext } from '../Context/AppContext';
 import axios from 'axios';
 import { Button, Typography } from '@material-ui/core';
 
-const Avatar = ({role, petUpdate}) => {
+const Avatar = ({ role, petUpdate }) => {
   const { currentUser, setCurrentUser, setLoading } = useContext(AppContext);
   const [preview, setPreview] = useState(null);
   const [image, setImage] = useState(null);
@@ -22,24 +22,33 @@ const Avatar = ({role, petUpdate}) => {
     const avatar = new FormData();
     avatar.append('avatar', image, image.name);
     axios
-      .post(`/${role}/avatar/${petUpdate ? petUpdate.data._id : ''}`, avatar, { withCredentials: true })
+      .post(`/${role}/avatar/${petUpdate ? petUpdate.data._id : ''}`, avatar, {
+        withCredentials: true
+      })
       .then((response) => {
         setCurrentUser({ ...currentUser, avatar: response.data.secure_url });
         setPreview(null);
         setLoading(false);
       })
       .catch((error) => console.log(error));
-      alert('Your avatar was updated successfully!');
+    alert('Your avatar was updated successfully!');
   };
 
   return (
     <form
       onSubmit={handleImage}
-      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifySelf: "flex-start"}}
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifySelf: 'flex-start'
+      }}
     >
-      <Typography variant="h5" style={{marginBottom: "10px"}}>Upload Avatar</Typography>
-      { role === "pets" ?
-          <div
+      <Typography variant="h5" style={{ marginBottom: '10px' }}>
+        Upload Avatar
+      </Typography>
+      {role === 'pets' ? (
+        <div
           style={{
             backgroundImage: `url('${
               preview
@@ -50,20 +59,21 @@ const Avatar = ({role, petUpdate}) => {
             }')`
           }}
           className="avatar-preview profile-image"
-          ></div> :
-          <div
-              style={{
-                backgroundImage: `url('${
-                  preview
-                    ? preview
-                    : currentUser?.avatar
-                    ? currentUser.avatar
-                    : defaultAvatar
-                }')`
-              }}
-              className="avatar-preview profile-image"
-            ></div>
-        }
+        ></div>
+      ) : (
+        <div
+          style={{
+            backgroundImage: `url('${
+              preview
+                ? preview
+                : currentUser?.avatar
+                ? currentUser.avatar
+                : defaultAvatar
+            }')`
+          }}
+          className="avatar-preview profile-image"
+        ></div>
+      )}
       <label htmlFor="avatar">Upload an avatar:</label>
       <input
         onChange={handleChange}
@@ -71,9 +81,13 @@ const Avatar = ({role, petUpdate}) => {
         id="avatar"
         name="avatar"
         accept="image/*"
-        style={{marginLeft: '60px' }}
+        style={{ marginLeft: '60px' }}
       />
-      <Button type="submit" className="header-card-btn" style={{marginBottom: '30px'}}>
+      <Button
+        type="submit"
+        className="header-card-btn"
+        style={{ marginBottom: '30px' }}
+      >
         Upload Avatar
       </Button>
     </form>
