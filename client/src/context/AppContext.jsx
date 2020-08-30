@@ -4,7 +4,7 @@ const AppContext = createContext();
 
 const AppContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
-  const [currentPets, setCurrentPets] = useState(null);
+  const [loading, setLoading] = useState(false);
   const user = sessionStorage.getItem('user');
 
   useEffect(() => {
@@ -16,29 +16,16 @@ const AppContextProvider = ({ children }) => {
         })
         .catch((error) => console.log(error));
     }
-  }, [currentUser, user]);
-
-  useEffect(() => {
-    if (currentUser) {
-      currentUser.ownedPets.forEach(pet => {
-        axios.get(`/pets/${pet}`)
-         .then(({data}) => {
-          //  console.log("axios data", data)
-           setCurrentPets({...currentPets, [data.name]: data });
-          //  console.log("axios current pets", currentPets);
-         })
-        .catch((error) => console.log(error));
-        });
-    }
-  }, [currentUser]);
-
-  // console.log("current pets", currentPets);
+  }, [currentUser, user, setCurrentUser, setLoading]);
 
   return (
     <AppContext.Provider
       value={{
         currentUser,
-        setCurrentUser
+        setCurrentUser,
+        user,
+        loading,
+        setLoading
       }}
     >
       {children}

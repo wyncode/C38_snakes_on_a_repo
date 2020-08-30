@@ -3,6 +3,7 @@ import '../account.css';
 import '../../colors.css';
 import axios from 'axios';
 import Avatar from '../Avatar';
+import PetLinks from './PetLinks';
 import { AppContext } from '../../Context/AppContext';
 import {
   TextField,
@@ -10,28 +11,28 @@ import {
   FormControl,
   InputLabel,
   Select,
-  MenuItem
+  MenuItem,
+  Typography
 } from '@material-ui/core';
 
 const PetForm = ({ form }) => {
-  const { currentUser } = useContext(AppContext);
+  const { currentUser, loading, setLoading } = useContext(AppContext);
   const [formData, setFormData] = useState({});
   const [petUpdateID, setPetUpdateID] = useState(null);
   const [petUpdate, setPetUpdate] = useState(null);
-//   const [links, setLinks] = useState({text: "", url: ""})
-  console.log(formData)
-//   console.log("current pets", currentPets);
+  const [type, setType] = useState('');
+  const [selectID, setSelectID] = useState('');
 
-    useEffect(() => {
-        if (petUpdateID) {
-            axios.get(`/pets/${petUpdateID?.id}`)
+  useEffect(() => {
+    if (petUpdateID) {
+        axios.get(`/pets/${petUpdateID?.id}`)
         .then(({data}) => {
-        setPetUpdate({...petUpdate, data });
+          setPetUpdate({...petUpdate, data });
+          setType(data.type);
         })
     .catch((error) => console.log(error));
-        } 
-    }, [petUpdateID])
-    
+    } 
+  }, [petUpdateID, loading])
 
   const submitNewPet = () => {
     if (!formData.description || !formData.name || !formData.type) {
@@ -49,7 +50,8 @@ const PetForm = ({ form }) => {
   };
 
   const updatePet = () => {
-    axios.put(`/pets/${petUpdateID.id}`, formData)
+    if (!selectID) { alert('Please select a pet to update!') };
+    axios.put(`/pets/${selectID}`, formData)
       .then((response) => {
         console.log(response.data);
         alert('Successfully updated pet');
@@ -59,177 +61,133 @@ const PetForm = ({ form }) => {
         alert('Something went wrong...');
       });
   };
-  
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    form === "add" ? submitNewPet() : updatePet();
-  };
 
   return (
+    <div id="pet-forms-container">
+
+    {/* SELECT WHICH PET TO UPDATE, IF ON UPDATE TAB */}
+    {form === 'update' && (
+      <div className="pet-select-id">
+      <Typography variant="h5">Select a Pet to Update: </Typography>
+      <FormControl className="tab-input" variant="outlined">
+        <InputLabel id="type">Pet ID</InputLabel>
+        <Select
+          style={{textAlign: "left"}}
+          value={selectID}
+          name="_id"
+          onChange={(e) => {
+            setPetUpdateID({ ...petUpdateID, "id": e.target.value });
+            setSelectID(e.target.value);
+          }}
+          label="pet"
+          >
+          <MenuItem />
+          {currentUser?.ownedPets &&
+            currentUser.ownedPets.map((petID, index) => {
+              return (
+                <MenuItem key={index} value={petID}>
+                  {petID}
+                </MenuItem>
+              );
+          })}
+        </Select>
+      </FormControl>
+      </div>
+    )}
+
+  {/* HIDE FORMS ON PET UPDATE UNLESS PET IS SELECTED */}
+  {((form === "update" && selectID) || form === "add") &&
     <>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+
+    {/* SHOW/HIDE UPLOAD AVATAR COMPONENT */}
+    {form === "update" &&
+      <div className="pet-form-avatar" style={{ display: 'flex', justifyContent: 'center' }}>
         <Avatar role={'pets'} petUpdate={petUpdate}/>
       </div>
-      <form className="tab-content" onSubmit={handleSubmit}>
-        <div className="tab-grid" key={petUpdate?.data._id}>
+    }
 
-          {/* SELECT WHICH PET TO UPDATE BY NAME, IF ON UPDATE TAB */}
-          {form === 'update' && (
-            <FormControl className="tab-input" variant="outlined">
-              <InputLabel id="type">Pet Name</InputLabel>
-              <Select
-                labelId="pet"
-                id="pet"
-                value=""
-                name="_id"
-                onChange={(e) => setPetUpdateID({ ...petUpdateID, "id": e.target.value })}                label="pet"
-                >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                {currentUser.ownedPets &&
-                  currentUser.ownedPets.map((petID, index) => {
-                    return (
-                      <MenuItem key={index} value={petID}>
-                        {petID}
-                      </MenuItem>
-                    );
-                  })}
-              </Select>
-            </FormControl>
-          )}
+    {/* EDIT/ADD LINKS */}
+    <div className={(form === "add") ? "pet-form-links links-add" : "pet-form-links"} key={petUpdate?.data.name}>        
+      <PetLinks selectID={selectID} petUpdate={petUpdate} />
+    </div>
 
-          {/* UPDATE PET NAME */}
-          <TextField
-            onChange={(e) =>
-              setFormData({ ...formData, [e.target.name]: e.target.value })
-            }
-            defaultValue={petUpdate?.data.name}
-            className="tab-input"
-            variant="outlined"
-            id="name"
-            label="name"
-            type="text"
-            name="name"
-            required
-          />
 
-          {/* SELECT PET TYPE */}
-          <FormControl className="tab-input" variant="outlined">
-            <InputLabel id="type">Pet Type</InputLabel>
-            <Select
-              labelId="type"
-              id="type"
-              value=""
-              name="type"
-              onChange={(e) =>
-                setFormData({ ...formData, [e.target.name]: e.target.value })
-              }
-              label="type"
-            >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              {['reptile', 'amphibian', 'mammal', 'fish', 'arachnid/insect', 'other'].map(type => {
-                  return <MenuItem key={type} value={type}>{type}</MenuItem>
-              })}
-            </Select>
-          </FormControl>
+    {/* PET INFORMATION FORM */}
+    <form className="pet-info-form" key={petUpdate?.data._id} onSubmit={() => form === "add" ? submitNewPet() : updatePet()}>
+    
+    <Typography variant="h5" component="div" style={{marginBottom: "10px"}}>Pet Information</Typography>
 
-          {/* UPDATE PET DESCRIPTION */}
-          <TextField
-            onChange={(e) =>
-              setFormData({ ...formData, [e.target.name]: e.target.value })
-            }
-            defaultValue={petUpdate?.data.description}
-            className="tab-input"
-            variant="outlined"
-            id="description"
-            label="description"
-            type="text"
-            name="description"
-            multiline
-            required
-            rows="10"
-          />
-        </div>
-        <div className="tab-grid" key={petUpdate?.data.name}>
-            
-          {/* MAP THROUGH TO CREATE LINKS */}
-          {[
-            { text: 'link one', url: 'linkOne' },
-            { text: 'link two', url: 'linkTwo' },
-            { text: 'link three', url: 'linkThree' }
-          ].map((el, index) => {
-            return (
-              <span className="tab-input" key={index}>
-                <TextField
-                  style={{
-                    width: '100%',
-                    textAlign: 'left',
-                    marginTop: '-1px'
-                  }}
-                  variant="outlined"
-                  id={el.url}
-                  label={el.text}
-                  type="text"
-                  name={el.url}
-                />
-                <TextField
-                  style={{
-                    width: '100%',
-                    textAlign: 'left',
-                    marginTop: '-1px'
-                  }}
-                  variant="outlined"
-                  id={`${el.url}URL`}
-                  label={`${el.text} URL`}
-                  type="text"
-                  name={`${el.url}URL`}
-                />
-              </span>
-            );
+      <div className="forms-container">
+      {/* UPDATE PET NAME */}
+      <TextField
+        onChange={(e) =>
+          setFormData({ ...formData, [e.target.name]: e.target.value })
+        }
+        defaultValue={petUpdate?.data.name}
+        className="tab-input"
+        variant="outlined"
+        label="name"
+        type="text"
+        name="name"
+        required
+      />
+
+      {/* SELECT PET TYPE */}
+      <FormControl className="tab-input" variant="outlined">
+        <InputLabel id="type">Pet Type</InputLabel>
+        <Select
+          style={{textAlign:"left"}}
+          value={type}
+          name="type"
+          onChange={(e) => {
+            setFormData({ ...formData, [e.target.name]: e.target.value });
+            setType(e.target.value);
+          }}
+          label="type"
+        >
+          <MenuItem />
+          {['reptile', 'amphibian', 'mammal', 'fish', 'arachnid/insect', 'other'].map(type => {
+              return <MenuItem key={type} value={type}>{type}</MenuItem>
           })}
-        </div>
-        <div className="tab-grid" key={petUpdate?.data.type}>
+        </Select>
+      </FormControl>
+ 
+    {/* MAP THROUGH TO CREATE REST OF TEXT FIELD INPUTS */}
+      {['description', 'emergency', 'medical', 'feeding', 'cleaning', 'exercise', 'additional'].map(
+        (el) => {
+          return (
+            <TextField
+              onChange={(e) => setFormData({...formData, [e.target.name]: e.target.value})}
+              defaultValue={petUpdate?.data[el]}
+              key={el}
+              className="tab-input"
+              variant="outlined"
+              label={`${el === 'description' ? el : el + ' instructions'}`}
+              type="text"
+              name={el}
+              multiline
+              required={el === 'description' ? true : false}
+              rows="5"
+            />
+          );
+      })}
 
-          {/* MAP THROUGH TO CREATE REST OF TEXT FIELD INPUTS */}
-          {['medical', 'feeding', 'cleaning', 'exercise', 'additional'].map(
-            (el) => {
-              return (
-                <TextField
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      [e.target.name]: e.target.value
-                    })
-                  }
-                  defaultValue={petUpdate?.data[el]}
-                  key={el}
-                  className="tab-input"
-                  variant="outlined"
-                  id={el}
-                  label={`${el} instructions`}
-                  type="text"
-                  name={el}
-                  multiline
-                  rows="5"
-                />
-              );
-            }
-          )}
-        </div>
-        <div className="tab-grid">
+      {/* SUBMIT FORM */}
+        <div className="pet-info-submit">
           <Button
             type="submit"
             className="header-card-btn"
-            style={{ width: '100%', height: '50px' }}
+            style={{ width: '50%', height: '50px' }}
           >
             Submit Changes
           </Button>
         </div>
+        </div>
       </form>
-    </>
+
+      </>
+    }
+    </div>
   );
 };
 

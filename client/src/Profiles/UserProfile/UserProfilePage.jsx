@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import '../AllProfiles/profiles.css';
+import defaultAvatar from '../../Images/defaultUser.png'
 import Calendar from '../AllProfiles/Calendar';
 import ProfileImg from '../AllProfiles/ProfileImg';
 import ProfileName from '../AllProfiles/ProfileName';
@@ -9,13 +10,13 @@ import PetCard from './PetCard';
 
 const UserProfilePage = ({match}) => {
 const {id} = match.params;
-const [petOwner, setPetOwner] = useState({owner: false, ownedPets: [], description: "", name: ""});
+const [userProfile, setUserProfile] = useState({owner: false, ownedPets: [], description: "", name: ""});
 
   useEffect(() => {
     fetch(`/users/${id}`)
     .then(res => res.json())
-    .then(petOwner => {
-      setPetOwner(petOwner);
+    .then(user => {
+      setUserProfile(user);
     })
     .catch(err => console.log(err));
   }, [id])
@@ -23,14 +24,14 @@ const [petOwner, setPetOwner] = useState({owner: false, ownedPets: [], descripti
   return (
     <div id="profile-container">
       <div id="topleft">
-        <ProfileImg imgURL={petOwner.avatar} />
-        <ProfileName name={petOwner.name} role={petOwner.owner ? 'pet owner' : 'pet sitter'} />
-        <ProfileButtons role={petOwner.owner === true ? "owner" : "sitter"} />
+        <ProfileImg imgURL={userProfile.avatar ? userProfile.avatar : defaultAvatar} />
+        <ProfileName name={userProfile.name} role={userProfile.owner ? 'pet owner' : 'pet sitter'} />
+        <ProfileButtons role={userProfile.owner === true ? "owner" : "sitter"} />
       </div>
       <div id="right"> 
         <div id="right-flex">
-        <About profileUser="Me" description={petOwner.description} />
-          {petOwner.owner === true && petOwner.ownedPets.map((id) => {
+        <About profileUser="Me" description={userProfile.description} />
+          {userProfile.owner === true && userProfile.ownedPets.map((id) => {
             return (
               <PetCard
                 key={id}

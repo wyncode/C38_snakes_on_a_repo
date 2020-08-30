@@ -8,7 +8,7 @@ import Avatar from '../Avatar';
 
 const UpdateAccount = () => {
   const [formData, setFormData] = useState(null);
-  const { currentUser, setCurrentUser } = useContext(AppContext);
+  const { currentUser, setCurrentUser, setLoading } = useContext(AppContext);
 
   const checkPasswords = () => {
     if (formData.password && !formData.confirmPassword) {
@@ -32,6 +32,7 @@ const UpdateAccount = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
     if (formData && formData.password) {
       return checkPasswords();
     }
@@ -39,22 +40,23 @@ const UpdateAccount = () => {
       .put('/user/me', formData)
       .then((response) => {
         setCurrentUser(response.data);
+        setLoading(false);
         alert('Successfully updated account');
       })
       .catch((error) => {
         console.log(error);
         alert('Something went wrong...');
       });
+    
   };
 
   return (
-    <div className="tab-content">
-      <div className="tab-grid">
-        {' '}
+    <div className="user-tab-content">
+      <div className="user-tab-grid">
         <Avatar role={'user'} />
       </div>
-      <div className="tab-grid">
-        {['name', 'email', 'password', 'confirmPassword'].map((el) => {
+      <div className="user-tab-grid">
+        {currentUser && ['name', 'email', 'password', 'confirmPassword'].map((el) => {
           return (
             <TextField
               key={el}
@@ -81,7 +83,7 @@ const UpdateAccount = () => {
         })}
       </div>
       <form onSubmit={handleSubmit}>
-        <div className="tab-grid" key={currentUser?._id}>
+        <div className="user-tab-grid" key={currentUser?._id}>
           <TextField
             onChange={(e) =>
               setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -97,7 +99,7 @@ const UpdateAccount = () => {
             rows="12"
           />
         </div>
-        <div className="tab-grid">
+        <div className="user-tab-grid">
           <Button
             type="submit"
             className="header-card-btn"

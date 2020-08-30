@@ -92,8 +92,60 @@ router.put('/pets/:id', async (req, res) => {
   }
 });
 
+// Add Pet Link
+router.post('/pets/:id/link', async (req, res) => {
+  try {
+    const pet = await Pet.findById(req.params.id);
+    const {links} = pet;
+    links.push(req.body)
+    pet.save();
+    res.status(201).json(pet);
+  } catch (err) {
+    res.status(500).json({ err: err.toString() });
+  }
+});
+
+// Edit Pet Link By ID
+router.put('/pets/:id/link/:linkID', async (req, res) => {
+  try {
+    const pet = await Pet.findById(req.params.id);
+    const {links} = pet;
+    const link = await pet.links.id(req.params.linkID);
+    link.remove();
+    links.push(req.body);
+    pet.save();
+    res.status(201).json(pet);
+  } catch (err) {
+    res.status(500).json({ err: err.toString() });
+  }
+});
+
+// Get Pet Link by ID
+router.get('/pets/:id/link/:linkID', async (req, res) => {
+  try {
+    const pet = await Pet.findById(req.params.id);
+    const link = await pet.links.id(req.params.linkID);
+    res.status(200).json(link);
+  } catch (err) {
+    res.status(500).json({ err: err.toString() });
+  }
+});
+
+// Delete Pet Link by ID
+router.delete('/pets/:id/link/:linkID', async (req, res) => {
+  try {
+    const pet = await Pet.findById(req.params.id);
+    const link = await pet.links.id(req.params.linkID);
+    link.remove();
+    pet.save();
+    res.json(pet);
+  } catch (err) {
+    res.status(500).json({ err: err.toString() });
+  }
+});
+
 // Upload Pet Avatar
-router.post('/pets/:id/avatar', async (req, res) => {
+router.post('/pets/avatar/:id', async (req, res) => {
   try {
     const pet = await Pet.findById(req.params.id);
     if (!pet) {

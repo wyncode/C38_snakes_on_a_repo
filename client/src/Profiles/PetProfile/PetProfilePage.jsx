@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import '../AllProfiles/profiles.css';
+import defaultPet from '../../Images/defaultPet.png'
 import Calendar from '../AllProfiles/Calendar';
 import ProfileImg from '../AllProfiles/ProfileImg';
 import ProfileName from '../AllProfiles/ProfileName';
@@ -10,7 +11,7 @@ import PetInfo from './PetInfo';
 const PetProfilePage = ({match}) => {
   const {id} = match.params;
   const [pet, setPet] = useState({owner: "", links: []});
-  
+
     useEffect(() => {
       fetch(`/pets/${id}`)
       .then(res => res.json())
@@ -23,7 +24,7 @@ const PetProfilePage = ({match}) => {
   return (
     <div id="profile-container">
       <div id="topleft">
-        <ProfileImg imgURL={pet.avatar} />
+        <ProfileImg imgURL={pet.avatar ? pet.avatar : defaultPet} />
         <ProfileName name={pet.name} role={pet.type} />
         <ProfileButtons ownerID={pet.owner} owner={pet.owner} />
       </div>
