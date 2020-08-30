@@ -48,7 +48,7 @@ const UpdateAccount = () => {
         console.log(error);
         alert('Something went wrong...');
       })
-      .finally(() => setLoading(false);
+      .finally(() => setLoading(false));
   };
 
   const handleDelete = () => {

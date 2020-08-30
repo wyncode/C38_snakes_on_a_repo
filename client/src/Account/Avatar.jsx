@@ -33,13 +33,13 @@ const Avatar = ({ role, petUpdate }) => {
       .catch((error) => console.log(error));
     alert('Your avatar was updated successfully!');
   };
-  
+
   const getBackgroundImage = () => {
-	if (role === 'pets') {
-		return preview || petUpdate?.data?.avatar || defaultPetAvatar;
-	}
-	  return preview || currentUser?.avatar || defaultAvatar;
-  }
+    if (role === 'pets') {
+      return preview || petUpdate?.data?.avatar || defaultPetAvatar;
+    }
+    return preview || currentUser?.avatar || defaultAvatar;
+  };
 
   return (
     <form
@@ -54,7 +54,10 @@ const Avatar = ({ role, petUpdate }) => {
       <Typography variant="h5" style={{ marginBottom: '10px' }}>
         Upload Avatar
       </Typography>
-        <div style={{ backgroundImage: `url('${getBackgroundImage()}')` }} className="avatar-preview profile-image" /></div>
+      <div
+        style={{ backgroundImage: `url('${getBackgroundImage()}')` }}
+        className="avatar-preview profile-image"
+      />
       <label htmlFor="avatar">Upload an avatar:</label>
       <input
         onChange={handleChange}
