@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import Logout from '../Login/Logout';
-import './account.css';
 import { Typography, Card, CardContent } from '@material-ui/core';
+import { AppContext } from '../context/AppContext';
+import Logout from '../Login/Logout';
 import TabPane from './TabPane';
-import { AppContext } from '../Context/AppContext';
+import './account.css';
 
 const AccountPage = () => {
   const { currentUser } = useContext(AppContext);

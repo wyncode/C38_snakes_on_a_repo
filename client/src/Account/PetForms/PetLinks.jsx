@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
-import '../account.css';
-import '../../colors.css';
+import { TextField, Button, Typography } from '@material-ui/core';
 import axios from 'axios';
 import { AppContext } from '../../context/AppContext';
-import { TextField, Button, Typography } from '@material-ui/core';
+import '../account.css';
+import '../../colors.css';
 
 const PetLinks = ({ selectID, petUpdate }) => {
   const { setLoading } = useContext(AppContext);
@@ -13,26 +13,26 @@ const PetLinks = ({ selectID, petUpdate }) => {
     setLoading(true);
     axios
       .post(`/pets/${selectID}/link`, currentLink)
-      .then((response) => {
+      .then(() => {
         alert('Link added!');
       })
       .catch((error) => {
         console.log(error);
       })
-      .finally(() => setLoading(false);
+      .finally(() => setLoading(false));
   };
 
   const editLink = () => {
     setLoading(true);
     axios
       .put(`/pets/${selectID}/link/${currentLink?._id}`, currentLink)
-      .then((response) => {
+      .then(() => {
         alert('Link edited!');
       })
       .catch((error) => {
         console.log(error);
       })
-      .finally(() => setLoading(false);
+      .finally(() => setLoading(false));
   };
 
   const handleSubmit = (e) => {
@@ -49,12 +49,11 @@ const PetLinks = ({ selectID, petUpdate }) => {
     setLoading(true);
     axios
       .delete(`/pets/${selectID}/link/${id}`)
-      .then(() => {
-      })
+      .then(() => {})
       .catch((error) => {
         console.log(error);
       })
-      .finally(() => setLoading(false);
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -111,7 +110,11 @@ const PetLinks = ({ selectID, petUpdate }) => {
               <div className="links-btns">
                 <Button
                   onClick={() =>
-                    setCurrentLink({ _id: link._id, text: link.text, url: link.url })
+                    setCurrentLink({
+                      _id: link._id,
+                      text: link.text,
+                      url: link.url
+                    })
                   }
                   className="edit-btn"
                 >
