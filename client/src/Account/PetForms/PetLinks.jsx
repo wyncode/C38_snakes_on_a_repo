@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import '../account.css';
 import '../../colors.css';
 import axios from 'axios';
-import { AppContext } from '../../Context/AppContext';
+import { AppContext } from '../../context/AppContext';
 import { TextField, Button, Typography } from '@material-ui/core';
 
 const PetLinks = ({ selectID, petUpdate }) => {
@@ -15,11 +15,12 @@ const PetLinks = ({ selectID, petUpdate }) => {
       .post(`/pets/${selectID}/link`, currentLink)
       .then((response) => {
         alert('Link added!');
-        setLoading(false);
+        setLoading(false)
       })
       .catch((error) => {
         console.log(error);
-      });
+      })
+      .finally(() => setLoading(false);
   };
 
   const editLink = () => {
@@ -28,11 +29,12 @@ const PetLinks = ({ selectID, petUpdate }) => {
       .put(`/pets/${selectID}/link/${currentLink?._id}`, currentLink)
       .then((response) => {
         alert('Link edited!');
-        setLoading(false);
+        setLoading(false)
       })
       .catch((error) => {
         console.log(error);
-      });
+      })
+      .finally(() => setLoading(false);
   };
 
   const handleSubmit = (e) => {
@@ -40,14 +42,8 @@ const PetLinks = ({ selectID, petUpdate }) => {
     if (!currentLink || !currentLink.text || !currentLink.url) {
       return alert('Please fill both the text and url fields.');
     }
-    if (currentLink?._id) {
-      editLink();
-    } else if (!currentLink?._id) {
-      addLink();
-    } else {
-      alert('?');
-    }
-    let form = e.target;
+    currentLink?._id ? editLink() : addLink();
+    const form = e.target;
     form.reset();
   };
 
@@ -60,7 +56,8 @@ const PetLinks = ({ selectID, petUpdate }) => {
       })
       .catch((error) => {
         console.log(error);
-      });
+      })
+      .finally(() => setLoading(false);
   };
 
   return (
@@ -111,20 +108,20 @@ const PetLinks = ({ selectID, petUpdate }) => {
 
       {/* MAP THROUGH EXISTING LINKS */}
       {petUpdate?.data.links
-        .map((el) => {
+        .map((link) => {
           return (
-            <div key={el?._id} className="links-wrapper">
+            <div key={link?._id} className="links-wrapper">
               <div className="links-btns">
                 <Button
                   onClick={() =>
-                    setCurrentLink({ _id: el._id, text: el.text, url: el.url })
+                    setCurrentLink({ _id: link._id, text: link.text, url: link.url })
                   }
                   className="edit-btn"
                 >
                   Edit
                 </Button>
                 <Button
-                  onClick={() => deleteLink(el._id)}
+                  onClick={() => deleteLink(link._id)}
                   className="delete-btn"
                 >
                   Delete
@@ -132,10 +129,10 @@ const PetLinks = ({ selectID, petUpdate }) => {
               </div>
               <div className="links-text">
                 <span>
-                  <b>Link:</b> {el.text}
+                  <b>Link:</b> {link.text}
                 </span>
                 <span>
-                  <b>URL:</b> {el.url}
+                  <b>URL:</b> {link.url}
                 </span>
               </div>
             </div>
