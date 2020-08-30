@@ -72,4 +72,22 @@ router.post('/user/avatar', async (req, res) => {
 	}
 });
 
+const router = require('express').Router(),
+  { sendCancellationEmail } = require('../../emails/index'),
+  cloudinary = require('cloudinary').v2;
+
+// ***********************************************//
+// Delete a user
+// ***********************************************//
+router.delete('/api/users/me', async (req, res) => {
+  try {
+    await req.user.remove();
+    CancellationEmail(req.user.email, req.user.name);
+    res.clearCookie('jwt');
+    res.json(req.user);
+  } catch (e) {
+    res.sendStatus(500);
+  }
+});
+
 module.exports = router;

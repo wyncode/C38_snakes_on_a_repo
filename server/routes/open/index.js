@@ -4,6 +4,7 @@ const Pet = require('../../db/models/pet');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
+
 // router.use(
 // 	session({
 // 		secret: process.env.SESSION_SECRET,
@@ -184,5 +185,30 @@ router.get('/password/:token', (req, res) => {
 	  res.status(401).json({ error: error.toString() });
 	}
   });
+
+  const router = require('express').Router(),
+  { sendWelcomeEmail } = require('../../emails/index'),
+  User = require('../../db/models/user');
+
+
+// ***********************************************//
+// Create a user
+// ***********************************************//
+router.post('/api/users', async (req, res) => {
+  const user = new User(req.body);
+  try {
+    await user.save();
+    WelcomeEmail(user.email, user.name);
+    const token = await user.generateAuthToken();
+    res.cookie('jwt', token, {
+      httpOnly: true,
+      sameSite: 'Strict',
+      secure: process.env.NODE_ENV !== 'production' ? false : true
+    });
+    res.json(user);
+  } catch (e) {
+    res.status(201).status(400).send(e);
+  }
+}); 
 
 module.exports = router;

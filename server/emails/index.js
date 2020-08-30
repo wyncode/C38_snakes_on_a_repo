@@ -35,12 +35,12 @@ const CancellationEmail = (email, cancelEmail) => {
   });
 };
 
-const ForgotPassword = (email, passwordEmail) => {
+const ForgotPassword = (email, passwordEmail, token) => {
   sgMail.send({
     to: email,
     from: `${process.env.FROM_EMAIL}`,
     subject: 'Reset Password.',
-    html: passwordEmail
+    html: passwordEmail(token)
     //text: `Bye ${name}. Hope to see you soon.`
   });
 };
