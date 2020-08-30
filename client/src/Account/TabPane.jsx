@@ -4,7 +4,7 @@ import 'react-tabs/style/react-tabs.css';
 import { Typography } from '@material-ui/core';
 import UpdateAccount from './UserForms/UpdateAccount';
 import PetForm from './PetForms/PetForm';
-import { AppContext } from '../Context/AppContext';
+import { AppContext } from '../context/AppContext';
 
 const TabPane = () => {
   const { currentUser } = useContext(AppContext);
