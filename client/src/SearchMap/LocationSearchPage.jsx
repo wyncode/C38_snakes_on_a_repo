@@ -15,7 +15,6 @@ const LocationSearchPage = () => {
 				marginTop: '100px'
 			}}
 		>
-			<Payment />
 			<Card elevation={3} className="gradient-border">
 				<CardContent className="card-inside">
 					<Typography variant="h2">Map Search</Typography>
