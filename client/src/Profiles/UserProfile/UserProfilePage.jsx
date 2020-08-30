@@ -30,21 +30,20 @@ const UserProfilePage = ({ match }) => {
     <div id="profile-container">
       <div id="topleft">
         <ProfileImg
-          imgURL={userProfile.avatar ? userProfile.avatar : defaultAvatar}
+          imgURL={userProfile.avatar || defaultAvatar}
         />
         <ProfileName
           name={userProfile.name}
           role={userProfile.owner ? 'pet owner' : 'pet sitter'}
         />
         <ProfileButtons
-          role={userProfile.owner === true ? 'owner' : 'sitter'}
+          role={userProfile.owner ? 'owner' : 'sitter'}
         />
       </div>
       <div id="right">
         <div id="right-flex">
           <About profileUser="Me" description={userProfile.description} />
-          {userProfile.owner === true &&
-            userProfile.ownedPets.map((id) => {
+          {userProfile.owner && userProfile.ownedPets.map((id) => {
               return <PetCard key={id} petID={id} />;
             })}
         </div>
