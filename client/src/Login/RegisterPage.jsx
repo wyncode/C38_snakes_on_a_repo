@@ -13,7 +13,7 @@ import {
   Select,
   MenuItem
 } from '@material-ui/core';
-import { AppContext } from '../Context/AppContext';
+import { AppContext } from '../context/AppContext';
 
 const RegisterPage = ({ history }) => {
   const [formData, setFormData] = useState(null);
@@ -82,11 +82,7 @@ const RegisterPage = ({ history }) => {
             >
               You have chosen to register as...
               <b>
-                {accountType === ''
-                  ? ' a pet sitter!'
-                  : accountType === 'true'
-                  ? ' a pet owner!'
-                  : ''}
+                {accountType === 'true' ? 'a pet owner!' : 'a pet sitter!'}
               </b>
             </Typography>
 
