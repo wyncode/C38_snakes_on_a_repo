@@ -2,6 +2,7 @@ import React from 'react';
 import '../colors.css';
 import { Typography, Card, CardContent } from '@material-ui/core';
 import Map from '../Map/Map';
+import Payment from '../Payment/Payment';
 
 const LocationSearchPage = () => {
 	return (
@@ -14,6 +15,7 @@ const LocationSearchPage = () => {
 				marginTop: '100px'
 			}}
 		>
+			<Payment />
 			<Card elevation={3} className="gradient-border">
 				<CardContent className="card-inside">
 					<Typography variant="h2">Map Search</Typography>

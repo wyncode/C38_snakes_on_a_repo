@@ -79,11 +79,11 @@ const userSchema = new mongoose.Schema(
 		],
 		latitude: {
 			type: Number,
-			default: Math.random() * 26
+			default: Math.random() + 25
 		},
 		longitude: {
 			type: Number,
-			default: Math.random() * -81
+			default: Math.random() - 80
 		}
 	},
 	{
@@ -113,17 +113,13 @@ userSchema.virtual('pets', {
 // };
 
 // add token to user
-userSchema.methods.generateAuthToken = async function () {
+userSchema.methods.generateAuthToken = async function() {
 	const user = this;
-	const token = jwt.sign(
-	  { _id: user._id.toString(), name: user.name },
-	  process.env.JWT_SECRET,
-	  { expiresIn: '24h' },
-	);
+	const token = jwt.sign({ _id: user._id.toString(), name: user.name }, process.env.JWT_SECRET, { expiresIn: '24h' });
 	user.tokens = user.tokens.concat({ token });
 	await user.save();
 	return token;
-  };
+};
 
 // find user by email and password
 userSchema.statics.findByCredentials = async (email, password) => {
