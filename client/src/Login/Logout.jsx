@@ -6,13 +6,14 @@ import { AppContext } from '../context/AppContext';
 
 const Logout = ({ styleType }) => {
   const history = useHistory();
-  const { setCurrentUser } = useContext(AppContext);
+  const { setCurrentUser, setCurrentPets } = useContext(AppContext);
 
   const handleLogOut = () => {
     axios
       .post('/user/logout', { withCredentials: true })
       .then(() => {
         setCurrentUser(null);
+        setCurrentPets(null);
         sessionStorage.removeItem('user');
         history.push('/login');
       })

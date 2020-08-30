@@ -13,7 +13,7 @@ import axios from 'axios';
 
 const LoginPage = ({history}) => {
   const [formData, setFormData] = useState(null);
-  const { setCurrentUser } = useContext(AppContext);
+  const { setCurrentUser, setCurrentPets } = useContext(AppContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -24,6 +24,7 @@ const LoginPage = ({history}) => {
     }).then(({data}) => {
         sessionStorage.setItem('user', data.data);
         setCurrentUser(data.data);
+        setCurrentPets(data.data.ownedPets);
         if (data){
           history.push('/account');
         }      
