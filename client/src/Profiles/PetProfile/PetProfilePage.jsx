@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import '../AllProfiles/profiles.css';
 import Calendar from '../AllProfiles/Calendar';
 import ProfileImg from '../AllProfiles/ProfileImg';
@@ -7,18 +7,18 @@ import ProfileButtons from '../AllProfiles/ProfileButtons';
 import About from '../AllProfiles/About';
 import PetInfo from './PetInfo';
 
-const PetProfilePage = ({match}) => {
-  const {id} = match.params;
-  const [pet, setPet] = useState({owner: "", links: []});
-  
-    useEffect(() => {
-      fetch(`/pets/${id}`)
-      .then(res => res.json())
-      .then(pet => {
+const PetProfilePage = ({ match }) => {
+  const { id } = match.params;
+  const [pet, setPet] = useState({ owner: '', links: [] });
+
+  useEffect(() => {
+    fetch(`/pets/${id}`)
+      .then((res) => res.json())
+      .then((pet) => {
         setPet(pet);
       })
-      .catch(err => console.log(err));
-    }, [id])
+      .catch((err) => console.log(err));
+  }, [id]);
 
   return (
     <div id="profile-container">
@@ -29,14 +29,20 @@ const PetProfilePage = ({match}) => {
       </div>
       <div id="right">
         <div id="right-flex">
-        <About profileUser="The Pet" description={pet.description}/>
-        <PetInfo title="Links" links={pet.links} />
-        <PetInfo title="Feeding Instructions" instructions={pet.feeding} />
-        <PetInfo title="Cleaning Instructions" instructions={pet.cleaning} />
-        <PetInfo title="Exercise Instructions" instructions={pet.exercise} />
-        <PetInfo title="Medical Instructions" instructions={pet.medical} />
-        <PetInfo title="Additional Instructions" instructions={pet.additional} />
-        <PetInfo title="Emergency Instructions" instructions={pet.emergency} />
+          <About profileUser="The Pet" description={pet.description} />
+          <PetInfo title="Links" links={pet.links} />
+          <PetInfo title="Feeding Instructions" instructions={pet.feeding} />
+          <PetInfo title="Cleaning Instructions" instructions={pet.cleaning} />
+          <PetInfo title="Exercise Instructions" instructions={pet.exercise} />
+          <PetInfo title="Medical Instructions" instructions={pet.medical} />
+          <PetInfo
+            title="Additional Instructions"
+            instructions={pet.additional}
+          />
+          <PetInfo
+            title="Emergency Instructions"
+            instructions={pet.emergency}
+          />
         </div>
       </div>
       <Calendar />

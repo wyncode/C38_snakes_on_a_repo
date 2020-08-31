@@ -1,6 +1,4 @@
-function sendEmail1() {
-    return(`
-    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+const welcomeEmail = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
     <html data-editor-version="2" class="sg-campaigns" xmlns="http://www.w3.org/1999/xhtml">
         <head>
           <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -194,7 +192,6 @@ function sendEmail1() {
             </div>
           </center>
         </body>
-      </html>
-`
-)}
-export default sendEmail1
+      </html>`;
+
+module.exports = welcomeEmail;

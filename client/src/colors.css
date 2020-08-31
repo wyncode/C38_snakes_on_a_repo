@@ -140,15 +140,16 @@ a:hover {
 #calendar button {
   background: var(--mid-darker);
   border: none;
-  transition: all .3s;
+  transition: all 0.3s;
 }
-#calendar button:hover, #calendar button:focus {
+#calendar button:hover,
+#calendar button:focus {
   background: var(--mid);
 }
 /*BUTTON PAIR UNDERNEATH PROFILE NAME + LOGIN BUTTONS*/
 #btn1,
 #btn2,
-form .login-btn{
+form .login-btn {
   color: var(--less-white);
   background: var(--mid);
   transition: all 0.3s ease-in;

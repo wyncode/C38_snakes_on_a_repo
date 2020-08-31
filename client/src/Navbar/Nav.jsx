@@ -97,7 +97,7 @@ const Nav = () => {
             { text: 'Search', link: '/search' },
             { text: 'Location Search', link: '/map' },
             { text: 'User Profile', link: '/userprofile' },
-            { text: 'Pet Profile', link: '/petprofile' },
+            { text: 'Pet Profile', link: '/petprofile' }
           ].map((el) => (
             <ListItem
               button

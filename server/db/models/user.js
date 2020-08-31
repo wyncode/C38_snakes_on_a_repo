@@ -1,98 +1,98 @@
 const mongoose = require('mongoose'),
-	validator = require('validator'),
-	bcrypt = require('bcryptjs'),
-	jwt = require('jsonwebtoken'),
-	Pet = require('./pet');
+  validator = require('validator'),
+  bcrypt = require('bcryptjs'),
+  jwt = require('jsonwebtoken'),
+  Pet = require('./pet');
 const findOrCreate = require('mongoose-findorcreate');
 
 const userSchema = new mongoose.Schema(
-	{
-		name: {
-			type: String,
-			required: true,
-			trim: true
-		},
-		email: {
-			type: String,
-			unique: true,
-			required: true,
-			trim: true,
-			lowercase: true,
-			validate(value) {
-				if (!validator.isEmail(value)) {
-					throw new Error('email is invalid');
-				}
-			}
-		},
-		password: {
-			type: String,
-			required: true,
-			trim: true,
-			validate(value) {
-				if (value.toLowerCase().includes('password')) {
-					throw new Error("can't contain 'password'");
-				}
-				if (value.length < 5) {
-					throw new Error('password must be at least 5 characters long.');
-				}
-				if (value.toLowerCase().includes(User.name.toLowerCase())) {
-					throw new Error("can't contain name");
-				}
-			}
-		},
-		owner: {
-			type: Boolean,
-			required: true,
-			default: true
-		},
-		tokens: [
-			{
-				token: {
-					type: String,
-					required: true
-				}
-			}
-		],
-		avatar: {
-			type: String
-		},
-		description: {
-			type: String
-		},
-		favUsers: [
-			{
-				type: mongoose.Schema.Types.ObjectId,
-				ref: 'User'
-			}
-		],
-		favPets: [
-			{
-				type: mongoose.Schema.Types.ObjectId,
-				ref: 'Pet'
-			}
-		],
-		ownedPets: [
-			{
-				type: mongoose.Schema.Types.ObjectId,
-				ref: 'Pet'
-			}
-		]
-	},
-	{
-		googleId: {
-			type: String
-		}
-	},
-	{
-		timestamps: true
-	}
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    email: {
+      type: String,
+      unique: true,
+      required: true,
+      trim: true,
+      lowercase: true,
+      validate(value) {
+        if (!validator.isEmail(value)) {
+          throw new Error('email is invalid');
+        }
+      }
+    },
+    password: {
+      type: String,
+      required: true,
+      trim: true,
+      validate(value) {
+        if (value.toLowerCase().includes('password')) {
+          throw new Error("can't contain 'password'");
+        }
+        if (value.length < 5) {
+          throw new Error('password must be at least 5 characters long.');
+        }
+        if (value.toLowerCase().includes(User.name.toLowerCase())) {
+          throw new Error("can't contain name");
+        }
+      }
+    },
+    owner: {
+      type: Boolean,
+      required: true,
+      default: true
+    },
+    tokens: [
+      {
+        token: {
+          type: String,
+          required: true
+        }
+      }
+    ],
+    avatar: {
+      type: String
+    },
+    description: {
+      type: String
+    },
+    favUsers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+      }
+    ],
+    favPets: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Pet'
+      }
+    ],
+    ownedPets: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Pet'
+      }
+    ]
+  },
+  {
+    googleId: {
+      type: String
+    }
+  },
+  {
+    timestamps: true
+  }
 );
 
 // connect pet to owner
 userSchema.virtual('pets', {
-	ref: Pet,
-	localField: '_id',
-	foreignField: 'owner'
+  ref: Pet,
+  localField: '_id',
+  foreignField: 'owner'
 });
 
 // hide user password/tokens
@@ -106,42 +106,42 @@ userSchema.virtual('pets', {
 
 // add token to user
 userSchema.methods.generateAuthToken = async function () {
-	const user = this;
-	const token = jwt.sign(
-	  { _id: user._id.toString(), name: user.name },
-	  process.env.JWT_SECRET,
-	  { expiresIn: '24h' },
-	);
-	user.tokens = user.tokens.concat({ token });
-	await user.save();
-	return token;
-  };
+  const user = this;
+  const token = jwt.sign(
+    { _id: user._id.toString(), name: user.name },
+    process.env.JWT_SECRET,
+    { expiresIn: '24h' }
+  );
+  user.tokens = user.tokens.concat({ token });
+  await user.save();
+  return token;
+};
 
 // find user by email and password
 userSchema.statics.findByCredentials = async (email, password) => {
-	const user = await User.findOne({ email });
-	if (!user) throw new Error("user doesn't exist");
-	const isMatch = await bcrypt.compare(password, user.password);
-	if (!isMatch) throw new Error('invalid credentials');
-	return user;
+  const user = await User.findOne({ email });
+  if (!user) throw new Error("user doesn't exist");
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) throw new Error('invalid credentials');
+  return user;
 };
 
 // Middleware
-userSchema.pre('save', async function(next) {
-	const user = this;
-	if (user.isModified('password')) {
-		user.password = await bcrypt.hash(user.password, 8);
-	}
-	next();
+userSchema.pre('save', async function (next) {
+  const user = this;
+  if (user.isModified('password')) {
+    user.password = await bcrypt.hash(user.password, 8);
+  }
+  next();
 });
 
 // Delete owned pets when a user is removed.
-userSchema.pre('remove', async function(next) {
-	const user = this;
-	await Pet.deleteMany({
-		owner: user._id
-	});
-	next();
+userSchema.pre('remove', async function (next) {
+  const user = this;
+  await Pet.deleteMany({
+    owner: user._id
+  });
+  next();
 });
 
 userSchema.plugin(findOrCreate);

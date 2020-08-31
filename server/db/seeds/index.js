@@ -35,7 +35,7 @@ const dbReset = async () => {
       password: faker.internet.password(),
       owner: Boolean(Math.round(Math.random())),
       description: faker.lorem.paragraph(),
-      avatar: faker.internet.avatar(),
+      avatar: faker.internet.avatar()
     });
     await user.generateAuthToken();
     userIdArray.push(user._id);
@@ -52,7 +52,7 @@ const dbReset = async () => {
   ];
 
   const randomUser =
-  userIdArray[Math.floor(Math.random() * userIdArray.length)];
+    userIdArray[Math.floor(Math.random() * userIdArray.length)];
 
   for (let i = 0; i < 100; i++) {
     const randomIndex = Math.floor(Math.random() * allowedTypes.length);
@@ -81,22 +81,36 @@ const dbReset = async () => {
   }
 
   const randomNum = (arr) => {
-   return Math.floor(Math.random() * arr.length + 1);
-  } 
+    return Math.floor(Math.random() * arr.length + 1);
+  };
 
   const queryAllUsers = () => {
     //Where User is you mongoose user model
-    User.find({} , (err, users) => {
-        if(err) {console.log(err)}
-        users.map(user => {
-            user.ownedPets = [petArray[randomNum(petArray)],petArray[randomNum(petArray)],petArray[randomNum(petArray)]];
-            user.favPets = [petArray[randomNum(petArray)],petArray[randomNum(petArray)],petArray[randomNum(petArray)]];
-            user.favUsers = [userIdArray[randomNum(userIdArray)],userIdArray[randomNum(userIdArray)],userIdArray[randomNum(userIdArray)]]
-            user.save()
-        })
-    })
-}
-queryAllUsers();
+    User.find({}, (err, users) => {
+      if (err) {
+        console.log(err);
+      }
+      users.map((user) => {
+        user.ownedPets = [
+          petArray[randomNum(petArray)],
+          petArray[randomNum(petArray)],
+          petArray[randomNum(petArray)]
+        ];
+        user.favPets = [
+          petArray[randomNum(petArray)],
+          petArray[randomNum(petArray)],
+          petArray[randomNum(petArray)]
+        ];
+        user.favUsers = [
+          userIdArray[randomNum(userIdArray)],
+          userIdArray[randomNum(userIdArray)],
+          userIdArray[randomNum(userIdArray)]
+        ];
+        user.save();
+      });
+    });
+  };
+  queryAllUsers();
 
   await User.countDocuments({}, function (err, count) {
     console.log('Number of users:', count);

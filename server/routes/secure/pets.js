@@ -31,7 +31,7 @@ router.post('/pets', async (req, res) => {
       additional,
       emergency,
       links,
-     owner: req.user._id
+      owner: req.user._id
     });
     await newPet.save();
     // once passport is up and running, test without the following

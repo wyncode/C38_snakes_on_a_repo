@@ -1,41 +1,41 @@
- #profile-container {
-    margin-top: 100px;
-    padding-bottom: 50px;
-    display: grid;
-    grid-gap: 5vw;
+#profile-container {
+  margin-top: 100px;
+  padding-bottom: 50px;
+  display: grid;
+  grid-gap: 5vw;
+  grid-template-rows: repeat(3, auto);
+  grid-template-columns: 100vw;
+  grid-template-areas: 'topleft' 'right' 'cal';
+  white-space: pre-wrap;
+}
+@media only screen and (min-width: 630px) {
+  #profile-container {
     grid-template-rows: repeat(3, auto);
     grid-template-columns: 100vw;
     grid-template-areas: 'topleft' 'right' 'cal';
-    white-space: pre-wrap;
   }
-  @media only screen and (min-width: 630px) {
-    #profile-container {
-      grid-template-rows: repeat(3, auto);
-      grid-template-columns: 100vw;
-      grid-template-areas: 'topleft' 'right' 'cal';
-    }
-  }
-  @media only screen and (min-width: 950px) {
-    #profile-container {
+}
+@media only screen and (min-width: 950px) {
+  #profile-container {
     grid-template-rows: auto auto;
     grid-template-columns: 20vw 70vw;
     grid-template-areas:
       'topleft right'
       '. cal';
   }
-  }
+}
 /* TOP LEFT */
-  #topleft {
-    position: relative;
-    left: 0;
-    top: 0;
-    margin: 30px auto auto;
-    padding: 0;
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+#topleft {
+  position: relative;
+  left: 0;
+  top: 0;
+  margin: 30px auto auto;
+  padding: 0;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 @media only screen and (min-width: 630px) {
   #topleft {
     grid-area: topleft;
@@ -97,7 +97,8 @@
   margin-top: 25px;
 }
 @media only screen and (min-width: 950px) {
-  #btn1, #btn2 {
+  #btn1,
+  #btn2 {
     margin-top: 10px;
   }
 }

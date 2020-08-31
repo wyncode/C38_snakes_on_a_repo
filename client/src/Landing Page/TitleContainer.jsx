@@ -1,6 +1,6 @@
-import React from "react";
-import { Button, Typography } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import React from 'react';
+import { Button, Typography } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 
 const TitleContainer = () => {
   const history = useHistory();
@@ -20,7 +20,7 @@ const TitleContainer = () => {
 
       <Button
         onClick={() => {
-          history.push("/search");
+          history.push('/search');
         }}
         className="home-btn"
         variant="contained"
@@ -31,7 +31,7 @@ const TitleContainer = () => {
         className="home-btn"
         variant="contained"
         onClick={() => {
-          history.push("/login");
+          history.push('/login');
         }}
       >
         Login
