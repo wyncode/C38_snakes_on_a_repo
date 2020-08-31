@@ -4,21 +4,7 @@ const Pet = require('../../db/models/pet');
 const passport = require('passport');
 const jwt = require('jsonwebtoken')
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const {WelcomeEmail, ForgotPassword, CancellationEmail} = require('../../emails/');
-
-// router.use(
-// 	session({
-// 		secret: process.env.SESSION_SECRET,
-// 		resave: false,
-// 		saveUninitialized: true,
-// 		cookie: { secure: true }
-// 	})
-// );
-
-// router.use(passport.initialize());
-// router.use(passport.session());
-
-// passport.use(User.createStrategy());
+const findOrCreate = require('mongoose-findorcreate');
 
 passport.serializeUser(function (user, done) {
   done(null, user.id);
@@ -31,28 +17,23 @@ passport.deserializeUser(function (id, done) {
 });
 
 passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.CLIENT_ID,
-      clientSecret: process.env.CLIENT_SECRET,
-      callbackURL: 'http://localhost:3000/auth/google/users',
-      userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
-    },
-    function (accessToken, refreshToken, profile, cb) {
-      User.findOrCreate({ googleId: profile.id }, function (err, user) {
-        return cb(err, user);
-      });
-    }
-  )
+	new GoogleStrategy(
+		{
+			clientID: process.env.CLIENT_ID,
+			clientSecret: process.env.CLIENT_SECRET,
+			callbackURL: 'http://localhost:8080/auth/google/users',
+			userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
+		},
+		function(accessToken, refreshToken, profile, cb) {
+			console.log(profile);
+			User.findOrCreate({ googleId: profile.id }, function(err, user) {
+				return cb(err, user);
+			});
+		}
+	)
 );
 
-router.get(
-  '/auth/google',
-  passport.authenticate('google', { scope: ['profile'] }),
-  (req, res) => {
-    res.redirect('/users');
-  }
-);
+router.get('/auth/google', passport.authenticate('google', { scope: [ 'profile' ] }));
 
 router.get(
   '/auth/google/users',
@@ -62,32 +43,92 @@ router.get(
   }
 );
 
+// Search Pet by Name OR Description
+router.get('/search/pet', async (req, res) => {
+	const { query } = req.query;
+	try {
+		const pets = await Pet.find({
+			$or: [
+				{
+					name: {
+						$regex: `${query}`,
+						$options: 'i'
+					}
+				},
+				{
+					description: {
+						$regex: `${query}`,
+						$options: 'i'
+					}
+				}
+			]
+		});
+		if (!pets) {
+			res.sendStatus(410).json('nothing found');
+		} else {
+			res.status(200).json(pets);
+		}
+	} catch (err) {
+		res.status(500).json({ err: err.toString() });
+	}
+});
+
+// Search User by Name OR Description
+router.get('/search/user', async (req, res) => {
+	const { query } = req.query;
+	try {
+		const users = await User.find({
+			$or: [
+				{
+					name: {
+						$regex: `${query}`,
+						$options: 'i'
+					}
+				},
+				{
+					description: {
+						$regex: `${query}`,
+						$options: 'i'
+					}
+				}
+			]
+		});
+		if (!users) {
+			res.sendStatus(410).json('nothing found');
+		} else {
+			res.status(200).json(users);
+		}
+	} catch (err) {
+		res.status(500).json({ err: err.toString() });
+	}
+});
+
 // Get All Pets
 router.get('/pets', async (req, res) => {
-  try {
-    const pets = await Pet.find();
-    if (!pets) {
-      res.sendStatus(410);
-    } else {
-      res.status(200).json(pets);
-    }
-  } catch (err) {
-    res.status(500).json({ err: err.toString() });
-  }
+	try {
+		const pets = await Pet.find();
+		if (!pets) {
+			res.sendStatus(410);
+		} else {
+			res.status(200).json(pets);
+		}
+	} catch (err) {
+		res.status(500).json({ err: err.toString() });
+	}
 });
 
 // Get Pet by ID
 router.get('/pets/:id', async (req, res) => {
-  try {
-    const pet = await Pet.findById(req.params.id);
-    if (!pet) {
-      res.sendStatus(410);
-    } else {
-      res.status(200).json(pet);
-    }
-  } catch (err) {
-    res.status(500).json({ err: err.toString() });
-  }
+	try {
+		const pet = await Pet.findById(req.params.id);
+		if (!pet) {
+			res.sendStatus(410);
+		} else {
+			res.status(200).json(pet);
+		}
+	} catch (err) {
+		res.status(500).json({ err: err.toString() });
+	}
 });
 
 // Get All Users
@@ -142,90 +183,54 @@ router.post('/users', async (req, res) => {
 });
 
 // User Login
-router.post('/users/login', async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    const user = await User.findByCredentials(email, password);
-    const token = await user.generateAuthToken();
-    res.cookie('jwt', token, {
-      httpOnly: true,
-      sameSite: 'Strict',
-      secure: process.env.NODE_ENV !== 'production' ? false : true
-    });
-    res.status(200).json('Logged in!');
-  } catch (err) {
-    res.status(500).json({ err: err.toString() });
-  }
+router.post('/user/login', async (req, res) => {
+	const { email, password } = req.body;
+	try {
+		const user = await User.findByCredentials(email, password);
+		const token = await user.generateAuthToken();
+		res.cookie('jwt', token, {
+			httpOnly: true,
+			sameSite: 'Strict',
+			secure: process.env.NODE_ENV !== 'production' ? false : true
+		});
+		res.status(200).json({message: 'Logged in!', data: user});
+	} catch (err) {
+		res.status(500).json({ err: err.toString() });
+	}
 });
 
 // Password Reset
 router.get('/password', async (req, res) => {
-  try {
-    const { email } = req.query,
-      user = await User.findOne({ email });
-    if (!user) throw new Error("account doesn't exist");
-    const token = jwt.sign(
-      { _id: user._id.toString(), name: user.name },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: '10m'
-      }
-    );
-    ForgotPassword(email, token);
-    res.json({ message: 'reset password email sent' });
-  } catch (error) {
-    res.status(500).json({ error: error.toString() });
-  }
+	try {
+		const { email } = req.query,
+			user = await User.findOne({ email });
+		if (!user) throw new Error("account doesn't exist");
+		const token = jwt.sign({ _id: user._id.toString(), name: user.name }, process.env.JWT_SECRET, {
+			expiresIn: '10m'
+		});
+		forgotPasswordEmail(email, token);
+		res.json({ message: 'reset password email sent' });
+	} catch (error) {
+		res.status(500).json({ error: error.toString() });
+	}
 });
 
 // Password Redirect
 router.get('/password/:token', (req, res) => {
-  const { token } = req.params;
-  try {
-    jwt.verify(token, process.env.JWT_SECRET, function (err, decoded) {
-      if (err) throw new Error(err.message);
-    });
-    res.cookie('jwt', token, {
-      httpOnly: true,
-      maxAge: 600000,
-      sameSite: 'Strict'
-    });
-    res.redirect(process.env.URL + '/update-password');
-  } catch (error) {
-    res.status(401).json({ error: error.toString() });
-  }
-});
-
-
-// Create a user
-router.post('/api/users', async (req, res) => {
-  const user = new User(req.body);
-  console.log(user);
-  try {
-    await user.save();
-    WelcomeEmail(user.email, user.name);
-    const token = await user.generateAuthToken();
-    res.cookie('jwt', token, {
-      httpOnly: true,
-      sameSite: 'Strict',
-      secure: process.env.NODE_ENV !== 'production' ? false : true
-    });
-    res.json(user);
-  } catch (e) {
-    res.status(201).status(400).send(e);
-  }
-});
-
-// Delete a user
-router.delete('/api/users/me', async (req, res) => {
-  try {
-    await req.user.remove();
-    CancellationEmail(req.user.email, req.user.name);
-    res.clearCookie('jwt');
-    res.json(req.user);
-  } catch (e) {
-    res.sendStatus(500);
-  }
+	const { token } = req.params;
+	try {
+		jwt.verify(token, process.env.JWT_SECRET, function(err, decoded) {
+			if (err) throw new Error(err.message);
+		});
+		res.cookie('jwt', token, {
+			httpOnly: true,
+			maxAge: 600000,
+			sameSite: 'Strict'
+		});
+		res.redirect(process.env.URL + '/update-password');
+	} catch (error) {
+		res.status(401).json({ error: error.toString() });
+	}
 });
 
 module.exports = router;

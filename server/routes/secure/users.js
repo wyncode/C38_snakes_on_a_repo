@@ -33,6 +33,17 @@ router.put('/user/me', async (req, res) => {
   }
 });
 
+// Delete Current User
+router.delete('/user/me', async (req, res) => {
+  try {
+    await req.user.remove();
+    res.clearCookie('jwt');
+    res.json({ message: 'User deleted' });
+  } catch (err) {
+    res.status(500).json({ err: err.toString() });
+  }
+});
+
 // User Logout
 router.post('/user/logout', async (req, res) => {
   try {
@@ -82,20 +93,6 @@ router.post('/user/avatar', async (req, res) => {
     res.json(response);
   } catch (err) {
     res.status(400).json({ err: err.toString() });
-  }
-});
-
-// ***********************************************//
-// Delete a user
-// ***********************************************//
-router.delete('/api/users/me', async (req, res) => {
-  try {
-    await req.user.remove();
-    CancellationEmail(req.user.email, req.user.name);
-    res.clearCookie('jwt');
-    res.json(req.user);
-  } catch (e) {
-    res.sendStatus(500);
   }
 });
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import defaultPet from '../../Images/defaultPet.png';
 import '../AllProfiles/profiles.css';
 import '../../colors.css';
 import {
@@ -19,19 +20,18 @@ const PetCard = ({ petID }) => {
     fetch(`/pets/${petID}`)
       .then((res) => res.json())
       .then((petCard) => {
-        console.log(petCard);
         setPetCard(petCard);
       })
       .catch((err) => console.log(err));
   }, [petID]);
 
   return (
-    <Card elevation="3" className="pet-card gradient-border">
+    <Card elevation={3} className="pet-card gradient-border">
       <CardMedia
         className="pet-card-img"
         component="img"
         alt="pet-img"
-        image={petCard.avatar}
+        image={petCard.avatar || defaultPet}
         title="pet-img"
       />
       <CardContent className="card-inside">
