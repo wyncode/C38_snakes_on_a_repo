@@ -4,7 +4,7 @@ import Logout from '../Login/Logout'
 import './account.css';
 import { Typography, Card, CardContent } from '@material-ui/core';
 import TabPane from './TabPane';
-import {AppContext} from '../Context/AppContext'
+import {AppContext} from '../context/AppContext'
 
 const AccountPage = () => {
   const {currentUser} = useContext(AppContext)

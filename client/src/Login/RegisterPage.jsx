@@ -9,7 +9,7 @@ import {
   Card,
   CardContent
 } from '@material-ui/core';
-import { AppContext } from '../Context/AppContext';
+import { AppContext } from '../context/AppContext';
 
 const RegisterPage = ({history}) => {
   const [formData, setFormData] = useState(null);

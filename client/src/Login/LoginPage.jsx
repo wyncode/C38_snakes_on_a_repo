@@ -8,7 +8,7 @@ import {
   Card,
   CardContent
 } from '@material-ui/core';
-import { AppContext } from '../Context/AppContext';
+import { AppContext } from '../context/AppContext';
 import axios from 'axios'
 
 const LoginPage = ({history}) => {

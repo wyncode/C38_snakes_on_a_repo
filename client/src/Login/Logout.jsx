@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import { AppContext } from '../Context/AppContext';
+import { AppContext } from '../context/AppContext';
 import axios from 'axios';
 import {Button} from '@material-ui/core';
 

@@ -10,7 +10,7 @@ import UserProfilePage from './Profiles/UserProfile/UserProfilePage';
 import PetProfilePage from './Profiles/PetProfile/PetProfilePage';
 import SecureRoute from './Account/SecureRoute'
 import LoggedInRoute from './Account/LoggedInRoute'
-import { AppContextProvider } from './Context/AppContext';
+import { AppContextProvider } from './context/AppContext';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 const App = () => {

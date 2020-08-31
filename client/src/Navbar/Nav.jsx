@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import { AppContext } from '../Context/AppContext';
+import { AppContext } from '../context/AppContext';
 import Logout from '../Login/Logout'
 import './nav.css';
 import '../colors.css';
