@@ -28,6 +28,7 @@ const Avatar = ({ role, petUpdate }) => {
       .then((response) => {
         setCurrentUser({ ...currentUser, avatar: response.data.secure_url });
         setPreview(null);
+        getBackgroundImage();
         setLoading(false);
       })
       .catch((error) => console.log(error));
