@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
+import defaultPet from '../../Images/defaultPet.png';
 import '../AllProfiles/profiles.css';
 import '../../colors.css';
 import {
@@ -11,18 +12,18 @@ import {
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 
-const PetCard = ({petID}) => {
-const history = useHistory();
-const [petCard, setPetCard] = useState({});
+const PetCard = ({ petID }) => {
+  const history = useHistory();
+  const [petCard, setPetCard] = useState({});
 
-useEffect(() => {
-  fetch(`/pets/${petID}`)
-  .then(res => res.json())
-  .then(petCard => {
-    console.log(petCard)
-    setPetCard(petCard);
-  }).catch(err => console.log(err));
-}, [petID]);
+  useEffect(() => {
+    fetch(`/pets/${petID}`)
+      .then((res) => res.json())
+      .then((petCard) => {
+        setPetCard(petCard);
+      })
+      .catch((err) => console.log(err));
+  }, [petID]);
 
   return (
     <Card elevation={3} className="pet-card gradient-border">
@@ -30,7 +31,7 @@ useEffect(() => {
         className="pet-card-img"
         component="img"
         alt="pet-img"
-        image={petCard.avatar}
+        image={petCard.avatar || defaultPet}
         title="pet-img"
       />
       <CardContent className="card-inside">

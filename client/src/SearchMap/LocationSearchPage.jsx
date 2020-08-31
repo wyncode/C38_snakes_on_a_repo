@@ -2,6 +2,7 @@ import React from 'react';
 import '../colors.css';
 import { Typography, Card, CardContent } from '@material-ui/core';
 import Map from '../Map/Map';
+import Payment from '../Payment/Payment';
 
 const LocationSearchPage = () => {
 	return (
