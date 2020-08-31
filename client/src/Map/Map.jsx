@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import ReactMapGL from 'react-map-gl';
+import ReactMapGL, { Marker } from 'react-map-gl';
+import PetsIcon from '@material-ui/icons/Pets';
+import './Map.css';
+import { IconButton } from '@material-ui/core';
 
 const geolocationOptions = {
 	enableHighAccuracy: true,
@@ -11,7 +14,15 @@ const getCurrentPosition = (_) =>
 
 const Map = () => {
 	const [ viewport, setViewport ] = useState(null);
-	useEffect(() => {
+	const [ userLocations, setUserLocations ] = useState([]);
+
+	const fetchUserLocation = () => {
+		fetch('/users').then((response) => response.json()).then((data) => {
+			setUserLocations(data);
+		});
+	};
+
+	const setCurrentUserLocation = () => {
 		getCurrentPosition().then((pos) => {
 			if (!pos) return;
 			const { latitude, longitude } = pos.coords;
@@ -23,8 +34,15 @@ const Map = () => {
 				zoom: 15
 			});
 		});
+	};
+
+	useEffect(() => {
+		fetchUserLocation();
+		setCurrentUserLocation();
 	}, []);
+
 	if (!viewport) return null;
+
 	return (
 		<ReactMapGL
 			{...viewport}
@@ -33,7 +51,15 @@ const Map = () => {
 			onViewportChange={(viewport) => {
 				setViewport(viewport);
 			}}
-		/>
+		>
+			{userLocations.map((userLoc) => (
+				<Marker key={userLoc._id} latitude={userLoc.latitude} longitude={userLoc.longitude}>
+					<IconButton color="secondary">
+						<PetsIcon />
+					</IconButton>
+				</Marker>
+			))}
+		</ReactMapGL>
 	);
 };
 export default Map;
