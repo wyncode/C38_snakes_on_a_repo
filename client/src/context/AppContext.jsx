@@ -1,5 +1,5 @@
-import React, { createContext, useState, useEffect } from './node_modules/react';
-import axios from './node_modules/axios'
+import React, { createContext, useState, useEffect } from 'react';
+import axios from 'axios'
 const AppContext = createContext();
 
 const AppContextProvider = ({ children }) => {
