@@ -20,7 +20,7 @@ passport.use(
 		{
 			clientID: process.env.CLIENT_ID,
 			clientSecret: process.env.CLIENT_SECRET,
-			callbackURL: 'http://localhost:8080/auth/google/users',
+			callbackURL: 'https://petster-exotic.herokuapp.com/auth/google/users',
 			userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
 		},
 		function(accessToken, refreshToken, profile, cb) {
@@ -186,7 +186,7 @@ router.post('/user/login', async (req, res) => {
 			sameSite: 'Strict',
 			secure: process.env.NODE_ENV !== 'production' ? false : true
 		});
-		res.status(200).json({message: 'Logged in!', data: user});
+		res.status(200).json({ message: 'Logged in!', data: user });
 	} catch (err) {
 		res.status(500).json({ err: err.toString() });
 	}

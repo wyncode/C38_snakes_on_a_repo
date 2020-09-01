@@ -14,23 +14,23 @@ import { AppContextProvider } from './context/AppContext';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 const App = () => {
-  return (
-    <AppContextProvider>
-      <Router>
-        <Nav />
-        <Switch>
-          <Route exact path="/" component={Landing} />
-          <Route exact path="/search" component={SearchPage} />
-          <Route exact path="/map" component={LocationSearchPage} />
-          <Route exact path="/userprofile/:id" component={UserProfilePage} />
-          <Route exact path="/petprofile/:id" component={PetProfilePage} />
-          <LoggedInRoute exact path="/login" component={LoginPage} />
-          <LoggedInRoute exact path="/register" component={RegisterPage} />
-          <SecureRoute exact path="/account" component={AccountPage} />
-        </Switch>
-      </Router>
-    </AppContextProvider>
-  );
+	return (
+		<AppContextProvider>
+			<Router>
+				<Nav />
+				<Switch>
+					<Route exact path="/" component={Landing} />
+					<Route exact path="/search" component={SearchPage} />
+					<Route exact path="/map" component={LocationSearchPage} />
+					<Route exact path="/userprofile/:id" component={UserProfilePage} />
+					<Route exact path="/petprofile/:id" component={PetProfilePage} />
+					<LoggedInRoute exact path="/login" component={LoginPage} />
+					<LoggedInRoute exact path="/register" component={RegisterPage} />
+					<SecureRoute exact path="/account" component={AccountPage} />
+				</Switch>
+			</Router>
+		</AppContextProvider>
+	);
 };
 
 export default App;
