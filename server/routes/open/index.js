@@ -217,20 +217,52 @@ router.get('/password', async (req, res) => {
 
 // Password Redirect
 router.get('/password/:token', (req, res) => {
-	const { token } = req.params;
-	try {
-		jwt.verify(token, process.env.JWT_SECRET, function(err, decoded) {
-			if (err) throw new Error(err.message);
-		});
-		res.cookie('jwt', token, {
-			httpOnly: true,
-			maxAge: 600000,
-			sameSite: 'Strict'
-		});
-		res.redirect(process.env.URL + '/update-password');
-	} catch (error) {
-		res.status(401).json({ error: error.toString() });
-	}
+  const { token } = req.params;
+  try {
+    jwt.verify(token, process.env.JWT_SECRET, function (err, decoded) {
+      if (err) throw new Error(err.message);
+    });
+    res.cookie('jwt', token, {
+      httpOnly: true,
+      maxAge: 600000,
+      sameSite: 'Strict'
+    });
+    res.redirect(process.env.URL + '/update-password');
+  } catch (error) {
+    res.status(401).json({ error: error.toString() });
+  }
+});
+
+
+// Create a user
+router.post('/api/users', async (req, res) => {
+  const user = new User(req.body);
+  console.log(user);
+  try {
+    await user.save();
+    WelcomeEmail(user.email, user.name);
+    const token = await user.generateAuthToken();
+    res.cookie('jwt', token, {
+      httpOnly: true,
+      sameSite: 'Strict',
+      secure: process.env.NODE_ENV !== 'production' ? false : true
+    });
+    res.json(user);
+  } catch (e) {
+    res.status(201).status(400).send(e);
+  }
+});
+
+// Delete a user
+router.delete('/api/users/me', async (req, res) => {
+  try {
+    await req.user.remove();
+    CancellationEmail(req.user.email, req.user.name);
+    res.clearCookie('jwt');
+    res.json(req.user);
+  } catch (e) {
+    res.sendStatus(500);
+  }
 });
 
 module.exports = router;

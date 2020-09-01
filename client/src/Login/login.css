@@ -18,12 +18,12 @@ form .text-field {
   position: relative;
   width: 70%;
 }
-.header-card-btn:nth-of-type(2) {
+form .google {
   background: #4285f4;
   color: white;
 }
-.header-card-btn:nth-of-type(2):hover,
-.header-card-btn:nth-of-type(2):focus {
+form .google:hover,
+form .google:focus {
   background: #3a78db;
   color: white;
 }
