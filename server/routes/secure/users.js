@@ -1,10 +1,18 @@
 const router = require('express').Router();
 const cloudinary = require('cloudinary').v2;
 const User = require('../../db/models/user');
-const { CancellationEmail } = require('../../emails/index')
+const { CancellationEmail } = require('../../emails/index');
+const Pet = require('../../db/models/pet');
 
 // Get Current User
-router.get('/user/me', async (req, res) => res.json(req.user));
+router.get('/user/me', async (req, res) => {
+  try {
+    req.user.ownedPets = await Pet.find({ owner: req.user._id });
+    res.json(req.user);
+  } catch (err) {
+    res.status(500).json({ err: err.toString() });
+  }
+});
 
 // Update Current User
 router.put('/user/me', async (req, res) => {
@@ -78,7 +86,7 @@ router.put('/password', async (req, res) => {
     user.password = req.body.password;
     await user.save();
     res.clearCookie('jwt');
-   
+
     res.json({ message: 'password updated successfully' });
   } catch (err) {
     res.json({ err: err.toString() });

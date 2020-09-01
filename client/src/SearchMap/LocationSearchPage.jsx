@@ -19,21 +19,15 @@ const LocationSearchPage = () => {
           <Typography variant="h2">Map Search</Typography>
         </CardContent>
       </Card>
+      
+			<Card style={{ marginTop: '100px' }} elevation={3} className="gradient-border">
+				<CardContent style={{ width: '1400px', height: '800px' }} className="card-inside">
+					<Map />
+				</CardContent>
+			</Card>
+		</div>
+	);
 
-      <Card
-        style={{ marginTop: '100px' }}
-        elevation={3}
-        className="gradient-border"
-      >
-        <CardContent
-          style={{ width: '800px', height: '400px' }}
-          className="card-inside"
-        >
-          <Map style={{ width: '800px', height: '400px' }} />
-        </CardContent>
-      </Card>
-    </div>
-  );
 };
 
 export default LocationSearchPage;
