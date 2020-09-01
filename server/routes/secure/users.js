@@ -37,7 +37,7 @@ router.put('/user/me', async (req, res) => {
 // Delete Current User
 router.delete('/user/me', async (req, res) => {
   try {
-    CancellationEmail(req.user.email)
+    CancellationEmail(req.user.email);
     await req.user.remove();
     res.clearCookie('jwt');
     res.json({ message: 'User deleted' });

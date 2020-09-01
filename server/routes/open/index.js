@@ -5,6 +5,7 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken')
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const findOrCreate = require('mongoose-findorcreate');
+const { WelcomeEmail } = require('../../emails');
 
 passport.serializeUser(function (user, done) {
   done(null, user.id);
@@ -169,7 +170,8 @@ router.post('/users', async (req, res) => {
       .json('Sorry, an account with that email already exists.');
   }
   try {
-    const newUser = new User(req.body);
+	const newUser = new User(req.body);
+	WelcomeEmail(newUser.email, newUser.name);
     const token = await newUser.generateAuthToken();
     res.cookie('jwt', token, {
       httpOnly: true,
@@ -208,7 +210,7 @@ router.get('/password', async (req, res) => {
 		const token = jwt.sign({ _id: user._id.toString(), name: user.name }, process.env.JWT_SECRET, {
 			expiresIn: '10m'
 		});
-		forgotPasswordEmail(email, token);
+		PasswordEmail(email, token);
 		res.json({ message: 'reset password email sent' });
 	} catch (error) {
 		res.status(500).json({ error: error.toString() });
@@ -232,37 +234,4 @@ router.get('/password/:token', (req, res) => {
     res.status(401).json({ error: error.toString() });
   }
 });
-
-
-// Create a user
-router.post('/api/users', async (req, res) => {
-  const user = new User(req.body);
-  console.log(user);
-  try {
-    await user.save();
-    WelcomeEmail(user.email, user.name);
-    const token = await user.generateAuthToken();
-    res.cookie('jwt', token, {
-      httpOnly: true,
-      sameSite: 'Strict',
-      secure: process.env.NODE_ENV !== 'production' ? false : true
-    });
-    res.json(user);
-  } catch (e) {
-    res.status(201).status(400).send(e);
-  }
-});
-
-// Delete a user
-router.delete('/api/users/me', async (req, res) => {
-  try {
-    await req.user.remove();
-    CancellationEmail(req.user.email, req.user.name);
-    res.clearCookie('jwt');
-    res.json(req.user);
-  } catch (e) {
-    res.sendStatus(500);
-  }
-});
-
 module.exports = router;

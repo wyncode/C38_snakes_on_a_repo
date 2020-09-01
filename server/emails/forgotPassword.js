@@ -107,7 +107,6 @@ function passwordEmail(token) {
         <!--user entered Head Start--><!--End Head user entered-->
       </head>
       <body>
-      <a href=${`http://localhost:8080/password/${token}`}  target="_blank" rel="noopener noreferrer" > Reset Password </a>
         <center class="wrapper" data-link-color="#1188E6" data-body-style="font-size:14px; font-family:arial,helvetica,sans-serif; color:#000000; background-color:#FFFFFF;">
           <div class="webkit">
             <table cellpadding="0" cellspacing="0" border="0" width="100%" class="wrapper" bgcolor="#FFFFFF">
@@ -159,7 +158,7 @@ function passwordEmail(token) {
                 <tbody>
                   <tr>
                   <td align="center" bgcolor="#e7e3e3" class="inner-td" style="border-radius:6px; font-size:16px; text-align:center; background-color:inherit;">
-                    <a href="" style="background-color:#e7e3e3; border:1px solid #fefefe; border-color:#fefefe; border-radius:6px; border-width:1px; color:#287169; display:inline-block; font-size:14px; font-weight:bold; letter-spacing:0px; line-height:normal; padding:12px 20px 12px 20px; text-align:center; text-decoration:none; border-style:solid; font-family:verdana,geneva,sans-serif;" target="_blank">Reset Password</a>
+                    <a href="${`http://localhost:8080/password/${token}`}  target="_blank" rel="noopener noreferrer"" style="background-color:#e7e3e3; border:1px solid #fefefe; border-color:#fefefe; border-radius:6px; border-width:1px; color:#287169; display:inline-block; font-size:14px; font-weight:bold; letter-spacing:0px; line-height:normal; padding:12px 20px 12px 20px; text-align:center; text-decoration:none; border-style:solid; font-family:verdana,geneva,sans-serif;" target="_blank">Reset Password</a>
                   </td>
                   </tr>
                 </tbody>

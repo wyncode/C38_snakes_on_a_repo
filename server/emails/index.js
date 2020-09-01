@@ -1,9 +1,8 @@
 const sgMail = require('@sendgrid/mail');
 const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
-const sendEmail1 = require('./welcomeEmail');
-const cancelEmail = require('./cancellationEmail');
+const {cancellationEmail} = require('./cancellationEmail');
 const {passwordEmail} = require('./forgotPassword.js');
-const welcomeEmail = require('./welcomeEmail');
+const {welcomeEmail} = require('./welcomeEmail');
 sgMail.setApiKey(SENDGRID_API_KEY);
 
 // make sure your export function appropriatly
