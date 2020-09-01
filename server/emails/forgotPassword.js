@@ -107,6 +107,7 @@ function passwordEmail(token) {
         <!--user entered Head Start--><!--End Head user entered-->
       </head>
       <body>
+      <a href=${`http://localhost:8080/password/${token}`}  target="_blank" rel="noopener noreferrer" > Reset Password </a>
         <center class="wrapper" data-link-color="#1188E6" data-body-style="font-size:14px; font-family:arial,helvetica,sans-serif; color:#000000; background-color:#FFFFFF;">
           <div class="webkit">
             <table cellpadding="0" cellspacing="0" border="0" width="100%" class="wrapper" bgcolor="#FFFFFF">
