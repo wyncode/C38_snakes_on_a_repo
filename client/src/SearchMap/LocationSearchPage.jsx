@@ -22,8 +22,8 @@ const LocationSearchPage = () => {
 			</Card>
 
 			<Card style={{ marginTop: '100px' }} elevation={3} className="gradient-border">
-				<CardContent style={{ width: '800px', height: '400px' }} className="card-inside">
-					<Map style={{ width: '800px', height: '400px' }} />
+				<CardContent style={{ width: '1400px', height: '800px' }} className="card-inside">
+					<Map />
 				</CardContent>
 			</Card>
 		</div>
