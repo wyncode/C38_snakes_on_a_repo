@@ -5,6 +5,7 @@ import Calendar from '../AllProfiles/Calendar';
 import ProfileImg from '../AllProfiles/ProfileImg';
 import ProfileName from '../AllProfiles/ProfileName';
 import ProfileButtons from '../AllProfiles/ProfileButtons';
+import Payment from './Payment';
 import About from '../AllProfiles/About';
 import PetCard from './PetCard';
 
@@ -29,21 +30,23 @@ const UserProfilePage = ({ match }) => {
   return (
     <div id="profile-container">
       <div id="topleft">
-        <ProfileImg
-          imgURL={userProfile.avatar || defaultAvatar}
-        />
+        <ProfileImg imgURL={userProfile.avatar || defaultAvatar} />
         <ProfileName
           name={userProfile.name}
           role={userProfile.owner ? 'pet owner' : 'pet sitter'}
         />
-        <ProfileButtons
-          role={userProfile.owner ? 'owner' : 'sitter'}
-        />
+        <ProfileButtons role="user" userEmail={userProfile.email} />
+        {!userProfile.owner && (
+          <div id="payment">
+            <Payment />
+          </div>
+        )}
       </div>
       <div id="right">
+        <About profileUser="Me" description={userProfile.description} />
         <div id="right-flex">
-          <About profileUser="Me" description={userProfile.description} />
-          {userProfile.owner && userProfile.ownedPets.map((id) => {
+          {userProfile.owner &&
+            userProfile.ownedPets.map((id) => {
               return <PetCard key={id} petID={id} />;
             })}
         </div>
