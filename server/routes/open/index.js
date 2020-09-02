@@ -20,7 +20,7 @@ passport.use(
 		{
 			clientID: process.env.CLIENT_ID,
 			clientSecret: process.env.CLIENT_SECRET,
-			callbackURL: 'https://petster-exotic.herokuapp.com/auth/google/users',
+			callbackURL: process.env.URL || 'https://petster-exotic.herokuapp.com/auth/google/users',
 			userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
 		},
 		function(accessToken, refreshToken, profile, cb) {

@@ -1,8 +1,8 @@
 const mongoose = require('mongoose'),
-  validator = require('validator'),
-  bcrypt = require('bcryptjs'),
-  jwt = require('jsonwebtoken'),
-  Pet = require('./pet');
+	validator = require('validator'),
+	bcrypt = require('bcryptjs'),
+	jwt = require('jsonwebtoken'),
+	Pet = require('./pet');
 const findOrCreate = require('mongoose-findorcreate');
 
 const userSchema = new mongoose.Schema(
@@ -84,9 +84,7 @@ const userSchema = new mongoose.Schema(
 		longitude: {
 			type: Number,
 			default: Math.random() - 80
-		}
-	},
-	{
+		},
 		googleId: {
 			type: String
 		}
@@ -94,64 +92,58 @@ const userSchema = new mongoose.Schema(
 	{
 		timestamps: true
 	}
-
 );
 
 // connect pet to owner
 userSchema.virtual('pets', {
-  ref: Pet,
-  localField: '_id',
-  foreignField: 'user'
+	ref: Pet,
+	localField: '_id',
+	foreignField: 'user'
 });
 
 // hide user password/tokens
-userSchema.methods.toJSON = function () {
-  const user = this;
-  const userObject = user.toObject();
-  delete userObject.password;
-  delete userObject.tokens;
-  return userObject;
+userSchema.methods.toJSON = function() {
+	const user = this;
+	const userObject = user.toObject();
+	delete userObject.password;
+	delete userObject.tokens;
+	return userObject;
 };
 
 // add token to user
-userSchema.methods.generateAuthToken = async function () {
-  const user = this;
-  const token = jwt.sign(
-    { _id: user._id.toString(), name: user.name },
-    process.env.JWT_SECRET,
-    { expiresIn: '24h' }
-  );
-  user.tokens = user.tokens.concat({ token });
-  await user.save();
-  return token;
-
+userSchema.methods.generateAuthToken = async function() {
+	const user = this;
+	const token = jwt.sign({ _id: user._id.toString(), name: user.name }, process.env.JWT_SECRET, { expiresIn: '24h' });
+	user.tokens = user.tokens.concat({ token });
+	await user.save();
+	return token;
 };
 
 // find user by email and password
 userSchema.statics.findByCredentials = async (email, password) => {
-  const user = await User.findOne({ email });
-  if (!user) throw new Error("user doesn't exist");
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) throw new Error('invalid credentials');
-  return user;
+	const user = await User.findOne({ email });
+	if (!user) throw new Error("user doesn't exist");
+	const isMatch = await bcrypt.compare(password, user.password);
+	if (!isMatch) throw new Error('invalid credentials');
+	return user;
 };
 
 // Middleware
-userSchema.pre('save', async function (next) {
-  const user = this;
-  if (user.isModified('password')) {
-    user.password = await bcrypt.hash(user.password, 8);
-  }
-  next();
+userSchema.pre('save', async function(next) {
+	const user = this;
+	if (user.isModified('password')) {
+		user.password = await bcrypt.hash(user.password, 8);
+	}
+	next();
 });
 
 // Delete owned pets when a user is removed.
-userSchema.pre('remove', async function (next) {
-  const user = this;
-  await Pet.deleteMany({
-    owner: user._id
-  });
-  next();
+userSchema.pre('remove', async function(next) {
+	const user = this;
+	await Pet.deleteMany({
+		owner: user._id
+	});
+	next();
 });
 
 userSchema.plugin(findOrCreate);

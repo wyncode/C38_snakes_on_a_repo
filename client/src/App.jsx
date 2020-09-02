@@ -12,6 +12,7 @@ import SecureRoute from './Routes/SecureRoute';
 import LoggedInRoute from './Routes/LoggedInRoute';
 import { AppContextProvider } from './context/AppContext';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import VideoChat from './VideoChat/VideoChat';
 
 const App = () => {
 	return (
@@ -24,6 +25,7 @@ const App = () => {
 					<Route exact path="/map" component={LocationSearchPage} />
 					<Route exact path="/userprofile/:id" component={UserProfilePage} />
 					<Route exact path="/petprofile/:id" component={PetProfilePage} />
+					<Route exact path="/videochat" component={VideoChat} />
 					<LoggedInRoute exact path="/login" component={LoginPage} />
 					<LoggedInRoute exact path="/register" component={RegisterPage} />
 					<SecureRoute exact path="/account" component={AccountPage} />
