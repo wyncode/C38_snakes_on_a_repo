@@ -10,6 +10,7 @@ import SearchPage from './SearchMap/SearchPage';
 import UserProfilePage from './Profiles/UserProfile/UserProfilePage';
 import PetProfilePage from './Profiles/PetProfile/PetProfilePage';
 import SecureRoute from './Routes/SecureRoute';
+import ForgetPassword from './Login/ForgetPassword';
 import LoggedInRoute from './Routes/LoggedInRoute';
 import { AppContextProvider } from './context/AppContext';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -25,6 +26,7 @@ const App = () => {
           <Route exact path="/map" component={LocationSearchPage} />
           <Route exact path="/userprofile/:id" component={UserProfilePage} />
           <Route exact path="/petprofile/:id" component={PetProfilePage} />
+          <Route exact path="/password" component={ForgetPassword} />
           <LoggedInRoute exact path="/login" component={LoginPage} />
           <LoggedInRoute exact path="/register" component={RegisterPage} />
           <SecureRoute exact path="/account" component={AccountPage} />
