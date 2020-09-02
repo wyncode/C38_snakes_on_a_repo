@@ -51,7 +51,8 @@ router.put('/user/me', async (req, res) => {
     'description',
     'ownedPets',
     'favPets',
-    'favUsers'
+    'favUsers',
+    'events'
   ];
   const isValidOperation = updates.every((update) =>
     allowedUpdates.includes(update)

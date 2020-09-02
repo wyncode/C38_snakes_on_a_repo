@@ -9,6 +9,11 @@ const Calendar = () => {
   // Calendar States
   const [currentEvents, setCurrentEvents] = useState([]);
   const [counter, setCounter] = useState(0);
+  const [eventObj, setEventObj] = useState(null);
+
+  // useEffect(() => {
+  // LOAD all events
+  // }, [currentEvents])
 
   // from fullcalendar libary to handle calendar events
   const handleDateSelect = (selectInfo) => {
@@ -16,7 +21,7 @@ const Calendar = () => {
     let calendarApi = selectInfo.view.calendar;
     calendarApi.unselect(); // clear date selection
     if (title) {
-      calendarApi.addEvent({
+      let newEvent = calendarApi.addEvent({
         id: counter,
         title,
         start: selectInfo.startStr,
@@ -24,8 +29,13 @@ const Calendar = () => {
         allDay: selectInfo.allDay
       });
       setCounter(counter + 1);
+      setEventObj(newEvent);
+      // PUT new event to database
     }
   };
+
+  console.log('curr', currentEvents);
+  console.log('obj', eventObj);
 
   const handleEventClick = (clickInfo) => {
     if (
@@ -34,12 +44,15 @@ const Calendar = () => {
       )
     ) {
       clickInfo.event.remove();
+      // DELETE event from database
     }
   };
 
   const handleEvents = (events) => {
     setCurrentEvents(events);
   };
+
+  console.log(currentEvents);
 
   return (
     <Typography component="div" id="calendar">
@@ -53,8 +66,6 @@ const Calendar = () => {
         initialView="dayGridMonth"
         editable={true}
         selectable={true}
-        dayMaxEvents={true}
-        updateSize={true}
         select={handleDateSelect}
         eventClick={handleEventClick}
         eventsSet={handleEvents}
