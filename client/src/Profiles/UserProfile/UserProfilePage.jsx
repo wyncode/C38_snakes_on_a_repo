@@ -34,6 +34,7 @@ const UserProfilePage = ({ match }) => {
         <ProfileName
           name={userProfile.name}
           role={userProfile.owner ? 'pet owner' : 'pet sitter'}
+          id={id}
         />
         <ProfileButtons role="user" userEmail={userProfile.email} />
         {!userProfile.owner && (
