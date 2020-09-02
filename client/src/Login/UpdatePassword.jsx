@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 import axios from 'axios';
 
-const ForgetPassword = ({ history }) => {
+const UpdatePassword = ({ history }) => {
   const [formData, setFormData] = useState(null);
 
   const handleSubmit = async (e) => {
@@ -68,4 +68,4 @@ const ForgetPassword = ({ history }) => {
   );
 };
 
-export default ForgetPassword;
+export default UpdatePassword;

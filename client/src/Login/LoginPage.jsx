@@ -9,9 +9,9 @@ import {
   CardContent
 } from '@material-ui/core';
 import { AppContext } from '../context/AppContext';
-import axios from 'axios'
+import axios from 'axios';
 
-const LoginPage = ({history}) => {
+const LoginPage = ({ history }) => {
   const [formData, setFormData] = useState(null);
   const { setCurrentUser } = useContext(AppContext);
 
@@ -19,22 +19,21 @@ const LoginPage = ({history}) => {
     event.preventDefault();
     axios('/user/login', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       data: formData
-    }).then(({data}) => {
+    })
+      .then(({ data }) => {
         sessionStorage.setItem('user', data.data);
         setCurrentUser(data.data);
-        if (data){
+        if (data) {
           history.push('/account');
         }
-        
       })
       .catch((error) => {
         console.log(error);
-        alert("Problem logging in; check your email and password");
+        alert('Problem logging in; check your email and password');
       });
   };
-
 
   return (
     <div id="login-container">
@@ -45,7 +44,9 @@ const LoginPage = ({history}) => {
           </Typography>
           <form onSubmit={handleSubmit} autoComplete="off">
             <TextField
-              onChange={((e) => setFormData({ ...formData, [e.target.name]: e.target.value }))}
+              onChange={(e) =>
+                setFormData({ ...formData, [e.target.name]: e.target.value })
+              }
               className="text-field"
               variant="outlined"
               id="email"
@@ -54,7 +55,9 @@ const LoginPage = ({history}) => {
               name="email"
             />
             <TextField
-              onChange={((e) => setFormData({ ...formData, [e.target.name]: e.target.value }))}
+              onChange={(e) =>
+                setFormData({ ...formData, [e.target.name]: e.target.value })
+              }
               className="text-field"
               variant="outlined"
               id="password"
@@ -63,12 +66,12 @@ const LoginPage = ({history}) => {
               name="password"
             />
             <Typography variant="button">
-              <Link to="#">Forgot password?</Link>
+              <Link to="/password">Forgot password?</Link>
               <br />
               <Link to="/register">Register?</Link>
             </Typography>
             <Button
-            type="submit"
+              type="submit"
               variant="contained"
               size="large"
               style={{
