@@ -4,6 +4,7 @@ import 'react-tabs/style/react-tabs.css';
 import { Typography } from '@material-ui/core';
 import UpdateAccount from './UserForms/UpdateAccount';
 import PetForm from './PetForms/PetForm';
+import Favorites from './UserForms/Favorites';
 import { AppContext } from '../context/AppContext';
 
 const TabPane = () => {
@@ -43,7 +44,7 @@ const TabPane = () => {
           </>
         )}
         <TabPanel>
-          <h2>Favorites</h2>
+          <Favorites />
         </TabPanel>
       </Tabs>
     </Typography>

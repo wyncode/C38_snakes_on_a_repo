@@ -14,6 +14,32 @@ router.get('/user/me', async (req, res) => {
   }
 });
 
+// Get Current User's Favorites
+router.get('/user/me/favorites', async (req, res) => {
+  try {
+    let favorites = await req.user.find({}).select('favUsers favPets');
+    res.send(favorites);
+  } catch (err) {
+    res.status(500).json({ err: err.toString() });
+  }
+});
+
+// Add Or Remove Favorite
+router.put('/user/me/favorites/:fav/:id', async (req, res) => {
+  // let favType = req.params.fav;
+  try {
+    // if (req.user[favType].includes(req.params.id)) {
+    //   req.user[favType] = req.user[favType].filter((id) => id !== req.params.id);
+    // } else {
+    //   req.user.favType.push(req.params.id);
+    // }
+    // res.send(req.user[favType]);
+    res.send('is this working');
+  } catch (err) {
+    res.status(500).json({ err: err.toString() });
+  }
+});
+
 // Update Current User
 router.put('/user/me', async (req, res) => {
   const updates = Object.keys(req.body);
