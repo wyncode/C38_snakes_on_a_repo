@@ -24,7 +24,7 @@ const Favorites = () => {
         setCurrentFavSitters([...currentFavSitters, ...favSitters]);
       })
       .catch((error) => console.log(error));
-  }, [currentUser]);
+  }, [currentUser, loading]);
 
   const cards = (array, role) => {
     let profile = 'favUsers';
@@ -70,7 +70,7 @@ const Favorites = () => {
   const toggleFav = (e, profile, id) => {
     console.log(profile);
     console.log(id);
-    setLoading(true);
+
     axios
       .put(`/user/me/favorites?id=${id}&profile=${profile}`, {
         withCredentials: true
@@ -79,7 +79,12 @@ const Favorites = () => {
         console.log(data);
       })
       .catch((error) => console.log(error))
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setCurrentFavOwners([]);
+        setCurrentFavPets([]);
+        setCurrentFavSitters([]);
+        setLoading(!loading);
+      });
     let heart = e.target.style;
     if (heart.color === 'red') {
       heart.color = 'gray';

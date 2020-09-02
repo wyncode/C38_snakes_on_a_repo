@@ -6,19 +6,21 @@ import { AppContext } from '../../context/AppContext';
 import { Typography, Card, CardContent, Popover } from '@material-ui/core/';
 import FavoriteTwoToneIcon from '@material-ui/icons/FavoriteTwoTone';
 
-const ProfileName = ({ id, role, name }) => {
-  const { currentUser, user } = useContext(AppContext);
+const ProfileName = ({ id, role, name, heartRole }) => {
+  const { currentUser, user, loading } = useContext(AppContext);
   const heart = useRef(null);
   const [popoverMessage, setPopoverMessage] = useState('');
 
   useEffect(() => {
-    if (!currentUser || !user) {
+    if (!currentUser && !user) {
       heart.current.style.color = 'gray';
     } else {
       axios
         .get('/user/me', { withCredentials: true })
         .then(({ data }) => {
-          if (data.favPets.includes(id) || data.favUsers.includes(id)) {
+          if (data.favPets.includes(id) && heartRole === 'pet') {
+            heart.current.style.color = 'red';
+          } else if (data.favUsers.includes(id) && heartRole === 'user') {
             heart.current.style.color = 'red';
           } else {
             heart.current.style.color = 'gray';
@@ -26,7 +28,7 @@ const ProfileName = ({ id, role, name }) => {
         })
         .catch((error) => console.log(error));
     }
-  }, [id, currentUser, user]);
+  }, [currentUser, user, loading]);
 
   const toggleFav = () => {
     if (!currentUser || !user) {
@@ -42,7 +44,9 @@ const ProfileName = ({ id, role, name }) => {
       .put(`/user/me/favorites?id=${id}&profile=${profile}`, {
         withCredentials: true
       })
+      .then(({ data }) => console.log(data))
       .catch((error) => console.log(error));
+    console.log(heart.current.style.color);
     if (heart.current.style.color === 'red') {
       heart.current.style.color = 'gray';
       setPopoverMessage('Removed from favorites');
