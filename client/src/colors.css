@@ -140,9 +140,10 @@ a:hover {
 #calendar button {
   background: var(--mid-darker);
   border: none;
-  transition: all .3s;
+  transition: all 0.3s;
 }
-#calendar button:hover, #calendar button:focus {
+#calendar button:hover,
+#calendar button:focus {
   background: var(--mid);
 }
 /*BUTTON PAIR UNDERNEATH PROFILE NAME + LOGIN  & SEARCH BUTTONS*/

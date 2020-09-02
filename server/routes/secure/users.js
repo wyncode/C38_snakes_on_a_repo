@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const cloudinary = require('cloudinary').v2;
 const User = require('../../db/models/user');
+const { CancellationEmail } = require('../../emails/index');
 const Pet = require('../../db/models/pet');
 
 // Get Current User
@@ -8,6 +9,32 @@ router.get('/user/me', async (req, res) => {
   try {
     req.user.ownedPets = await Pet.find({ owner: req.user._id });
     res.json(req.user);
+  } catch (err) {
+    res.status(500).json({ err: err.toString() });
+  }
+});
+
+// Get Current User's Favorites
+router.get('/user/me/favorites', async (req, res) => {
+  try {
+    let favorites = await req.user.find({}).select('favUsers favPets');
+    res.send(favorites);
+  } catch (err) {
+    res.status(500).json({ err: err.toString() });
+  }
+});
+
+// Add Or Remove Favorite
+router.put('/user/me/favorites/:fav/:id', async (req, res) => {
+  // let favType = req.params.fav;
+  try {
+    // if (req.user[favType].includes(req.params.id)) {
+    //   req.user[favType] = req.user[favType].filter((id) => id !== req.params.id);
+    // } else {
+    //   req.user.favType.push(req.params.id);
+    // }
+    // res.send(req.user[favType]);
+    res.send('is this working');
   } catch (err) {
     res.status(500).json({ err: err.toString() });
   }
@@ -44,6 +71,7 @@ router.put('/user/me', async (req, res) => {
 // Delete Current User
 router.delete('/user/me', async (req, res) => {
   try {
+    CancellationEmail(req.user.email);
     await req.user.remove();
     res.clearCookie('jwt');
     res.json({ message: 'User deleted' });
@@ -84,6 +112,7 @@ router.put('/password', async (req, res) => {
     user.password = req.body.password;
     await user.save();
     res.clearCookie('jwt');
+
     res.json({ message: 'password updated successfully' });
   } catch (err) {
     res.json({ err: err.toString() });

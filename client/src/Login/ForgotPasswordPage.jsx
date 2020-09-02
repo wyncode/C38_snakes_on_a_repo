@@ -1,0 +1,71 @@
+import React, { useState } from 'react';
+import './login.css';
+import { Link } from 'react-router-dom';
+import {
+  Typography,
+  TextField,
+  Button,
+  Card,
+  CardContent
+} from '@material-ui/core';
+import axios from 'axios';
+
+const ForgetPassword = ({ history }) => {
+  const [formData, setFormData] = useState(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    try {
+      await axios.get(`/password?email=${formData}`);
+      form.reset();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <div id="login-container">
+      <Card elevation={3} className="gradient-border">
+        <CardContent className="card-inside">
+          <Typography variant="h2" className="header-card-title">
+            Forgot Password
+          </Typography>
+          <form onSubmit={handleSubmit} autoComplete="off">
+            <TextField
+              onChange={(e) =>
+                setFormData({ ...formData, [e.target.name]: e.target.value })
+              }
+              className="text-field"
+              variant="outlined"
+              label="email"
+              type="email"
+              name="email"
+            />
+            <Typography variant="button">
+              <Link to="#">Forgot password?</Link>
+              <br />
+              <Link to="/register">Register?</Link>
+            </Typography>
+            <Button
+              type="submit"
+              variant="contained"
+              size="large"
+              style={{
+                alignSelf: 'center',
+                marginTop: '30px',
+                width: '70%'
+              }}
+              className="header-card-btn"
+            >
+              Reset Password
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+export default ForgetPassword;

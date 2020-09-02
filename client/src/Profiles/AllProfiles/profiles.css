@@ -78,6 +78,7 @@
 #profile-name {
   margin-left: 5vw;
   margin-top: 10px;
+  position: relative;
   grid-area: name;
   min-height: 40px;
   width: 90%;
@@ -88,6 +89,9 @@
     margin-bottom: 20px;
     width: 100%;
   }
+}
+.heart {
+  position: absolute;
 }
 #profile-btn-wrapper {
   grid-area: btns;

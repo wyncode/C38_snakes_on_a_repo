@@ -17,12 +17,9 @@ const UpdatePet = ({ setPetUpdateID, petUpdateID, setSelectID, selectID }) => {
       .then((res) => {
         let pets = res.data.ownedPets;
         setPetList([...petList, ...pets]);
-        console.log('inside axios', petList);
       })
       .catch((error) => console.log(error));
-  }, []);
-
-  console.log('outside axios', petList);
+  }, [setPetList]);
 
   return (
     <div className="pet-select-id">
