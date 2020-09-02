@@ -22,8 +22,6 @@ const SearchPage = () => {
   const [searchModel, setSearchModel] = useState('');
   const [all, setAll] = useState([]);
 
-  console.log('results: ', results, 'sModel:', searchModel);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!searchModel) {
