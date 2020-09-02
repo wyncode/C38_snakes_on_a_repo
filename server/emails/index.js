@@ -1,51 +1,48 @@
-const nodemailer = require('nodemailer');
-let transport = nodemailer.createTransport({
-	host: 'smtp.mailtrap.io',
-	port: 2525,
-	auth: {
-		user: `${process.env.MAILTRAP_USERNAME}`,
-		pass: `${process.env.MAILTRAP_PASSWORD}`
-	}
-});
+const sgMail = require('@sendgrid/mail');
+const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
+const { cancellationEmail } = require('./cancellationEmail');
+const { passwordEmail } = require('./forgotPassword.js');
+const { welcomeEmail } = require('./welcomeEmail');
+sgMail.setApiKey(SENDGRID_API_KEY);
 
-const welcomeMessage = {
-	from: 'snakes-0fd529@inbox.mailtrap.io',
-	to: 'snakes-0fd529@inbox.mailtrap.io',
-	subject: 'Welcome to Pet-Xotic',
-	text: 'Get the best sitters to take care of your exotics companions!'
+const WelcomeEmail = (email, welcomeEmail) => {
+  sgMail
+    .send({
+      to: email,
+      from: `${process.env.FROM_EMAIL}`,
+      subject: 'Welcome to the Petster Exotic family ✨.',
+      html: welcomeEmail,
+      template_id: 'd-a1f050803e924917ae14271b11d39b84'
+    })
+    .catch((error) => console.log(error.response.body.errors));
 };
-transport.sendMail(welcomeMessage, (err, info) => {
-	if (err) {
-		console.log(err);
-	} else {
-		console.log('Email sent', info);
-	}
-});
 
-const cancellationMessage = {
-	from: 'snakes-0fd529@inbox.mailtrap.io',
-	to: 'snakes-0fd529@inbox.mailtrap.io',
-	subject: 'Welcome to Pet-Xotic',
-	text: 'Get the best sitters to take care of your exotics companions!'
+const CancellationEmail = (email, cancellationEmail) => {
+  sgMail
+    .send({
+      to: email,
+      from: `${process.env.FROM_EMAIL}`,
+      subject: 'Sorry to see you go. 🥺',
+      html: cancellationEmail,
+      template_id: 'd-228080a75e204bb0b14ae417ff9284ab'
+    })
+    .catch((error) => console.log(error.response.body.errors));
 };
-transport.sendMail(cancellationMessage, (err, info) => {
-	if (err) {
-		console.log(err);
-	} else {
-		console.log('Email sent', info);
-	}
-});
 
-const forgotPassword = {
-	from: 'snakes-0fd529@inbox.mailtrap.io',
-	to: 'snakes-0fd529@inbox.mailtrap.io',
-	subject: 'Welcome to Pet-Xotic',
-	text: 'Get the best sitters to take care of your exotics companions!'
+const ForgotPassword = (email, token) => {
+  sgMail
+    .send({
+      to: email,
+      from: `${process.env.FROM_EMAIL}`,
+      subject: 'Reset Password.',
+      html: passwordEmail(token),
+      template_id: 'aeb95daafbec49e1baee25e813252b89 '
+    })
+    .catch((error) => console.log(error.response.body.errors));
 };
-transport.sendMail(forgotPassword, (err, info) => {
-	if (err) {
-		console.log(err);
-	} else {
-		console.log('Email sent', info);
-	}
-});
+
+module.exports = {
+  WelcomeEmail,
+  CancellationEmail,
+  ForgotPassword
+};

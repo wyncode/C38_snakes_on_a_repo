@@ -56,7 +56,7 @@ const UpdateAccount = () => {
       'Warning: this action is permanent. Are you SURE you want to delete your account forever?'
     );
     axios
-      .delete(`/user/me`)
+      .delete(`/user/me`, {withCredentials: true})
       .then(() => {
         setCurrentUser(null);
         sessionStorage.removeItem('user');

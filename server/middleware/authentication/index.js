@@ -7,7 +7,7 @@ let jwtOptions = {
   jwtFromRequest: (req) => {
     return req?.cookies?.jwt || ExtractJwt.fromAuthHeaderWithScheme('jwt')(req);
   },
-  secretOrKey: process.env.JWT_SECRET,
+  secretOrKey: process.env.JWT_SECRET
 };
 
 passport.use(
@@ -19,7 +19,7 @@ passport.use(
     let { iat, exp, ...userData } = jwtPayload;
     userData = await User.findById(userData._id);
     return done(null, userData);
-  }),
+  })
 );
 
 module.exports = passport;
