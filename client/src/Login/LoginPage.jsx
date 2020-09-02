@@ -66,7 +66,7 @@ const LoginPage = ({ history }) => {
               name="password"
             />
             <Typography variant="button">
-              <Link to="#">Forgot password?</Link>
+              <Link to="/password">Forgot password?</Link>
               <br />
               <Link to="/register">Register?</Link>
             </Typography>
