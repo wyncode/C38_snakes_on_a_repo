@@ -18,9 +18,9 @@ const ProfileName = ({ id, role, name, heartRole }) => {
       axios
         .get('/user/me', { withCredentials: true })
         .then(({ data }) => {
-          if (data.favPets.includes(id) && heartRole === 'pet') {
+          if (data.favPets.indexOf(id) > -1 && heartRole === 'pet') {
             heart.current.style.color = 'red';
-          } else if (data.favUsers.includes(id) && heartRole === 'user') {
+          } else if (data.favUsers.indexOf(id) > -1 && heartRole === 'user') {
             heart.current.style.color = 'red';
           } else {
             heart.current.style.color = 'gray';
