@@ -51,7 +51,7 @@ const UserProfilePage = ({ match }) => {
             })}
         </div>
       </div>
-      <Calendar />
+      <Calendar id={id} />
     </div>
   );
 };

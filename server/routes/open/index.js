@@ -116,23 +116,14 @@ router.get('/pets/:id', async (req, res) => {
 });
 
 // Get Events by User ID
-router.get('/users/:id', async (req, res) => {
+router.get('/users/:id/events', async (req, res) => {
   try {
-    const events = await User.findById(req.params.id);
+    const events = await User.findById(req.params.id, 'events');
     if (!events) {
       res.sendStatus(410);
     } else {
       res.status(200).json(events);
     }
-  } catch (err) {
-    res.status(500).json({ err: err.toString() });
-  }
-});
-
-// Update Events by User ID
-router.put('/users/:id', async (req, res) => {
-  try {
-    res.status(200).json(req.body);
   } catch (err) {
     res.status(500).json({ err: err.toString() });
   }

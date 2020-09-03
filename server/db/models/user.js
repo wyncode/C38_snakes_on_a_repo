@@ -77,7 +77,16 @@ const userSchema = new mongoose.Schema(
         ref: 'Pet'
       }
     ],
-    events: [{ id: String, title: String, startStr: String, endStr: String }],
+    events: [
+      {
+        title: String,
+        startStr: String,
+        start: String,
+        endStr: String,
+        end: String,
+        allDay: Boolean
+      }
+    ],
     latitude: {
       type: Number,
       default: Math.random() + 25

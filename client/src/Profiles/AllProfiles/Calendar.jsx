@@ -1,19 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { Typography } from '@material-ui/core';
+import axios from 'axios';
 
-const Calendar = () => {
-  // Calendar States
-  const [currentEvents, setCurrentEvents] = useState([]);
-  const [counter, setCounter] = useState(0);
+const Calendar = ({ id }) => {
   const [eventObj, setEventObj] = useState(null);
+  const [onloadEvents, setOnloadEvents] = useState([]);
 
-  // useEffect(() => {
-  // LOAD all events
-  // }, [currentEvents])
+  useEffect(() => {
+    axios
+      .get(`/users/${id}/events`)
+      .then(({ data }) => {
+        console.log('data.events', data.events);
+        setOnloadEvents(data.events);
+      })
+      .catch((err) => console.log(err));
+  }, [id]);
+
+  console.log('onloadEvents', onloadEvents);
 
   // from fullcalendar libary to handle calendar events
   const handleDateSelect = (selectInfo) => {
@@ -22,37 +29,52 @@ const Calendar = () => {
     calendarApi.unselect(); // clear date selection
     if (title) {
       let newEvent = calendarApi.addEvent({
-        id: counter,
         title,
         start: selectInfo.startStr,
         end: selectInfo.endStr,
         allDay: selectInfo.allDay
       });
-      setCounter(counter + 1);
       setEventObj(newEvent);
-      // PUT new event to database
+      if (eventObj) {
+        console.log('eventObj in handleEvent', eventObj);
+        axios
+          .post('/user/me/events', {
+            events: {
+              title: eventObj.title,
+              start: eventObj.start,
+              startStr: eventObj.startStr,
+              end: eventObj.end,
+              endStr: eventObj.endStr,
+              allDay: eventObj.allDay
+            }
+          })
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     }
   };
 
-  console.log('curr', currentEvents);
-  console.log('obj', eventObj);
+  console.log(eventObj);
 
   const handleEventClick = (clickInfo) => {
+    console.log(clickInfo.event);
     if (
       window.confirm(
         `Are you sure you want to delete the event ${clickInfo.event.title}`
       )
     ) {
       clickInfo.event.remove();
-      // DELETE event from database
+      // axios.delete(`/user/me/events${eventID}`)
+      //     .then((response) => {
+      //       console.log(response);
+      //     })
+      //     .catch((error) => console.log(error));
     }
   };
-
-  const handleEvents = (events) => {
-    setCurrentEvents(events);
-  };
-
-  console.log(currentEvents);
 
   return (
     <Typography component="div" id="calendar">
@@ -64,11 +86,11 @@ const Calendar = () => {
           right: 'dayGridMonth,timeGridWeek,timeGridDay'
         }}
         initialView="dayGridMonth"
+        events={onloadEvents}
         editable={true}
         selectable={true}
         select={handleDateSelect}
         eventClick={handleEventClick}
-        eventsSet={handleEvents}
       />
     </Typography>
   );
