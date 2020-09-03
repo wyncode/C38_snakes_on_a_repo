@@ -18,20 +18,20 @@ passport.deserializeUser(function (id, done) {
 });
 
 passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.CLIENT_ID,
-      clientSecret: process.env.CLIENT_SECRET,
-      callbackURL: 'https://petster-exotic.herokuapp.com/auth/google/users',
-      userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
-    },
-    function (accessToken, refreshToken, profile, cb) {
-      console.log(profile);
-      User.findOrCreate({ googleId: profile.id }, function (err, user) {
-        return cb(err, user);
-      });
-    }
-  )
+	new GoogleStrategy(
+		{
+			clientID: process.env.CLIENT_ID,
+			clientSecret: process.env.CLIENT_SECRET,
+			callbackURL: process.env.URL || 'https://petster-exotic.herokuapp.com/auth/google/users',
+			userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
+		},
+		function(accessToken, refreshToken, profile, cb) {
+			console.log(profile);
+			User.findOrCreate({ googleId: profile.id }, function(err, user) {
+				return cb(err, user);
+			});
+		}
+	)
 );
 
 router.get(

@@ -14,6 +14,7 @@ import LoggedInRoute from './Routes/LoggedInRoute';
 import UpdatePassword from './Login/UpdatePassword';
 import { AppContextProvider } from './context/AppContext';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import VideoChat from './VideoChat/VideoChat';
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
           <Route exact path="/petprofile/:id" component={PetProfilePage} />
           <Route exact path="/password" component={ForgotPasswordPage} />
           <Route exact path="/update-password" component={UpdatePassword} />
+          <Route exact path="/videochat" component={VideoChat} />
           <LoggedInRoute exact path="/login" component={LoginPage} />
           <LoggedInRoute exact path="/register" component={RegisterPage} />
           <SecureRoute exact path="/account" component={AccountPage} />
