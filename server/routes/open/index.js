@@ -18,20 +18,22 @@ passport.deserializeUser(function (id, done) {
 });
 
 passport.use(
-	new GoogleStrategy(
-		{
-			clientID: process.env.CLIENT_ID,
-			clientSecret: process.env.CLIENT_SECRET,
-			callbackURL: process.env.URL || 'https://petster-exotic.herokuapp.com/auth/google/users',
-			userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
-		},
-		function(accessToken, refreshToken, profile, cb) {
-			console.log(profile);
-			User.findOrCreate({ googleId: profile.id }, function(err, user) {
-				return cb(err, user);
-			});
-		}
-	)
+  new GoogleStrategy(
+    {
+      clientID: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
+      callbackURL:
+        process.env.URL ||
+        'https://petster-exotic.herokuapp.com/auth/google/users',
+      userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
+    },
+    function (accessToken, refreshToken, profile, cb) {
+      console.log(profile);
+      User.findOrCreate({ googleId: profile.id }, function (err, user) {
+        return cb(err, user);
+      });
+    }
+  )
 );
 
 router.get(
@@ -129,6 +131,20 @@ router.get('/pets/:id', async (req, res) => {
       res.sendStatus(410);
     } else {
       res.status(200).json(pet);
+    }
+  } catch (err) {
+    res.status(500).json({ err: err.toString() });
+  }
+});
+
+// Get Events by User ID
+router.get('/users/:id/events', async (req, res) => {
+  try {
+    const events = await User.findById(req.params.id, 'events');
+    if (!events) {
+      res.sendStatus(410);
+    } else {
+      res.status(200).json(events);
     }
   } catch (err) {
     res.status(500).json({ err: err.toString() });

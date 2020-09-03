@@ -9,7 +9,7 @@ import SearchPage from './SearchMap/SearchPage';
 import UserProfilePage from './Profiles/UserProfile/UserProfilePage';
 import PetProfilePage from './Profiles/PetProfile/PetProfilePage';
 import SecureRoute from './Routes/SecureRoute';
-import ForgotPasswordPage from './Login/ForgotPasswordPage';
+import ForgetPassword from './Login/ForgetPassword';
 import LoggedInRoute from './Routes/LoggedInRoute';
 import UpdatePassword from './Login/UpdatePassword';
 import { AppContextProvider } from './context/AppContext';
@@ -27,7 +27,7 @@ const App = () => {
           <Route exact path="/map" component={LocationSearchPage} />
           <Route exact path="/userprofile/:id" component={UserProfilePage} />
           <Route exact path="/petprofile/:id" component={PetProfilePage} />
-          <Route exact path="/password" component={ForgotPasswordPage} />
+          <Route exact path="/password" component={ForgetPassword} />
           <Route exact path="/update-password" component={UpdatePassword} />
           <Route exact path="/videochat" component={VideoChat} />
           <LoggedInRoute exact path="/login" component={LoginPage} />
