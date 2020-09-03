@@ -5,7 +5,12 @@ const passport = require('passport'),
 
 let jwtOptions = {
   jwtFromRequest: (req) => {
-    return req?.cookies?.jwt || ExtractJwt.fromAuthHeaderWithScheme('jwt')(req);
+    let token =
+      req?.cookies?.jwt || ExtractJwt.fromAuthHeaderWithScheme('jwt')(req);
+    if (token?.includes('++target=')) {
+      [token] = token.split('++target=');
+    }
+    return token;
   },
   secretOrKey: process.env.JWT_SECRET
 };

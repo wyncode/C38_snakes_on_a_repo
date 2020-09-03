@@ -11,18 +11,18 @@ import {
 import axios from 'axios';
 
 const ForgetPassword = ({ history }) => {
-  const [formData, setFormData] = useState(null);
+  const [formData, setFormData] = useState('');
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const form = e.target;
-    try {
-      await axios.get(`/password?email=${formData}`);
-      form.reset();
-    } catch (error) {
-      console.log(error);
-    }
+    axios
+      .get(`/password?email=${formData}`)
+      .then((res) => {
+        form.reset();
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -34,9 +34,7 @@ const ForgetPassword = ({ history }) => {
           </Typography>
           <form onSubmit={handleSubmit} autoComplete="off">
             <TextField
-              onChange={(e) =>
-                setFormData({ ...formData, [e.target.name]: e.target.value })
-              }
+              onChange={(e) => setFormData(e.target.value)}
               className="text-field"
               variant="outlined"
               label="email"

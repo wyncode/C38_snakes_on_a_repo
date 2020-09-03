@@ -27,7 +27,7 @@ const App = () => {
           <Route exact path="/userprofile/:id" component={UserProfilePage} />
           <Route exact path="/petprofile/:id" component={PetProfilePage} />
           <Route exact path="/password" component={ForgotPasswordPage} />
-          <Route exact path="/updatepassword" component={UpdatePassword} />
+          <Route exact path="/update-password" component={UpdatePassword} />
           <LoggedInRoute exact path="/login" component={LoginPage} />
           <LoggedInRoute exact path="/register" component={RegisterPage} />
           <SecureRoute exact path="/account" component={AccountPage} />

@@ -210,4 +210,4 @@ function passwordEmail(token) {
     </html>
 `;
 }
-module.exports =  {passwordEmail};
+module.exports = { passwordEmail };

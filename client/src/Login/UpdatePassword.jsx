@@ -21,12 +21,16 @@ const UpdatePassword = ({ history }) => {
     if (password.password !== password.confirmPassword) {
       throw Error('Error', 'Oops, passwords must match.');
     }
-    await axios.put(
-      '/password',
-      { password: password.password },
-      { withCredentials: true }
-    );
-    history.push('/login');
+    try {
+      await axios.put(
+        '/password',
+        { password: password.password },
+        { withCredentials: true }
+      );
+      history.push('/login');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

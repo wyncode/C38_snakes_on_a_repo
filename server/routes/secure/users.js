@@ -109,10 +109,9 @@ router.post('/user/logoutAll', async (req, res) => {
 // Update Password
 router.put('/password', async (req, res) => {
   try {
-    user.password = req.body.password;
-    await user.save();
+    req.user.password = req.body.password;
+    await req.user.save();
     res.clearCookie('jwt');
-
     res.json({ message: 'password updated successfully' });
   } catch (err) {
     res.json({ err: err.toString() });
