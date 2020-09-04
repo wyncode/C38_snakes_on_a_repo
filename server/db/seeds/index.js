@@ -8,11 +8,6 @@ const User = require('../models/user'),
   moment = require('moment'),
   mongoose = require('mongoose');
 
-/**
- * @todo
- * There are ways we can run these promises concurrently to speed up the seed process
- * using Promise.all()
- */
 const dbReset = async () => {
   const collections = Object.keys(mongoose.connection.collections);
   for (const collectionName of collections) {

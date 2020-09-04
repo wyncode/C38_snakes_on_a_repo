@@ -3,6 +3,9 @@ const cloudinary = require('cloudinary').v2;
 const Pet = require('../../db/models/pet');
 const User = require('../../db/models/user');
 
+/*************************************************/
+/** CREATE, DELETE, UPDATE CURRENT USER'S PETS**/
+/*************************************************/
 // Create New Pet For Current User
 router.post('/pets', async (req, res) => {
   const {
@@ -95,6 +98,9 @@ router.put('/pets/:id', async (req, res) => {
   }
 });
 
+/*************************************************/
+/** GET, EDIT, ADD PET'S LINKS*/
+/*************************************************/
 // Add Pet Link
 router.post('/pets/:id/link', async (req, res) => {
   try {
@@ -135,6 +141,23 @@ router.get('/pets/:id/link/:linkID', async (req, res) => {
 });
 
 // Delete Pet Link by ID
+router.delete('/pets/:id/link/:linkID', async (req, res) => {
+  try {
+    const pet = await Pet.findById(req.params.id);
+    const link = await pet.links.id(req.params.linkID);
+    link.remove();
+    pet.save();
+    res.json(pet);
+  } catch (err) {
+    res.status(500).json({ err: err.toString() });
+  }
+});
+
+/*************************************************/
+/** ADD & DELETE PET EVENTS                     **/
+/*************************************************/
+
+// Delete Pet Event
 // router.delete('/pets/:id/link/:linkID', async (req, res) => {
 //   try {
 //     const pet = await Pet.findById(req.params.id);
@@ -146,6 +169,7 @@ router.get('/pets/:id/link/:linkID', async (req, res) => {
 
 // Add Pet Events
 router.post('/pets/:id/events', async (req, res) => {
+  console.log(req.body);
   try {
     const pet = await Pet.findById(req.params.id);
     pet.events.push(req.body.events);
@@ -156,6 +180,9 @@ router.post('/pets/:id/events', async (req, res) => {
   }
 });
 
+/*************************************************/
+/** PET AVATAR                                  **/
+/*************************************************/
 // Upload Pet Avatar
 router.post('/pets/avatar/:id', async (req, res) => {
   try {

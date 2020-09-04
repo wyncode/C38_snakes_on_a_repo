@@ -4,6 +4,10 @@ const User = require('../../db/models/user');
 const { CancellationEmail } = require('../../emails/index');
 const Pet = require('../../db/models/pet');
 
+/*************************************************/
+/** GET, UPDATE & DELETE CURRENT USER                            **/
+/*************************************************/
+
 // Get Current User
 router.get('/user/me', async (req, res) => {
   try {
@@ -14,6 +18,50 @@ router.get('/user/me', async (req, res) => {
   }
 });
 
+// Update Current User
+router.put('/user/me', async (req, res) => {
+  const updates = Object.keys(req.body);
+  const allowedUpdates = [
+    'name',
+    'email',
+    'password',
+    'avatar',
+    'description',
+    'ownedPets',
+    'favPets',
+    'favUsers',
+    'events'
+  ];
+  const isValidOperation = updates.every((update) =>
+    allowedUpdates.includes(update)
+  );
+  if (!isValidOperation) {
+    return res.status(400).send({ error: 'invalid updates!' });
+  }
+  try {
+    updates.forEach((update) => (req.user[update] = req.body[update]));
+    await req.user.save();
+    res.json(req.user);
+  } catch (err) {
+    res.status(400).json({ err: err.toString() });
+  }
+});
+
+// Delete Current User
+router.delete('/user/me', async (req, res) => {
+  try {
+    CancellationEmail(req.user.email);
+    await req.user.remove();
+    res.clearCookie('jwt');
+    res.json({ message: 'User deleted' });
+  } catch (err) {
+    res.status(500).json({ err: err.toString() });
+  }
+});
+
+/*************************************************/
+/** GET & TOGGLE CURRENT USER FAVORITES          */
+/*************************************************/
 // Get Current User's Favorites
 router.get('/user/me/favorites', async (req, res) => {
   try {
@@ -57,6 +105,9 @@ router.put('/user/me/favorites', async (req, res) => {
   }
 });
 
+/*************************************************/
+/** ADD & DELETE CURRENT USER'S EVENTS          **/
+/*************************************************/
 // Add Events
 router.post('/user/me/events', async (req, res) => {
   try {
@@ -80,60 +131,54 @@ router.post('/user/me/events', async (req, res) => {
 //   }
 // });
 
-// router.delete('/user/me/events', async (req, res) => {
-//   const { title, start, end } = req.query;
-//   try {
-//     if (!event) {
-//       res.sendStatus(410).json('nothing found');
-//     } else {
-//       res.status(200).json(event);
-//     }
-//   } catch (err) {
-//     res.status(500).json({ err: err.toString() });
-//   }
-// });
-
-// Update Current User
-router.put('/user/me', async (req, res) => {
-  const updates = Object.keys(req.body);
-  const allowedUpdates = [
-    'name',
-    'email',
-    'password',
-    'avatar',
-    'description',
-    'ownedPets',
-    'favPets',
-    'favUsers',
-    'events'
-  ];
-  const isValidOperation = updates.every((update) =>
-    allowedUpdates.includes(update)
-  );
-  if (!isValidOperation) {
-    return res.status(400).send({ error: 'invalid updates!' });
-  }
+router.delete('/user/me/events', async (req, res) => {
+  const { title, start, end } = req.query;
+  // console.log(req.user._id);
+  // console.log(req.query);
+  // console.log(title + start + end);
   try {
-    updates.forEach((update) => (req.user[update] = req.body[update]));
-    await req.user.save();
-    res.json(req.user);
-  } catch (err) {
-    res.status(400).json({ err: err.toString() });
-  }
-});
+    const events = await User.find({
+      _id: req.user._id,
+      events: {
+        $and: [
+          { title: { $regex: `${title}`, $options: 'i' } },
+          { start: { $regex: `${start}`, $options: 'i' } },
+          { end: { $regex: `${end}`, $options: 'i' } }
+        ]
+      }
+    });
 
-// Delete Current User
-router.delete('/user/me', async (req, res) => {
-  try {
-    CancellationEmail(req.user.email);
-    await req.user.remove();
-    res.clearCookie('jwt');
-    res.json({ message: 'User deleted' });
+    // req.user.events.pull(events).save();
+    if (!events) {
+      res.sendStatus(410).json('nothing found');
+    } else {
+      res.status(200).json(events);
+    }
   } catch (err) {
     res.status(500).json({ err: err.toString() });
   }
 });
 
+/*************************************************/
+/** Upload User Avatar                          **/
+/*************************************************/
+// Upload User Avatar
+router.post('/user/avatar', async (req, res) => {
+  try {
+    const response = await cloudinary.uploader.upload(
+      req.files.avatar.tempFilePath
+    );
+    req.user.avatar = response.secure_url;
+    await req.user.save();
+    res.json(response);
+  } catch (err) {
+    res.status(400).json({ err: err.toString() });
+  }
+});
+
+/*************************************************/
+/** LOGOUT & RESET PASSWORD                     **/
+/*************************************************/
 // User Logout
 router.post('/user/logout', async (req, res) => {
   try {
@@ -169,20 +214,6 @@ router.put('/password', async (req, res) => {
     res.json({ message: 'password updated successfully' });
   } catch (err) {
     res.json({ err: err.toString() });
-  }
-});
-
-// Upload Avatar
-router.post('/user/avatar', async (req, res) => {
-  try {
-    const response = await cloudinary.uploader.upload(
-      req.files.avatar.tempFilePath
-    );
-    req.user.avatar = response.secure_url;
-    await req.user.save();
-    res.json(response);
-  } catch (err) {
-    res.status(400).json({ err: err.toString() });
   }
 });
 

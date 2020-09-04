@@ -55,18 +55,8 @@ router.get('/search/pet', async (req, res) => {
   try {
     const pets = await Pet.find({
       $or: [
-        {
-          name: {
-            $regex: `${query}`,
-            $options: 'i'
-          }
-        },
-        {
-          description: {
-            $regex: `${query}`,
-            $options: 'i'
-          }
-        }
+        { name: { $regex: `${query}`, $options: 'i' } },
+        { description: { $regex: `${query}`, $options: 'i' } }
       ]
     });
     if (!pets) {
@@ -85,18 +75,8 @@ router.get('/search/user', async (req, res) => {
   try {
     const users = await User.find({
       $or: [
-        {
-          name: {
-            $regex: `${query}`,
-            $options: 'i'
-          }
-        },
-        {
-          description: {
-            $regex: `${query}`,
-            $options: 'i'
-          }
-        }
+        { name: { $regex: `${query}`, $options: 'i' } },
+        { description: { $regex: `${query}`, $options: 'i' } }
       ]
     });
     if (!users) {
