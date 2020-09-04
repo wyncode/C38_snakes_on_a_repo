@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 const VideoChat = () => {
     const jitsiContainerId = "jitsi-container-id";
@@ -7,12 +7,12 @@ const VideoChat = () => {
   const loadJitsiScript = () => {
     let resolveLoadJitsiScriptPromise = null;
 
-    const loadJitsiScriptPromise = new Promise(resolve => {
+    const loadJitsiScriptPromise = new Promise((resolve) => {
       resolveLoadJitsiScriptPromise = resolve;
     });
 
-    const script = document.createElement("script");
-    script.src = "https://meet.jit.si/external_api.js";
+    const script = document.createElement('script');
+    script.src = 'https://meet.jit.si/external_api.js';
     script.async = true;
     script.onload = () => resolveLoadJitsiScriptPromise(true);
     document.body.appendChild(script);
@@ -25,7 +25,7 @@ const VideoChat = () => {
       await loadJitsiScript();
     }
 
-    const _jitsi = new window.JitsiMeetExternalAPI("meet.jit.si", {
+    const _jitsi = new window.JitsiMeetExternalAPI('meet.jit.si', {
       parentNode: document.getElementById(jitsiContainerId)
     });
 
@@ -38,7 +38,9 @@ const VideoChat = () => {
     return () => jitsi?.dispose?.();
   }, []);
 
-  return <div id={jitsiContainerId} style={{ height: "100%", width: "100%" }} />;
+  return (
+    <div id={jitsiContainerId} style={{ height: '100%', width: '100%' }} />
+  );
 };
 
 export default VideoChat;

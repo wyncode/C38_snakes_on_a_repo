@@ -17,25 +17,65 @@ router.get('/user/me', async (req, res) => {
 // Get Current User's Favorites
 router.get('/user/me/favorites', async (req, res) => {
   try {
-    let favorites = await req.user.find({}).select('favUsers favPets');
+    const favorites = [];
+    // get current user's fav users, get the info of those users, split into owner/sitter
+    const userArray = await User.findById({ _id: req.user._id }, 'favUsers');
+    const myFavUsers = await User.find({ _id: { $in: userArray.favUsers } });
+    const favOwners = myFavUsers.filter((user) => user.owner);
+    const favSitters = myFavUsers.filter((user) => !user.owner);
+
+    //get current user's fav pets, get the info of those pets
+    const petArray = await User.findById({ _id: req.user._id }, 'favPets');
+    const favPets = await Pet.find({ _id: { $in: petArray.favPets } });
+
+    // condense all three into one array
+    favorites.push(
+      { pets: favPets },
+      { owners: favOwners },
+      { sitters: favSitters }
+    );
     res.send(favorites);
   } catch (err) {
     res.status(500).json({ err: err.toString() });
   }
 });
 
-// Add Or Remove Favorite
-router.put('/user/me/favorites/:fav/:id', async (req, res) => {
-  // let favType = req.params.fav;
+// Toggle Favorite
+router.put('/user/me/favorites', async (req, res) => {
+  // value of profile needs to be 'favUsers' or 'favPets'
+  let { id, profile } = req.query;
   try {
-    // if (req.user[favType].includes(req.params.id)) {
-    //   req.user[favType] = req.user[favType].filter((id) => id !== req.params.id);
-    // } else {
-    //   req.user.favType.push(req.params.id);
-    // }
-    // res.send(req.user[favType]);
-    res.send('is this working');
+    if (req.user[profile].includes(id)) {
+      req.user[profile].pull(id);
+    } else {
+      req.user[profile].push(id);
+    }
+    req.user.save();
+    res.send(req.user);
   } catch (err) {
+    res.status(500).json({ err: err.toString() });
+  }
+});
+
+// Add Events
+router.post('/user/me/events', async (req, res) => {
+  try {
+    req.user.events.push(req.body.events);
+    req.user.save();
+    res.status(201).send(req.user);
+  } catch (error) {
+    res.status(500).json({ err: err.toString() });
+  }
+});
+
+// Delete Events
+router.delete('/user/me/events/:id', async (req, res) => {
+  try {
+    const event = await req.user.events.id(req.params.id);
+    event.remove();
+    req.user.save();
+    res.status(201).send(req.user);
+  } catch (error) {
     res.status(500).json({ err: err.toString() });
   }
 });
@@ -109,10 +149,9 @@ router.post('/user/logoutAll', async (req, res) => {
 // Update Password
 router.put('/password', async (req, res) => {
   try {
-    user.password = req.body.password;
-    await user.save();
+    req.user.password = req.body.password;
+    await req.user.save();
     res.clearCookie('jwt');
-
     res.json({ message: 'password updated successfully' });
   } catch (err) {
     res.json({ err: err.toString() });

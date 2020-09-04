@@ -24,6 +24,7 @@ import { useLocation } from 'react-router-dom';
 import clsx from 'clsx';
 import { AppContext } from '../context/AppContext';
 import Logout from '../Login/Logout';
+import navBarLogo from '../Images/navBarLogo.png';
 import './nav.css';
 import '../colors.css';
 
@@ -124,9 +125,20 @@ const Nav = () => {
   // Wrapped Navbar Return in If/Else so that it does NOT display on landing page
   if (pathname !== '/') {
     return (
-      <div>
+      <>
         <AppBar id="navbar">
           <Toolbar>
+            {/* HOME BUTTON */}
+            <IconButton
+              className="logo"
+              edge="start"
+              aria-label="menu"
+              to="/"
+              component={Link}
+            >
+              <img src={navBarLogo} alt="navbar logo" />
+            </IconButton>
+
             {/* DRAWER BUTTON */}
             <IconButton
               className="navbar-menu"
@@ -136,30 +148,6 @@ const Nav = () => {
               aria-label="menu"
             >
               <MenuIcon />
-            </IconButton>
-
-            {/* HOME BUTTON */}
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              className="navbar-menu"
-              to="/"
-              component={Link}
-            >
-              <HomeIcon />
-            </IconButton>
-
-            {/* SEARCH BUTTON */}
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              className="navbar-menu"
-              to="/search"
-              component={Link}
-            >
-              <SearchIcon />
             </IconButton>
 
             {/* LOGIN BUTTON */}
@@ -243,7 +231,7 @@ const Nav = () => {
         >
           {list(anchor)}
         </Drawer>
-      </div>
+      </>
     );
   } else {
     return null;

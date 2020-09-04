@@ -178,22 +178,26 @@
 /* Favorites */
 .fav-box {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
-  font-size: 20px;
+  justify-content: center;
 }
 .fav-card {
   margin: 30px;
   position: relative;
+  width: 300px;
   padding: 40px 20px 20px;
+  text-align: left;
   border-radius: 10px;
   border: 1px solid black;
   border-right-width: 2px;
   border-bottom-width: 3px;
 }
 .heart {
+  cursor: pointer;
   position: absolute;
   top: 10px;
   left: 10px;
+  transform: scale(2, 2);
+  padding: 2px;
   color: red;
 }

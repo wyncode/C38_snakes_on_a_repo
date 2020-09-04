@@ -1,7 +1,6 @@
 import React from 'react';
 import Nav from './Navbar/Nav';
 import Landing from './Landing Page/Landing';
-import ForgotPasswordPage from './Login/ForgotPasswordPage';
 import LoginPage from './Login/LoginPage';
 import RegisterPage from './Login/RegisterPage';
 import AccountPage from './Account/AccountPage';
@@ -12,6 +11,7 @@ import PetProfilePage from './Profiles/PetProfile/PetProfilePage';
 import SecureRoute from './Routes/SecureRoute';
 // import ForgetPassword from './Login/ForgetPassword';
 import LoggedInRoute from './Routes/LoggedInRoute';
+import UpdatePassword from './Login/UpdatePassword';
 import { AppContextProvider } from './context/AppContext';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import VideoChat from './VideoChat/VideoChat';

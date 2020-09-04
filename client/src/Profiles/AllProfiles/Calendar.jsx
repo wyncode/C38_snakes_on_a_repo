@@ -1,14 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { Typography } from '@material-ui/core';
+import axios from 'axios';
 
-const Calendar = () => {
-  // Calendar States
-  const [currentEvents, setCurrentEvents] = useState([]);
-  const [counter, setCounter] = useState(0);
+const Calendar = ({ id }) => {
+  const [onloadEvents, setOnloadEvents] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`/users/${id}/events`)
+      .then(({ data }) => {
+        console.log('data.events', data.events);
+        setOnloadEvents(data.events);
+      })
+      .catch((err) => console.log(err));
+  }, [id]);
+
+  console.log('onloadEvents', onloadEvents);
 
   // from fullcalendar libary to handle calendar events
   const handleDateSelect = (selectInfo) => {
@@ -16,29 +27,43 @@ const Calendar = () => {
     let calendarApi = selectInfo.view.calendar;
     calendarApi.unselect(); // clear date selection
     if (title) {
-      calendarApi.addEvent({
-        id: counter,
+      let newEvent = calendarApi.addEvent({
         title,
-        start: selectInfo.startStr,
-        end: selectInfo.endStr,
+        start: selectInfo.start,
+        startStr: selectInfo.startStr,
+        end: selectInfo.end,
+        endStr: selectInfo.endStr,
         allDay: selectInfo.allDay
       });
-      setCounter(counter + 1);
+      addEvent(newEvent);
     }
+  };
+
+  const addEvent = (eventObj) => {
+    axios
+      .post('/user/me/events', {
+        events: {
+          title: eventObj.title,
+          start: eventObj.start,
+          startStr: eventObj.startStr,
+          end: eventObj.end,
+          endStr: eventObj.endStr,
+          allDay: eventObj.allDay
+        }
+      })
+      .then(({ data }) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const handleEventClick = (clickInfo) => {
-    if (
-      window.confirm(
-        `Are you sure you want to delete the event ${clickInfo.event.title}`
-      )
-    ) {
-      clickInfo.event.remove();
-    }
-  };
-
-  const handleEvents = (events) => {
-    setCurrentEvents(events);
+    console.log(clickInfo.event);
+    alert(
+      `${clickInfo.event.title}: from ${clickInfo.event.startStr} to ${clickInfo.event.endStr}`
+    );
   };
 
   return (
@@ -51,13 +76,11 @@ const Calendar = () => {
           right: 'dayGridMonth,timeGridWeek,timeGridDay'
         }}
         initialView="dayGridMonth"
+        events={onloadEvents}
         editable={true}
         selectable={true}
-        dayMaxEvents={true}
-        updateSize={true}
         select={handleDateSelect}
         eventClick={handleEventClick}
-        eventsSet={handleEvents}
       />
     </Typography>
   );
