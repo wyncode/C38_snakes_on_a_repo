@@ -81,7 +81,7 @@ router.post('/user/me/events', async (req, res) => {
 // });
 
 // router.delete('/user/me/events', async (req, res) => {
-//   const { atitle, start, end } = req.query;
+//   const { title, start, end } = req.query;
 //   try {
 //     if (!event) {
 //       res.sendStatus(410).json('nothing found');
@@ -104,7 +104,8 @@ router.put('/user/me', async (req, res) => {
     'description',
     'ownedPets',
     'favPets',
-    'favUsers'
+    'favUsers',
+    'events'
   ];
   const isValidOperation = updates.every((update) =>
     allowedUpdates.includes(update)

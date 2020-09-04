@@ -46,7 +46,7 @@ const PetProfilePage = ({ match }) => {
           />
         </div>
       </div>
-      <Calendar id={id} />
+      <Calendar id={id} ownerID={pet.owner} />
     </div>
   );
 };

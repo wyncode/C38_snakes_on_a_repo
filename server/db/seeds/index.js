@@ -57,12 +57,30 @@ const dbReset = async () => {
   const randomUser =
     userIdArray[Math.floor(Math.random() * userIdArray.length)];
 
+  const randomElements = (array) => {
+    let randomArray = [];
+    for (let i = 0; i < 3; i++) {
+      randomArray.push(array[randomNum(array)]);
+    }
+    return randomArray;
+  };
+
+  const randomNum = (arr) => {
+    return Math.floor(Math.random() * arr.length);
+  };
+
+  const randomEvents = (start, end) => {
+    return {
+      title: faker.lorem.words(),
+      allDay: Boolean(Math.round(Math.random())),
+      start: moment(start).toJSON(),
+      end: moment(end).toJSON()
+    };
+  };
+
   for (let i = 0; i < 25; i++) {
     const randomIndex = Math.floor(Math.random() * allowedTypes.length);
     const randomType = allowedTypes[randomIndex];
-
-    const randomUser =
-      userIdArray[Math.floor(Math.random() * userIdArray.length)];
 
     const pet = new Pet({
       name: `${faker.name.firstName()}`,
@@ -80,6 +98,11 @@ const dbReset = async () => {
         { url: faker.internet.url(), text: faker.lorem.words() },
         { url: faker.internet.url(), text: faker.lorem.words() }
       ],
+      events: [
+        randomEvents(faker.date.recent(), faker.date.recent()),
+        randomEvents(faker.date.recent(), faker.date.soon()),
+        randomEvents(faker.date.soon(), faker.date.soon())
+      ],
       owner: randomUser
     });
     pet.save();
@@ -87,29 +110,8 @@ const dbReset = async () => {
     petArray.push(pet);
   }
 
-  const randomNum = (arr) => {
-    return Math.floor(Math.random() * arr.length);
-  };
-
-  const randomElements = (array) => {
-    let randomArray = [];
-    for (let i = 0; i < 3; i++) {
-      randomArray.push(array[randomNum(array)]);
-    }
-    return randomArray;
-  };
-
-  const randomEvents = (start, end) => {
-    return {
-      title: faker.lorem.words(),
-      allDay: Boolean(Math.round(Math.random())),
-      start: moment(start).toJSON(),
-      end: moment(end).toJSON()
-    };
-  };
-
   const queryAllUsers = () => {
-    //Where User is you mongoose user model
+    //Where User is your mongoose user model
     User.find({}, (err, users) => {
       if (err) {
         console.log(err);

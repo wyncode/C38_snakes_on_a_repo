@@ -137,6 +137,20 @@ router.get('/pets/:id', async (req, res) => {
   }
 });
 
+// Get Events by PetID
+router.get('/pets/:id/events', async (req, res) => {
+  try {
+    const events = await Pet.findById(req.params.id, 'events');
+    if (!events) {
+      res.sendStatus(410);
+    } else {
+      res.status(200).json(events);
+    }
+  } catch (err) {
+    res.status(500).json({ err: err.toString() });
+  }
+});
+
 // Get Events by User ID
 router.get('/users/:id/events', async (req, res) => {
   try {
