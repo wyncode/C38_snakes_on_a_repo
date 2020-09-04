@@ -4,6 +4,7 @@ import axios from 'axios';
 import { AppContext } from '../../context/AppContext';
 import '../account.css';
 import '../../colors.css';
+import swal from 'sweetalert';
 
 const PetLinks = ({ selectID, petUpdate }) => {
   const { setLoading } = useContext(AppContext);
@@ -14,7 +15,7 @@ const PetLinks = ({ selectID, petUpdate }) => {
     axios
       .post(`/pets/${selectID}/link`, currentLink)
       .then(() => {
-        alert('Link added!');
+        swal('Success!', 'Link added!', 'success');
       })
       .catch((error) => {
         console.log(error);
@@ -27,7 +28,7 @@ const PetLinks = ({ selectID, petUpdate }) => {
     axios
       .put(`/pets/${selectID}/link/${currentLink?._id}`, currentLink)
       .then(() => {
-        alert('Link edited!');
+        swal('Success!', 'Link edited!', 'success');
       })
       .catch((error) => {
         console.log(error);
@@ -38,7 +39,11 @@ const PetLinks = ({ selectID, petUpdate }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!currentLink || !currentLink.text || !currentLink.url) {
-      return alert('Please fill both the text and url fields.');
+      return swal(
+        'Oops!',
+        'Please fill both the text and url fields.',
+        'error'
+      );
     }
     currentLink?._id ? editLink() : addLink();
     const form = e.target;

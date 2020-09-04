@@ -6,6 +6,7 @@ import defaultPetAvatar from '../Images/defaultPet.png';
 import { AppContext } from '../context/AppContext';
 import axios from 'axios';
 import { Button, Typography } from '@material-ui/core';
+import swal from 'sweetalert';
 
 const Avatar = ({ role, petUpdate }) => {
   const { currentUser, setCurrentUser, setLoading } = useContext(AppContext);
@@ -32,7 +33,7 @@ const Avatar = ({ role, petUpdate }) => {
         setLoading(false);
       })
       .catch((error) => console.log(error));
-    alert('Your avatar was updated successfully!');
+    swal('Success!', 'Your avatar was updated successfully!', 'success');
   };
 
   const getBackgroundImage = () => {

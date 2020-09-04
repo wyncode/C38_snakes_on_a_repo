@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import { AppContext } from '../context/AppContext';
 import axios from 'axios';
+import swal from 'sweetalert';
 
 const LoginPage = ({ history }) => {
   const [formData, setFormData] = useState(null);
@@ -31,7 +32,11 @@ const LoginPage = ({ history }) => {
       })
       .catch((error) => {
         console.log(error);
-        alert('Problem logging in; check your email and password');
+        swal(
+          'Oops!',
+          'Problem logging in; check your email and password',
+          'error'
+        );
       });
   };
 
