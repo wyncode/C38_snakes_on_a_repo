@@ -22,7 +22,7 @@ const RegisterPage = ({ history }) => {
 
   const handleSelect = (e) => {
     setAccountType(e.target.value);
-    setFormData({ ...formData, owner: Boolean(e.target.value) });
+    setFormData({ ...formData, owner: e.target.value });
   };
 
   const handleSubmit = (event) => {
@@ -67,8 +67,8 @@ const RegisterPage = ({ history }) => {
                 <MenuItem disabled value="select">
                   Select an Account Type
                 </MenuItem>
-                <MenuItem value="true">Pet Owner</MenuItem>
-                <MenuItem value="">Pet Sitter</MenuItem>
+                <MenuItem value="owner">Pet Owner</MenuItem>
+                <MenuItem value="sitter">Pet Sitter</MenuItem>
               </Select>
             </FormControl>
 
@@ -81,9 +81,7 @@ const RegisterPage = ({ history }) => {
               }}
             >
               You have chosen to register as...
-              <b>
-                {accountType === 'true' ? 'a pet owner!' : 'a pet sitter!'}
-              </b>
+              <b>{accountType === 'true' ? 'a pet owner!' : 'a pet sitter!'}</b>
             </Typography>
 
             <TextField
