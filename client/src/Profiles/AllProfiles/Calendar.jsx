@@ -8,6 +8,7 @@ import { AppContext } from '../../context/AppContext';
 import moment from 'moment';
 import axios from 'axios';
 import swal from 'sweetalert';
+import { response } from 'express';
 
 const Calendar = ({ id, ownerID }) => {
   const { currentUser } = useContext(AppContext);
@@ -92,18 +93,26 @@ const Calendar = ({ id, ownerID }) => {
     }
   };
 
-  const deleteEvent = () => {
-    // clickInfo.event.remove();
-    // axios
-    //   .delete(`/user/me/events${eventID}`)
-    //   .then((response) => {
-    //     console.log(response);
-    //   })
-    //   .catch((error) => console.log(error));
+  const deleteEvent = (eventID) => {
+    if (!ownerID) {
+      axios
+        .delete(`/user/me/events/${eventID}`)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => console.log(error));
+    } else {
+      axios
+        .delete(`/pets/${id}/events/${eventID}`)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => console.log(error));
+    }
   };
 
   const handleEventClick = (clickInfo) => {
-    console.log(clickInfo.event);
+    const clickedEventID = clickInfo.event._def.extendedProps._id;
     const start = moment(clickInfo.event.start).format(
       'ddd, MMMM Do YYYY, h:mm a'
     );
@@ -119,6 +128,8 @@ const Calendar = ({ id, ownerID }) => {
           swal('Your event has been deleted!', {
             icon: 'success'
           });
+          deleteEvent(clickedEventID);
+          clickInfo.event.remove();
         }
       });
     } else {

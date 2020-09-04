@@ -158,14 +158,20 @@ router.delete('/pets/:id/link/:linkID', async (req, res) => {
 /*************************************************/
 
 // Delete Pet Event
-// router.delete('/pets/:id/link/:linkID', async (req, res) => {
-//   try {
-//     const pet = await Pet.findById(req.params.id);
-//     res.json(pet);
-//   } catch (err) {
-//     res.status(500).json({ err: err.toString() });
-//   }
-// });
+router.delete('/pets/:id/events/:eventID', async (req, res) => {
+  try {
+    const pet = await Pet.findById(req.params.id);
+    const event = await pet.events.id(req.params.eventID);
+    if (!event) {
+      res.status(404).send('event not found');
+    }
+    event.remove();
+    pet.save();
+    res.status(201).send(pet);
+  } catch (error) {
+    res.status(500).json({ err: err.toString() });
+  }
+});
 
 // Add Pet Events
 router.post('/pets/:id/events', async (req, res) => {

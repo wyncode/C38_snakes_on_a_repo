@@ -120,41 +120,13 @@ router.post('/user/me/events', async (req, res) => {
 });
 
 // Delete Events
-// router.delete('/user/me/events/:id', async (req, res) => {
-//   try {
-//     const event = await req.user.events.id(req.params.id);
-//     event.remove();
-//     req.user.save();
-//     res.status(201).send(req.user);
-//   } catch (error) {
-//     res.status(500).json({ err: err.toString() });
-//   }
-// });
-
-router.delete('/user/me/events', async (req, res) => {
-  const { title, start, end } = req.query;
-  // console.log(req.user._id);
-  // console.log(req.query);
-  // console.log(title + start + end);
+router.delete('/user/me/events/:id', async (req, res) => {
   try {
-    const events = await User.find({
-      _id: req.user._id,
-      events: {
-        $and: [
-          { title: { $regex: `${title}`, $options: 'i' } },
-          { start: { $regex: `${start}`, $options: 'i' } },
-          { end: { $regex: `${end}`, $options: 'i' } }
-        ]
-      }
-    });
-
-    // req.user.events.pull(events).save();
-    if (!events) {
-      res.sendStatus(410).json('nothing found');
-    } else {
-      res.status(200).json(events);
-    }
-  } catch (err) {
+    const event = await req.user.events.id(req.params.id);
+    event.remove();
+    req.user.save();
+    res.status(201).send(req.user);
+  } catch (error) {
     res.status(500).json({ err: err.toString() });
   }
 });
