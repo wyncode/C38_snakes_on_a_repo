@@ -4,7 +4,9 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { Typography } from '@material-ui/core';
+import moment from 'moment';
 import axios from 'axios';
+import swal from 'sweetalert';
 
 const Calendar = ({ id }) => {
   const [onloadEvents, setOnloadEvents] = useState([]);
@@ -13,13 +15,10 @@ const Calendar = ({ id }) => {
     axios
       .get(`/users/${id}/events`)
       .then(({ data }) => {
-        console.log('data.events', data.events);
         setOnloadEvents(data.events);
       })
       .catch((err) => console.log(err));
   }, [id]);
-
-  console.log('onloadEvents', onloadEvents);
 
   // from fullcalendar libary to handle calendar events
   const handleDateSelect = (selectInfo) => {
@@ -45,25 +44,44 @@ const Calendar = ({ id }) => {
         events: {
           title: eventObj.title,
           start: eventObj.start,
-          startStr: eventObj.startStr,
           end: eventObj.end,
-          endStr: eventObj.endStr,
           allDay: eventObj.allDay
         }
       })
-      .then(({ data }) => {
-        console.log(data);
-      })
+      .then(({ data }) => {})
       .catch((error) => {
         console.log(error);
       });
   };
 
+  const deleteEvent = () => {
+    // clickInfo.event.remove();
+    // axios
+    //   .delete(`/user/me/events${eventID}`)
+    //   .then((response) => {
+    //     console.log(response);
+    //   })
+    //   .catch((error) => console.log(error));
+  };
+
   const handleEventClick = (clickInfo) => {
     console.log(clickInfo.event);
-    alert(
-      `${clickInfo.event.title}: from ${clickInfo.event.startStr} to ${clickInfo.event.endStr}`
+    const start = moment(clickInfo.event.start).format(
+      'ddd, MMMM Do YYYY, h:mm a'
     );
+    const end = moment(clickInfo.event.end).format('ddd, MMMM Do YYYY, h:mm a');
+    swal({
+      title: `Event: ${clickInfo.event.title}`,
+      text: `From: ${start}\nTo: ${end}`,
+      buttons: [true, 'Delete'],
+      dangerMode: true
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal('Your event has been deleted!', {
+          icon: 'success'
+        });
+      }
+    });
   };
 
   return (

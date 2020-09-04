@@ -69,16 +69,29 @@ router.post('/user/me/events', async (req, res) => {
 });
 
 // Delete Events
-router.delete('/user/me/events/:id', async (req, res) => {
-  try {
-    const event = await req.user.events.id(req.params.id);
-    event.remove();
-    req.user.save();
-    res.status(201).send(req.user);
-  } catch (error) {
-    res.status(500).json({ err: err.toString() });
-  }
-});
+// router.delete('/user/me/events/:id', async (req, res) => {
+//   try {
+//     const event = await req.user.events.id(req.params.id);
+//     event.remove();
+//     req.user.save();
+//     res.status(201).send(req.user);
+//   } catch (error) {
+//     res.status(500).json({ err: err.toString() });
+//   }
+// });
+
+// router.delete('/user/me/events', async (req, res) => {
+//   const { atitle, start, end } = req.query;
+//   try {
+//     if (!event) {
+//       res.sendStatus(410).json('nothing found');
+//     } else {
+//       res.status(200).json(event);
+//     }
+//   } catch (err) {
+//     res.status(500).json({ err: err.toString() });
+//   }
+// });
 
 // Update Current User
 router.put('/user/me', async (req, res) => {
