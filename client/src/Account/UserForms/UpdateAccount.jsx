@@ -41,16 +41,17 @@ const UpdateAccount = () => {
         'error'
       );
     }
+    delete formData.confirmPassword;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
     if (formData?.password) {
-      return checkPasswords();
+      checkPasswords();
     }
     axios
-      .put('/user/me', formData)
+      .put('/user/me', formData, { withCredentials: true })
       .then((response) => {
         setCurrentUser(response.data);
         swal('Success!', 'Successfully updated account', 'success');
@@ -101,7 +102,6 @@ const UpdateAccount = () => {
                 }
                 className="tab-input"
                 variant="outlined"
-                id={el}
                 label={el}
                 type={
                   el === 'name' ? 'text' : el === 'email' ? 'email' : 'password'
@@ -120,7 +120,6 @@ const UpdateAccount = () => {
             defaultValue={currentUser?.description}
             className="tab-input"
             variant="outlined"
-            id="description"
             label="description"
             type="text"
             name="description"
