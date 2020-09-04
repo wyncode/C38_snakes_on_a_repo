@@ -1,8 +1,8 @@
 import React from 'react';
 
 const VideoChat = () => {
-  const jitsiContainerId = 'jitsi-container-id';
-  const [jitsi, setJitsi] = React.useState({});
+    const jitsiContainerId = "jitsi-container-id";
+  const [jitsi, setJitsi] = useState({});
 
   const loadJitsiScript = () => {
     let resolveLoadJitsiScriptPromise = null;
@@ -32,7 +32,7 @@ const VideoChat = () => {
     setJitsi(_jitsi);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     initialiseJitsi();
 
     return () => jitsi?.dispose?.();
