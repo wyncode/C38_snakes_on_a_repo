@@ -6,6 +6,7 @@ import axios from 'axios';
 import { AppContext } from '../../context/AppContext';
 import Avatar from '../Avatar';
 import { useHistory } from 'react-router-dom';
+import swal from 'sweetalert';
 
 const UpdateAccount = () => {
   const history = useHistory();
@@ -14,21 +15,31 @@ const UpdateAccount = () => {
 
   const checkPasswords = () => {
     if (formData.password && !formData.confirmPassword) {
-      return alert('You must type the password confirmation!');
+      return swal('Oops', 'You must type the password confirmation!', 'error');
     }
     if (!formData.password && formData.confirmPassword) {
-      return alert(
-        'You must type the password and the confirm password to change password!'
+      return swal(
+        'Oops',
+        'You must type the password and the confirm password to change password!',
+        'error'
       );
     }
     if (formData.password !== formData.confirmPassword) {
-      return alert('Passwords must match!');
+      return swal('Error!', 'Passwords must match!', 'error');
     }
     if (formData.password.length < 6) {
-      return alert('Password must be longer than 6 characters!');
+      return swal(
+        'Error',
+        'Password must be longer than 6 characters!',
+        'error'
+      );
     }
     if (formData.password.toLowerCase().includes('password')) {
-      return alert('Password cannot contain the word password');
+      return swal(
+        'Error',
+        'Password cannot contain the word password',
+        'error'
+      );
     }
   };
 
@@ -42,11 +53,11 @@ const UpdateAccount = () => {
       .put('/user/me', formData)
       .then((response) => {
         setCurrentUser(response.data);
-        alert('Successfully updated account');
+        swal('Success!', 'Successfully updated account', 'success');
       })
       .catch((error) => {
         console.log(error);
-        alert('Something went wrong...');
+        swal('Oops!', 'Something went wrong...', 'error');
       })
       .finally(() => setLoading(false));
   };
@@ -56,7 +67,7 @@ const UpdateAccount = () => {
       'Warning: this action is permanent. Are you SURE you want to delete your account forever?'
     );
     axios
-      .delete(`/user/me`, {withCredentials: true})
+      .delete(`/user/me`, { withCredentials: true })
       .then(() => {
         setCurrentUser(null);
         sessionStorage.removeItem('user');

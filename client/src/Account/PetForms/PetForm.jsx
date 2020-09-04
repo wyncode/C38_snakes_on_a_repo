@@ -7,6 +7,7 @@ import UpdatePet from './UpdatePet';
 import AddPet from './AddPet';
 import '../account.css';
 import '../../colors.css';
+import swal from 'sweetalert';
 
 const PetForm = ({ form }) => {
   const { currentPets, setCurrentPets, loading, setLoading } = useContext(
@@ -32,32 +33,32 @@ const PetForm = ({ form }) => {
 
   const submitNewPet = () => {
     if (!formData.description || !formData.name || !formData.type) {
-      return alert('Name, type and description are required');
+      return swal('Error', 'Name, type and description are required', 'error');
     }
 
     axios
       .post('/pets', formData)
       .then(() => {
-        alert('Successfully added pet');
+        swal('Awesome!', 'Successfully added pet', 'success');
       })
       .catch((error) => {
         console.log(error);
-        alert('Something went wrong...');
+        swal('Oops!', 'Something went wrong...', 'error');
       });
   };
 
   const updatePet = () => {
     if (!selectID) {
-      alert('Please select a pet to update!');
+      swal('Something is missing', 'Please select a pet to update!', 'error');
     }
     axios
       .put(`/pets/${selectID}`, formData)
       .then(() => {
-        alert('Successfully updated pet');
+        swal('Awesome!', 'Successfully updated pet', 'success');
       })
       .catch((error) => {
         console.log(error);
-        alert('Something went wrong...');
+        swal('Oops!', 'Something went wrong...', 'warning');
       });
   };
 
@@ -69,7 +70,7 @@ const PetForm = ({ form }) => {
     axios
       .delete(`/pets/${selectID}`)
       .then(() => {
-        alert('Pet deleted!');
+        swal('Success!', 'Pet deleted!', 'success');
         setLoading(false);
       })
       .catch((error) => {
