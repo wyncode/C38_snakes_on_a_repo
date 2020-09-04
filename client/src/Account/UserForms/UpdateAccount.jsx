@@ -30,16 +30,17 @@ const UpdateAccount = () => {
     if (formData.password.toLowerCase().includes('password')) {
       return alert('Password cannot contain the word password');
     }
+    delete formData.confirmPassword;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
     if (formData?.password) {
-      return checkPasswords();
+      checkPasswords();
     }
     axios
-      .put('/user/me', formData)
+      .put('/user/me', formData, { withCredentials: true })
       .then((response) => {
         setCurrentUser(response.data);
         alert('Successfully updated account');
@@ -56,7 +57,7 @@ const UpdateAccount = () => {
       'Warning: this action is permanent. Are you SURE you want to delete your account forever?'
     );
     axios
-      .delete(`/user/me`, {withCredentials: true})
+      .delete(`/user/me`, { withCredentials: true })
       .then(() => {
         setCurrentUser(null);
         sessionStorage.removeItem('user');
@@ -90,7 +91,6 @@ const UpdateAccount = () => {
                 }
                 className="tab-input"
                 variant="outlined"
-                id={el}
                 label={el}
                 type={
                   el === 'name' ? 'text' : el === 'email' ? 'email' : 'password'
@@ -109,7 +109,6 @@ const UpdateAccount = () => {
             defaultValue={currentUser?.description}
             className="tab-input"
             variant="outlined"
-            id="description"
             label="description"
             type="text"
             name="description"

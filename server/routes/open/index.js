@@ -23,8 +23,7 @@ passport.use(
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
       callbackURL:
-        process.env.URL ||
-        'https://petster-exotic.herokuapp.com/auth/google/users',
+        process.env.URL || `${process.env.APP_URL}/auth/google/users`,
       userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
     },
     function (accessToken, refreshToken, profile, cb) {
@@ -189,6 +188,11 @@ router.post('/users', async (req, res) => {
       .json('Sorry, an account with that email already exists.');
   }
   try {
+    if (req.body.owner === 'owner') {
+      req.body.owner = true;
+    } else {
+      req.body.owner = false;
+    }
     const newUser = new User(req.body);
     WelcomeEmail(newUser.email, newUser.name);
     const token = await newUser.generateAuthToken();

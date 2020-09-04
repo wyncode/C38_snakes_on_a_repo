@@ -136,7 +136,7 @@ const Nav = () => {
               to="/"
               component={Link}
             >
-              <img src={navBarLogo} />
+              <img src={navBarLogo} alt="navbar logo" />
             </IconButton>
 
             {/* DRAWER BUTTON */}
@@ -148,18 +148,6 @@ const Nav = () => {
               aria-label="menu"
             >
               <MenuIcon />
-            </IconButton>
-
-            {/* SEARCH BUTTON */}
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              className="navbar-menu"
-              to="/search"
-              component={Link}
-            >
-              <SearchIcon />
             </IconButton>
 
             {/* LOGIN BUTTON */}
