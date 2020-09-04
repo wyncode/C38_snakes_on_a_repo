@@ -172,7 +172,8 @@ form .header-card-btn:hover {
 #account-header-links button {
   color: var(--mid);
 }
-#account-header-links button:hover, #account-header-links button:focus {
+#account-header-links button:hover,
+#account-header-links button:focus {
   color: var(--dark);
 }
 #account-header-subtitle {
@@ -192,9 +193,11 @@ div.search-results {
   border-left: 1px solid var(--mid);
   border-right: 2px solid var(--mid-darker);
 }
-a.result-link, a:visited.result-link {
+a.result-link,
+a:visited.result-link {
   color: var(--dark);
 }
-a:hover.result-link, a:focus.result-link {
+a:hover.result-link,
+a:focus.result-link {
   color: var(--mid-darker);
 }
