@@ -47,6 +47,14 @@ const petSchema = new mongoose.Schema(
       type: String
     },
     links: [{ text: String, url: String }],
+    events: [
+      {
+        title: String,
+        start: String,
+        end: String,
+        allDay: Boolean
+      }
+    ],
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'

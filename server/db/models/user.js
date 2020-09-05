@@ -80,9 +80,7 @@ const userSchema = new mongoose.Schema(
     events: [
       {
         title: String,
-        startStr: String,
         start: String,
-        endStr: String,
         end: String,
         allDay: Boolean
       }
