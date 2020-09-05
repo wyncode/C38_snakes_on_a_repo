@@ -40,7 +40,8 @@ a:hover {
   background: var(--white);
 }
 /*LANDING PAGE*/
-#top-container {
+#top-container,
+#landing-mid {
   border-bottom: 3px solid var(--dark);
 }
 #landing-title-container {
@@ -67,6 +68,34 @@ a:hover {
 }
 #landing-title-container .home-btn:nth-of-type(2):hover {
   background: rgba(255, 255, 255, 0.2);
+}
+#landing-mid-btns button:first-of-type {
+  background: var(--btn-gradient);
+  color: var(--less-white);
+  transition: all 0.5s;
+}
+#landing-mid-btns button:first-of-type:hover {
+  transform: scale(2.3, 2.3);
+  color: var(--white);
+}
+#landing-mid-btns button:nth-of-type(2) {
+  background: var(--mid);
+  color: var(--less-white);
+  transition: all 0.5s;
+}
+#landing-mid-btns button:nth-of-type(2):hover {
+  transform: scale(2.3, 2.3);
+  color: var(--white);
+}
+.aboutus-title,
+.card-text h4 {
+  color: var(--dark);
+}
+.about-card {
+  border: 1px solid #eee;
+  border-top-color: var(--mid);
+  border-left: 5px solid var(--mid);
+  box-shadow: 10px 10px 32px -19px rgba(0, 0, 0, 0.75);
 }
 /*NAVBAR*/
 #navbar {
