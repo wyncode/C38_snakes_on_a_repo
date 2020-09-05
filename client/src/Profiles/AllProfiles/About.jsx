@@ -15,7 +15,7 @@ const About = (props) => {
         >
           About {props.profileUser}:
         </Typography>
-        <Typography className="card-text" variant="body1" gutterBottom>
+        <Typography variant="body1" gutterBottom>
           {props.description}
         </Typography>
       </CardContent>
