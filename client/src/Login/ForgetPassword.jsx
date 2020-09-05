@@ -9,20 +9,36 @@ import {
   CardContent
 } from '@material-ui/core';
 import axios from 'axios';
+import swal from 'sweetalert';
 
 const ForgetPassword = ({ history }) => {
   const [formData, setFormData] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const form = e.target;
+    console.log(formData);
+    if (!formData) {
+      return swal('Wait!', 'Please enter an email', 'error');
+    }
     axios
       .get(`/password?email=${formData}`)
       .then((res) => {
+        return swal(
+          'Success!',
+          'Thank you! Please check your email for the reset link',
+          'success'
+        );
         form.reset();
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        return swal(
+          'Wait!',
+          "Something went wrong! Please make sure you're entering the correct email",
+          'error'
+        );
+        console.log(error);
+      });
   };
 
   return (
@@ -32,7 +48,19 @@ const ForgetPassword = ({ history }) => {
           <Typography variant="h2" className="header-card-title">
             Forgot Password
           </Typography>
-          <form onSubmit={handleSubmit} autoComplete="off">
+          <Typography
+            variant="body1"
+            component="div"
+            style={{ padding: '20px 50px 0' }}
+          >
+            Enter your email here to receive a message with a link to reset your
+            password.
+          </Typography>
+          <form
+            onSubmit={handleSubmit}
+            autoComplete="off"
+            style={{ width: '100%' }}
+          >
             <TextField
               onChange={(e) => setFormData(e.target.value)}
               className="text-field"
@@ -42,7 +70,7 @@ const ForgetPassword = ({ history }) => {
               name="email"
             />
             <Typography variant="button">
-              <Link to="#">Forgot password?</Link>
+              <Link to="/login">Login?</Link>
               <br />
               <Link to="/register">Register?</Link>
             </Typography>
