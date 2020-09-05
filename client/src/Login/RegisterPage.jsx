@@ -18,7 +18,7 @@ import swal from 'sweetalert';
 
 const RegisterPage = ({ history }) => {
   const [formData, setFormData] = useState(null);
-  const [accountType, setAccountType] = useState('select');
+  const [accountType, setAccountType] = useState('');
   const { setCurrentUser } = useContext(AppContext);
 
   const handleSelect = (e) => {
@@ -67,7 +67,7 @@ const RegisterPage = ({ history }) => {
                 onChange={handleSelect}
                 label="Account Type"
               >
-                <MenuItem disabled value="select">
+                <MenuItem disabled value="">
                   Select an Account Type
                 </MenuItem>
                 <MenuItem value="owner">Pet Owner</MenuItem>
@@ -84,7 +84,7 @@ const RegisterPage = ({ history }) => {
               }}
             >
               You have chosen to register as...
-              <b>{accountType === 'true' ? 'a pet owner!' : 'a pet sitter!'}</b>
+              <b>{accountType && 'a pet ' + accountType}</b>
             </Typography>
 
             <TextField

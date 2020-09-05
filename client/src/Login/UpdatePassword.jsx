@@ -8,6 +8,7 @@ import {
   CardContent
 } from '@material-ui/core';
 import axios from 'axios';
+import swal from 'sweetalert';
 
 const UpdatePassword = ({ history }) => {
   const [password, setPassword] = useState(null);
@@ -19,7 +20,28 @@ const UpdatePassword = ({ history }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password.password !== password.confirmPassword) {
-      throw Error('Error', 'Oops, passwords must match.');
+      return swal('Error!', 'Passwords must match!', 'error');
+    }
+    if (password.password.length < 6) {
+      return swal(
+        'Error',
+        'Password must be longer than 6 characters!',
+        'error'
+      );
+    }
+    if (password.password.toLowerCase().includes('password')) {
+      return swal(
+        'Error',
+        'Password cannot contain the word password',
+        'error'
+      );
+    }
+    if (!password.password || !password.confirmPassword) {
+      return swal(
+        'Wait!',
+        'You must enter a password and confirmation',
+        'error'
+      );
     }
     try {
       await axios.put(
@@ -27,20 +49,43 @@ const UpdatePassword = ({ history }) => {
         { password: password.password },
         { withCredentials: true }
       );
-      history.push('/login');
     } catch (error) {
+      return swal(
+        'Wait!',
+        'Something went wrong! Make sure you are entering the password correctly.',
+        'error'
+      );
       console.log(error);
     }
+    history.push('/login');
   };
 
   return (
     <div id="login-container">
-      <Card elevation={3} className="gradient-border">
+      <Card
+        elevation={3}
+        className="gradient-border"
+        style={{ maxWidth: '600px' }}
+      >
         <CardContent className="card-inside">
           <Typography variant="h2" className="header-card-title">
             Update Password
           </Typography>
-          <form onSubmit={handleSubmit} autoComplete="off">
+          <Typography
+            variant="body1"
+            component="div"
+            style={{
+              padding: '20px 50px 0'
+            }}
+          >
+            Enter your new password here. Passwords must be at least six
+            characters and cannot contain the phrase 'password'.
+          </Typography>
+          <form
+            onSubmit={handleSubmit}
+            autoComplete="off"
+            style={{ width: '100%' }}
+          >
             <TextField
               className="text-field"
               variant="outlined"
