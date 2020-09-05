@@ -114,10 +114,19 @@ a:hover {
 #navbar .navbar-menu:hover {
   color: var(--light);
 }
-.drawer-text a:visited {
+#account-menu,
+#account-menu a,
+#account-menu a:visited {
+  color: var(--black);
+}
+.drawer-icon {
   color: var(--mid);
 }
-.drawer-text:hover {
+.drawer-icon a,
+.drawer-icon a:visited {
+  color: var(--mid);
+}
+.drawer-icon a:hover {
   color: var(--mid-darker);
   transition: all 0.3s;
 }
@@ -127,7 +136,6 @@ a:hover {
 /*PET CARDS*/
 .pet-card {
   border: 1px solid #eee;
-  /* border-top: 10px solid var(--dark); */
 }
 .pet-card-img {
   border-bottom: 2px solid var(--mid);

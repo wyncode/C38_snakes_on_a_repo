@@ -16,6 +16,7 @@ import UpdatePassword from './Login/UpdatePassword';
 import { AppContextProvider } from './context/AppContext';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import VideoChat from './VideoChat/VideoChat';
+import AboutUs from './About/AboutUs';
 
 const App = () => {
   return (
@@ -32,6 +33,7 @@ const App = () => {
           <Route exact path="/password" component={ForgetPassword} />
           <Route exact path="/update-password" component={UpdatePassword} />
           <Route exact path="/videochat" component={VideoChat} />
+          <Route exact path="/about-us" component={AboutUs} />
           <LoggedInRoute exact path="/login" component={LoginPage} />
           <LoggedInRoute exact path="/register" component={RegisterPage} />
           <SecureRoute exact path="/account" component={AccountPage} />

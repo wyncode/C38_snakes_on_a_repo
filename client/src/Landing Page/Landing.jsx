@@ -3,7 +3,6 @@ import './landing.css';
 import '../index.css';
 import AboutTheSite from './AboutTheSite';
 import TitleContainer from './TitleContainer';
-import AboutUs from './AboutUs';
 
 const Landing = () => {
   return (
@@ -16,9 +15,6 @@ const Landing = () => {
       </div>
       <div id="landing-mid">
         <AboutTheSite />
-      </div>
-      <div id="landing-bottom">
-        <AboutUs />
       </div>
     </div>
   );

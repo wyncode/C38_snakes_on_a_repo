@@ -16,8 +16,13 @@ import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
 import SearchIcon from '@material-ui/icons/Search';
 import PetsIcon from '@material-ui/icons/Pets';
+import FaceIcon from '@material-ui/icons/Face';
+import InfoIcon from '@material-ui/icons/Info';
+import ExitToApp from '@material-ui/icons/ExitToApp';
+import EditIcon from '@material-ui/icons/Edit';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
+import AccountBox from '@material-ui/icons/AccountBox';
+import ChatIcon from '@material-ui/icons/Chat';
 import PersonPinCircleIcon from '@material-ui/icons/PersonPinCircle';
 import { makeStyles } from '@material-ui/core/styles';
 import { useLocation } from 'react-router-dom';
@@ -69,22 +74,22 @@ const Nav = () => {
 
   const iconList = (text) => {
     switch (text) {
-      case 'Home':
+      case 'Home & About':
         return <HomeIcon />;
       case 'Search':
         return <SearchIcon />;
       case 'Location Search':
         return <PersonPinCircleIcon />;
-      case 'Login':
-        return <AccountCircle />;
-      case 'User Profile':
-        return <EmojiPeopleIcon />;
-      case 'Pet Profile':
-        return <PetsIcon />;
+      case 'Chat':
+        return <ChatIcon />;
+      case 'About Us':
+        return <InfoIcon />;
       default:
         return null;
     }
   };
+
+  const viewLink = currentUser ? { display: 'flex' } : { display: 'none' };
 
   const list = (anchor) => (
     <>
@@ -97,12 +102,11 @@ const Nav = () => {
       >
         <List>
           {[
-            { text: 'Home', link: '/' },
-            { text: 'Login', link: '/login' },
+            { text: 'Home & About', link: '/' },
             { text: 'Search', link: '/search' },
-            { text: 'Location Search', link: '/map' },
-            { text: 'User Profile', link: '/userprofile' },
-            { text: 'Pet Profile', link: '/petprofile' }
+            { text: 'Location Search', link: '/map', secure: true },
+            { text: 'Chat', link: '/chat' },
+            { text: 'About Us', link: '/about-us' }
           ].map((el) => (
             <ListItem
               button
@@ -110,6 +114,7 @@ const Nav = () => {
               className="drawer-text"
               to={el.link}
               component={Link}
+              style={el.secure && viewLink}
             >
               <ListItemIcon className="drawer-icon">
                 {iconList(el.text)}
@@ -128,27 +133,29 @@ const Nav = () => {
       <>
         <AppBar id="navbar">
           <Toolbar>
-            {/* HOME BUTTON */}
-            <IconButton
-              className="logo"
-              edge="start"
-              aria-label="menu"
-              to="/"
-              component={Link}
-            >
-              <img src={navBarLogo} alt="navbar logo" />
-            </IconButton>
+            <div id="logo-home-container">
+              {/* HOME BUTTON */}
+              <IconButton
+                className="logo"
+                edge="start"
+                aria-label="menu"
+                to="/"
+                component={Link}
+              >
+                <img src={navBarLogo} alt="navbar logo" />
+              </IconButton>
 
-            {/* DRAWER BUTTON */}
-            <IconButton
-              className="navbar-menu"
-              onClick={toggleDrawer(anchor, true)}
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-            >
-              <MenuIcon />
-            </IconButton>
+              {/* DRAWER BUTTON */}
+              <IconButton
+                className="navbar-menu"
+                onClick={toggleDrawer(anchor, true)}
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+              >
+                <MenuIcon />
+              </IconButton>
+            </div>
 
             {/* LOGIN BUTTON */}
             <div id="login-icon">
@@ -163,6 +170,7 @@ const Nav = () => {
                 <AccountCircle />
               </IconButton>
               <Menu
+                id="account-menu"
                 style={{ zIndex: '1500' }}
                 anchorEl={anchorEl}
                 keepMounted
@@ -177,7 +185,8 @@ const Nav = () => {
                       to="/account"
                       onClick={handleClose}
                     >
-                      Account
+                      <EditIcon />
+                      &nbsp; Account
                     </MenuItem>
                     <MenuItem
                       style={{ color: 'black' }}
@@ -185,9 +194,12 @@ const Nav = () => {
                       to={`/userprofile/${currentUser && currentUser._id}`}
                       onClick={handleClose}
                     >
-                      Profile
+                      <FaceIcon />
+                      &nbsp; Profile
                     </MenuItem>
                     <MenuItem onClick={handleClose}>
+                      <ExitToApp />
+                      &nbsp;
                       <Logout
                         styleType={{
                           textTransform: 'capitalize',
@@ -206,14 +218,14 @@ const Nav = () => {
                       to="/login"
                       onClick={handleClose}
                     >
-                      Login
+                      <AccountBox /> &nbsp;Login
                     </MenuItem>
                     <MenuItem
                       component={Link}
                       to="/register"
                       onClick={handleClose}
                     >
-                      Sign Up
+                      <PetsIcon /> &nbsp;Sign Up
                     </MenuItem>
                   </span>
                 )}
