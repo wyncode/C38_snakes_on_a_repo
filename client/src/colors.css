@@ -209,6 +209,9 @@ form .header-card-btn:hover {
 #account-header-subtitle {
   color: var(--dark);
 }
+.header-pets {
+  border-top: 2px solid var(--mid);
+}
 /* SEARCH */
 fieldset.search-form-control {
   border: 1px solid var(--mid);
