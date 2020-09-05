@@ -114,7 +114,7 @@ router.post('/user/me/events', async (req, res) => {
     req.user.events.push(req.body.events);
     req.user.save();
     res.status(201).send(req.user);
-  } catch (error) {
+  } catch (err) {
     res.status(500).json({ err: err.toString() });
   }
 });

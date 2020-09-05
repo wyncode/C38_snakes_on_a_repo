@@ -8,7 +8,6 @@ import { AppContext } from '../../context/AppContext';
 import moment from 'moment';
 import axios from 'axios';
 import swal from 'sweetalert';
-import { response } from 'express';
 
 const Calendar = ({ id, ownerID }) => {
   const { currentUser } = useContext(AppContext);

@@ -166,7 +166,7 @@ router.delete('/pets/:id/events/:eventID', async (req, res) => {
       res.status(404).send('event not found');
     }
     event.remove();
-    pet.save();
+    await pet.save();
     res.status(201).send(pet);
   } catch (error) {
     res.status(500).json({ err: err.toString() });
@@ -175,7 +175,6 @@ router.delete('/pets/:id/events/:eventID', async (req, res) => {
 
 // Add Pet Events
 router.post('/pets/:id/events', async (req, res) => {
-  console.log(req.body);
   try {
     const pet = await Pet.findById(req.params.id);
     pet.events.push(req.body.events);
