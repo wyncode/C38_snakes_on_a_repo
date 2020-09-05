@@ -3,6 +3,9 @@ const cloudinary = require('cloudinary').v2;
 const Pet = require('../../db/models/pet');
 const User = require('../../db/models/user');
 
+/*************************************************/
+/** CREATE, DELETE, UPDATE CURRENT USER'S PETS**/
+/*************************************************/
 // Create New Pet For Current User
 router.post('/pets', async (req, res) => {
   const {
@@ -75,7 +78,8 @@ router.put('/pets/:id', async (req, res) => {
     'additional',
     'emergency',
     'links',
-    'avatar'
+    'avatar',
+    'events'
   ];
   const isValidOperation = updates.every((update) =>
     allowedUpdates.includes(update)
@@ -94,13 +98,16 @@ router.put('/pets/:id', async (req, res) => {
   }
 });
 
+/*************************************************/
+/** GET, EDIT, ADD PET'S LINKS*/
+/*************************************************/
 // Add Pet Link
 router.post('/pets/:id/link', async (req, res) => {
   try {
     const pet = await Pet.findById(req.params.id);
     const { links } = pet;
     links.push(req.body);
-    pet.save();
+    await pet.save();
     res.status(201).json(pet);
   } catch (err) {
     res.status(500).json({ err: err.toString() });
@@ -115,7 +122,7 @@ router.put('/pets/:id/link/:linkID', async (req, res) => {
     const link = await pet.links.id(req.params.linkID);
     link.remove();
     links.push(req.body);
-    pet.save();
+    await pet.save();
     res.status(201).json(pet);
   } catch (err) {
     res.status(500).json({ err: err.toString() });
@@ -146,6 +153,41 @@ router.delete('/pets/:id/link/:linkID', async (req, res) => {
   }
 });
 
+/*************************************************/
+/** ADD & DELETE PET EVENTS                     **/
+/*************************************************/
+
+// Delete Pet Event
+router.delete('/pets/:id/events/:eventID', async (req, res) => {
+  try {
+    const pet = await Pet.findById(req.params.id);
+    const event = await pet.events.id(req.params.eventID);
+    if (!event) {
+      return res.status(404).send('event not found');
+    }
+    event.remove();
+    await pet.save();
+    res.status(201).send(pet);
+  } catch (err) {
+    res.status(500).json({ err: err.toString() });
+  }
+});
+
+// Add Pet Events
+router.post('/pets/:id/events', async (req, res) => {
+  try {
+    const pet = await Pet.findById(req.params.id);
+    pet.events.push(req.body.events);
+    await pet.save();
+    res.status(201).json(pet.events);
+  } catch (err) {
+    res.status(500).json({ err: err.toString() });
+  }
+});
+
+/*************************************************/
+/** PET AVATAR                                  **/
+/*************************************************/
 // Upload Pet Avatar
 router.post('/pets/avatar/:id', async (req, res) => {
   try {

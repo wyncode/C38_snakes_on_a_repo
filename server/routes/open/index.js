@@ -54,18 +54,8 @@ router.get('/search/pet', async (req, res) => {
   try {
     const pets = await Pet.find({
       $or: [
-        {
-          name: {
-            $regex: `${query}`,
-            $options: 'i'
-          }
-        },
-        {
-          description: {
-            $regex: `${query}`,
-            $options: 'i'
-          }
-        }
+        { name: { $regex: `${query}`, $options: 'i' } },
+        { description: { $regex: `${query}`, $options: 'i' } }
       ]
     });
     if (!pets) {
@@ -84,18 +74,8 @@ router.get('/search/user', async (req, res) => {
   try {
     const users = await User.find({
       $or: [
-        {
-          name: {
-            $regex: `${query}`,
-            $options: 'i'
-          }
-        },
-        {
-          description: {
-            $regex: `${query}`,
-            $options: 'i'
-          }
-        }
+        { name: { $regex: `${query}`, $options: 'i' } },
+        { description: { $regex: `${query}`, $options: 'i' } }
       ]
     });
     if (!users) {
@@ -130,6 +110,20 @@ router.get('/pets/:id', async (req, res) => {
       res.sendStatus(410);
     } else {
       res.status(200).json(pet);
+    }
+  } catch (err) {
+    res.status(500).json({ err: err.toString() });
+  }
+});
+
+// Get Events by PetID
+router.get('/pets/:id/events', async (req, res) => {
+  try {
+    const events = await Pet.findById(req.params.id, 'events');
+    if (!events) {
+      res.sendStatus(410);
+    } else {
+      res.status(200).json(events);
     }
   } catch (err) {
     res.status(500).json({ err: err.toString() });

@@ -1,4 +1,5 @@
 import React from 'react';
+import ScrollToTop from './ScrollToTop';
 import Nav from './Navbar/Nav';
 import Landing from './Landing Page/Landing';
 import LoginPage from './Login/LoginPage';
