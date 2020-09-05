@@ -7,7 +7,7 @@ const TitleContainer = () => {
   return (
     <div id="landing-title-container">
       <Typography className="lt-title" gutterBottom variant="h1" component="h1">
-        Site Name
+        Petster Exotic
       </Typography>
       <Typography
         className="lt-subtitle"
@@ -15,7 +15,7 @@ const TitleContainer = () => {
         variant="h4"
         component="h4"
       >
-        welcome to the #1 site for stuff and things!
+        a place for exotic pet owners and pet sitters to connect online!
       </Typography>
 
       <Button
@@ -30,6 +30,7 @@ const TitleContainer = () => {
       <Button
         className="home-btn"
         variant="contained"
+        style={{ margin: '0 auto' }}
         onClick={() => {
           history.push('/login');
         }}
