@@ -37,7 +37,12 @@ const UserProfilePage = ({ match }) => {
           heartRole="user"
           id={userProfile._id}
         />
-        <ProfileButtons role="user" userEmail={userProfile.email} />
+        <ProfileButtons
+          role="user"
+          userID={userProfile._id}
+          name={userProfile.name}
+          email={userProfile.email}
+        />
         {!userProfile.owner && (
           <div id="payment">
             <Payment />

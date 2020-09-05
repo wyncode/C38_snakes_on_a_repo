@@ -42,8 +42,25 @@ const ForgotPassword = (email, token) => {
     .catch((error) => console.log(error.response.body.errors));
 };
 
+const UserEmail = (userID, name, subject, message, toEmail) => {
+  sgMail
+    .send({
+      to: toEmail,
+      from: `${process.env.FROM_EMAIL}`,
+      subject: `From Petster Exotic: ${subject}`,
+      html: `<h3 style="border-bottom: 1px solid black; padding-bottom: 10px; margin-bottom: 20px;">
+      <a target="_blank" rel="noopener noreferrer" href="${process.env.APP.URL}/userprofile/${userID}>${name}</a>
+      from <a href="${process.env.APP_URL}" target="_blank" rel="noopener noreferrer">Petster Exotic</a> has sent you a message!
+      </h3>
+      <h4>${subject}</h4>
+      <div>${message}</div>`
+    })
+    .catch((error) => console.log(error));
+};
+
 module.exports = {
   WelcomeEmail,
   CancellationEmail,
-  ForgotPassword
+  ForgotPassword,
+  UserEmail
 };

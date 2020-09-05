@@ -55,8 +55,8 @@
   #topleft {
     position: fixed;
     top: 100px;
-    left: 10vw;
-    max-width: 200px;
+    left: 8.5vw;
+    width: 500px;
     grid-area: topleft;
     display: grid;
     gap: 20px;
@@ -86,7 +86,6 @@
 @media only screen and (min-width: 630px) {
   #profile-name {
     margin-left: auto;
-    margin-bottom: 20px;
     width: 100%;
   }
 }
@@ -95,6 +94,7 @@
 }
 #profile-btn-wrapper {
   grid-area: btns;
+  display: flex;
 }
 #btn1 {
   margin-right: 10px;
@@ -106,6 +106,7 @@
 @media only screen and (min-width: 630px) {
   #profile-btn-wrapper {
     align-self: flex-start;
+    margin-bottom: 30px;
   }
 }
 @media only screen and (min-width: 950px) {
