@@ -73,15 +73,19 @@ const AboutUs = () => {
           <div className="card-text">
             <Typography variant="h4">Juan</Typography>
             <Typography variant="body1" style={{ marginTop: '10px' }}>
-              <hr /> Full Stack Web Development student from Wyncode's Cohort
-              38.
+              <hr /> Full Stack Web Development student from Wyncode's Cohort 38
+              -- with a background in hospitality and IT Support, I'm always
+              interested in learning more about technology.
             </Typography>
             <Typography variant="body1" style={{ marginTop: '10px' }}>
               <a href="https://github.com/juanjpayan" target="blank">
                 GitHub
               </a>
               &nbsp;||&nbsp;
-              <a href="#" target="_blank">
+              <a
+                href="https://www.linkedin.com/in/juan-j-perez-payan-9b654b67/"
+                target="_blank"
+              >
                 LinkedIn
               </a>
             </Typography>
