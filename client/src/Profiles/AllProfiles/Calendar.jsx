@@ -12,6 +12,7 @@ import swal from 'sweetalert';
 const Calendar = ({ id, ownerID }) => {
   const { currentUser } = useContext(AppContext);
   const [onloadEvents, setOnloadEvents] = useState([]);
+  const [refetch, setRefetch] = useState(false);
   const isOwnedPet = useRef(false);
 
   useEffect(() => {
@@ -19,7 +20,6 @@ const Calendar = ({ id, ownerID }) => {
       axios
         .get(`/pets/${id}/events`)
         .then(({ data }) => {
-          // console.log(data.events);
           setOnloadEvents(data.events);
         })
         .catch((err) => console.log(err));
@@ -27,7 +27,6 @@ const Calendar = ({ id, ownerID }) => {
       axios
         .get(`/users/${id}/events`)
         .then(({ data }) => {
-          // console.log(data.events);
           setOnloadEvents(data.events);
         })
         .catch((err) => console.log(err));
@@ -36,7 +35,7 @@ const Calendar = ({ id, ownerID }) => {
     if (ownerID === currentUser?._id) {
       isOwnedPet.current = true;
     }
-  }, [id, ownerID]);
+  }, [id, ownerID, refetch]);
 
   // from fullcalendar libary to handle calendar events
   const handleDateSelect = (selectInfo) => {
@@ -45,20 +44,21 @@ const Calendar = ({ id, ownerID }) => {
       let calendarApi = selectInfo.view.calendar;
       calendarApi.unselect(); // clear date selection
       if (title) {
-        let newEvent = calendarApi.addEvent({
+        let newEvent = {
           title,
           start: selectInfo.start,
           startStr: selectInfo.startStr,
           end: selectInfo.end,
           endStr: selectInfo.endStr,
           allDay: selectInfo.allDay
-        });
+        };
         addEvent(newEvent);
       }
     }
   };
 
   const addEvent = (eventObj) => {
+    setRefetch(true);
     if (ownerID) {
       axios
         .post(`/pets/${id}/events`, {
@@ -70,7 +70,7 @@ const Calendar = ({ id, ownerID }) => {
           }
         })
         .then(({ data }) => {
-          console.log(data);
+          setRefetch(false);
         })
         .catch((error) => {
           console.log(error);
@@ -85,7 +85,9 @@ const Calendar = ({ id, ownerID }) => {
             allDay: eventObj.allDay
           }
         })
-        .then(({ data }) => {})
+        .then(({ data }) => {
+          setRefetch(false);
+        })
         .catch((error) => {
           console.log(error);
         });
@@ -96,16 +98,10 @@ const Calendar = ({ id, ownerID }) => {
     if (!ownerID) {
       axios
         .delete(`/user/me/events/${eventID}`)
-        .then((response) => {
-          console.log(response);
-        })
         .catch((error) => console.log(error));
     } else {
       axios
         .delete(`/pets/${id}/events/${eventID}`)
-        .then((response) => {
-          console.log(response);
-        })
         .catch((error) => console.log(error));
     }
   };
@@ -123,12 +119,12 @@ const Calendar = ({ id, ownerID }) => {
         buttons: [true, 'Delete'],
         dangerMode: true
       }).then((willDelete) => {
+        deleteEvent(clickedEventID);
+        clickInfo.event.remove();
         if (willDelete) {
           swal('Your event has been deleted!', {
             icon: 'success'
           });
-          deleteEvent(clickedEventID);
-          clickInfo.event.remove();
         }
       });
     } else {

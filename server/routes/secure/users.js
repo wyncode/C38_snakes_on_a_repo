@@ -126,7 +126,7 @@ router.delete('/user/me/events/:id', async (req, res) => {
     event.remove();
     req.user.save();
     res.status(201).send(req.user);
-  } catch (error) {
+  } catch (err) {
     res.status(500).json({ err: err.toString() });
   }
 });

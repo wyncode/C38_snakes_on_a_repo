@@ -163,12 +163,12 @@ router.delete('/pets/:id/events/:eventID', async (req, res) => {
     const pet = await Pet.findById(req.params.id);
     const event = await pet.events.id(req.params.eventID);
     if (!event) {
-      res.status(404).send('event not found');
+      return res.status(404).send('event not found');
     }
     event.remove();
     await pet.save();
     res.status(201).send(pet);
-  } catch (error) {
+  } catch (err) {
     res.status(500).json({ err: err.toString() });
   }
 });
@@ -179,7 +179,7 @@ router.post('/pets/:id/events', async (req, res) => {
     const pet = await Pet.findById(req.params.id);
     pet.events.push(req.body.events);
     await pet.save();
-    res.status(201).send(pet.events);
+    res.status(201).json(pet.events);
   } catch (err) {
     res.status(500).json({ err: err.toString() });
   }
