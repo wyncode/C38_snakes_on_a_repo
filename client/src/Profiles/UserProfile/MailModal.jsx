@@ -39,7 +39,6 @@ const MailModal = ({ role, name, email, userID }) => {
   const handleClose = () => setOpen(false);
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('formData2', formData);
     axios
       .post(
         `/user/me/message?userID=${userID}&name=${name}&toEmail=${email}`,
@@ -49,7 +48,6 @@ const MailModal = ({ role, name, email, userID }) => {
         }
       )
       .then((response) => {
-        console.log(response);
         swal('Success!', 'Message sent', 'success');
       })
       .catch((error) => {

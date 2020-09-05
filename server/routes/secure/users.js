@@ -10,7 +10,6 @@ router.post('/user/me/message', async (req, res) => {
   const { toEmail, name, userID } = req.query;
   try {
     UserEmail(userID, name, subject, message, toEmail);
-    console.log(req.body + ' ' + req.query);
     res.status(200).json('message sent!');
   } catch (err) {
     res.status(500).json({ err: err.toString() });
