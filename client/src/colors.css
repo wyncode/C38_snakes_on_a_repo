@@ -56,6 +56,7 @@ a:hover {
   background: var(--btn-gradient);
   color: var(--white);
   transition: all 0.5s ease-in-out;
+  z-index: 100;
 }
 #landing-title-container .home-btn:first-of-type:hover {
   transform: scale(1.2) rotate(-10deg);
