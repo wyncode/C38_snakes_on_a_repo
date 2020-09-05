@@ -15,6 +15,7 @@ import {
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import SearchFilters from './SearchFilters';
+import swal from 'sweetalert';
 
 const SearchPage = () => {
   const [results, setResults] = useState('');
@@ -25,9 +26,9 @@ const SearchPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!searchModel) {
-      alert('Must select pets or users');
+      swal('Oops!', 'Must select pets or users', 'error');
     } else if (!search) {
-      alert('Must type a search term');
+      swal('Oops!', 'Must type a search term', 'error');
     } else {
       fetch(`/search/${searchModel}?query=${search}`)
         .then((res) => res.json())

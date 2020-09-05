@@ -3,6 +3,7 @@ import './landing.css';
 import '../index.css';
 import AboutTheSite from './AboutTheSite';
 import TitleContainer from './TitleContainer';
+import AboutUs from './AboutUs';
 
 const Landing = () => {
   return (
@@ -13,8 +14,11 @@ const Landing = () => {
       <div className="arrow-container">
         <div className="arrow down"></div>
       </div>
-      <div id="landing-bottom">
+      <div id="landing-mid">
         <AboutTheSite />
+      </div>
+      <div id="landing-bottom">
+        <AboutUs />
       </div>
     </div>
   );

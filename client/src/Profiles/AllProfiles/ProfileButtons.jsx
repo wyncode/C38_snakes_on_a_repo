@@ -5,26 +5,35 @@ import Button from '@material-ui/core/Button';
 import MailModal from '../UserProfile/MailModal';
 import { Link, useHistory } from 'react-router-dom';
 
-const ProfileButton = ({ role, ownerID, userEmail }) => {
-	const history = useHistory();
+const ProfileButton = ({ role, ownerID, email, userID, name }) => {
+  const history = useHistory();
 
-	return (
-		<div id="profile-btn-wrapper">
-			{/* LEFT BUTTON */}
-			<MailModal role={role} userEmail={userEmail} />
+  return (
+    <div id="profile-btn-wrapper">
+      {/* LEFT BUTTON */}
+      <MailModal role={role} email={email} name={name} userID={userID} />
 
-			{/* RIGHT BUTTON */}
-			{ownerID ? (
-				<Button onClick={() => history.push(`/userprofile/${ownerID}`)} variant="contained" id="btn2">
-					Owner
-				</Button>
-			) : (
-				<Button variant="contained" component={Link} to={'/videochat'} id="btn2">
-					VideoCall
-				</Button>
-			)}
-		</div>
-	);
+      {/* RIGHT BUTTON */}
+      {ownerID ? (
+        <Button
+          onClick={() => history.push(`/userprofile/${ownerID}`)}
+          variant="contained"
+          id="btn2"
+        >
+          Owner
+        </Button>
+      ) : (
+        <Button
+          variant="contained"
+          component={Link}
+          to={'/videochat'}
+          id="btn2"
+        >
+          Video Call
+        </Button>
+      )}
+    </div>
+  );
 };
 
 export default ProfileButton;

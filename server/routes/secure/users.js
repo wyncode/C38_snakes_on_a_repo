@@ -1,12 +1,23 @@
 const router = require('express').Router();
 const cloudinary = require('cloudinary').v2;
 const User = require('../../db/models/user');
-const { CancellationEmail } = require('../../emails/index');
+const { CancellationEmail, UserEmail } = require('../../emails/index');
 const Pet = require('../../db/models/pet');
 
 /*************************************************/
 /** GET, UPDATE & DELETE CURRENT USER                            **/
 /*************************************************/
+// Send Message
+router.post('/user/me/message', async (req, res) => {
+  const { subject, message } = req.body;
+  const { toEmail, name, userID } = req.query;
+  try {
+    UserEmail(userID, name, subject, message, toEmail);
+    res.status(200).json('message sent!');
+  } catch (err) {
+    res.status(500).json({ err: err.toString() });
+  }
+});
 
 // Get Current User
 router.get('/user/me', async (req, res) => {

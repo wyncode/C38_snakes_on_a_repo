@@ -14,6 +14,7 @@ import {
   MenuItem
 } from '@material-ui/core';
 import { AppContext } from '../context/AppContext';
+import swal from 'sweetalert';
 
 const RegisterPage = ({ history }) => {
   const [formData, setFormData] = useState(null);
@@ -22,13 +23,13 @@ const RegisterPage = ({ history }) => {
 
   const handleSelect = (e) => {
     setAccountType(e.target.value);
-    setFormData({ ...formData, owner: Boolean(e.target.value) });
+    setFormData({ ...formData, owner: e.target.value });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (accountType === 'select') {
-      return alert('Please select an account type!');
+      return swal('Wait!', 'Please select an account type!', 'error');
     }
     axios
       .post('/users/', formData)
@@ -41,8 +42,10 @@ const RegisterPage = ({ history }) => {
       })
       .catch((error) => {
         console.log(error);
-        alert(
-          'Something went wrong... please make sure you are not using a duplicate email and are entering correct information.'
+        swal(
+          'Oops',
+          'Something went wrong... please make sure you are not using a duplicate email and are entering correct information.',
+          'error'
         );
       });
   };
@@ -67,8 +70,8 @@ const RegisterPage = ({ history }) => {
                 <MenuItem disabled value="select">
                   Select an Account Type
                 </MenuItem>
-                <MenuItem value="true">Pet Owner</MenuItem>
-                <MenuItem value="">Pet Sitter</MenuItem>
+                <MenuItem value="owner">Pet Owner</MenuItem>
+                <MenuItem value="sitter">Pet Sitter</MenuItem>
               </Select>
             </FormControl>
 
@@ -81,9 +84,7 @@ const RegisterPage = ({ history }) => {
               }}
             >
               You have chosen to register as...
-              <b>
-                {accountType === 'true' ? 'a pet owner!' : 'a pet sitter!'}
-              </b>
+              <b>{accountType === 'true' ? 'a pet owner!' : 'a pet sitter!'}</b>
             </Typography>
 
             <TextField
