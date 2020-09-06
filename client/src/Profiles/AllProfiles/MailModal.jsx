@@ -36,7 +36,7 @@ const MailModal = ({ role, name, email, pet, userID }) => {
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
-
+  
   const handleOpen = () => {
     if (!currentUser || !user) {
       return swal('Oops!', 'You must be logged in to do this.', 'error');
@@ -134,7 +134,11 @@ const MailModal = ({ role, name, email, pet, userID }) => {
           rows="5"
           label="type your message here..."
         />
-        <Button type="submit" className="header-card-btn">
+        <Button
+          type="submit"
+          className="card-btn"
+          style={{ marginTop: '20px' }}
+        >
           Send
         </Button>
       </form>
