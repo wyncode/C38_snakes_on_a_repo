@@ -192,8 +192,8 @@ router.post('/users', async (req, res) => {
     const token = await newUser.generateAuthToken();
     res.cookie('jwt', token, {
       httpOnly: true,
-      sameSite: 'Strict',
-      secure: process.env.NODE_ENV !== 'production' ? false : true
+      sameSite: 'Strict'
+      // secure: process.env.NODE_ENV !== 'production' ? false : yatrue
     });
     res.status(201).json(newUser);
   } catch (err) {
@@ -209,8 +209,8 @@ router.post('/user/login', async (req, res) => {
     const token = await user.generateAuthToken();
     res.cookie('jwt', token, {
       httpOnly: true,
-      sameSite: 'Strict',
-      secure: process.env.NODE_ENV !== 'production' ? false : true
+      sameSite: 'Strict'
+      // secure: process.env.NODE_ENV !== 'production' ? false : true
     });
     res.status(200).json({ message: 'Logged in!', data: user });
   } catch (err) {
