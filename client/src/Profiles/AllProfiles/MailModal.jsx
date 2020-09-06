@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Modal, Button, Typography, TextField } from '@material-ui/core';
+import { AppContext } from '../../context/AppContext';
 import swal from 'sweetalert';
 import axios from 'axios';
 
@@ -30,16 +31,23 @@ const useStyles = makeStyles((theme) => ({
 
 /* Modal Component from Material UI */
 const MailModal = ({ role, name, email, pet, userID }) => {
+  const { currentUser, user } = useContext(AppContext);
   const [formData, setFormData] = useState();
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
 
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    if (!currentUser || !user) {
+      return swal('Oops!', 'You must be logged in to do this.', 'error');
+    } else {
+      setOpen(true);
+    }
+  };
   const handleClose = () => setOpen(false);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (role === 'user') {
       axios
         .post(
