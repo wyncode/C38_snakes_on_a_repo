@@ -115,7 +115,7 @@ const UpdatePassword = ({ history }) => {
                 marginTop: '30px',
                 width: '70%'
               }}
-              className="header-card-btn"
+              className="card-btn"
             >
               Update Password
             </Button>

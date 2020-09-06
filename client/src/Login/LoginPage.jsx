@@ -84,7 +84,7 @@ const LoginPage = ({ history }) => {
                 marginTop: '30px',
                 width: '70%'
               }}
-              className="header-card-btn"
+              className="card-btn"
             >
               Login
             </Button>
@@ -98,7 +98,7 @@ const LoginPage = ({ history }) => {
                 marginTop: '30px',
                 width: '70%'
               }}
-              className="header-card-btn google"
+              className="card-btn google"
             >
               <div className="google-logo"></div>
               Sign In With Google

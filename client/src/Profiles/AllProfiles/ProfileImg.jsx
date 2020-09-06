@@ -44,9 +44,8 @@ const ProfileImg = ({ id, role, heartRole, imgURL }) => {
       .put(`/user/me/favorites?id=${id}&profile=${profile}`, {
         withCredentials: true
       })
-      .then(({ data }) => console.log(data))
+      .then(({ data }) => {})
       .catch((error) => console.log(error));
-    console.log(heart.current.style.color);
     if (heart.current.style.color === 'red') {
       heart.current.style.color = 'gray';
       setPopoverMessage('Removed from favorites');
@@ -73,6 +72,7 @@ const ProfileImg = ({ id, role, heartRole, imgURL }) => {
       elevation={3}
       id="profile-image"
       style={{
+        position: 'relative',
         backgroundImage: `url('${imgURL}')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center'

@@ -17,7 +17,7 @@ const Chat = () => {
 
   useEffect(() => {
     socketIo.on('receive message', (data) => {
-      console.log('receive message', data);
+      // console.log('receive message', data);
       addMessage(data);
     });
   }, [chats]);
@@ -92,7 +92,7 @@ const Chat = () => {
           multiline
           rows={3}
         />
-        <Button className="header-card-btn chat-btn" onClick={sendMessage}>
+        <Button className="card-btn chat-btn" onClick={sendMessage}>
           Send
         </Button>
       </div>

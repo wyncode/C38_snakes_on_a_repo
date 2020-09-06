@@ -28,7 +28,7 @@ const Landing = () => {
           )}
         </ScrollTo>
       </div>
-      <div id="landing-mid">
+      <div id="landing-about-site">
         <AboutTheSite />
       </div>
     </div>

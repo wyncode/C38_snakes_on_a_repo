@@ -9,6 +9,11 @@ form {
   display: flex;
   flex-direction: column;
 }
+@media only screen and (max-width: 600px) {
+  form {
+    width: 80vw;
+  }
+}
 fieldset.search-form-control {
   margin-top: 20px;
   padding: 10px;
