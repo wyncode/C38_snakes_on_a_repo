@@ -41,7 +41,8 @@ Specific features include:
 <img src="./screenshots/pet_form.png" width="400" />
 <img src="./screenshots/pet_form_2.png" width="400" />
 <img src="./screenshots/search_results.png" width="400" />
-<img src="./screenshots/landing.png" width="400" />
+<img src="./screenshots/map.png" width="400" />
+<img src="./screenshots/video.png" width="400" />
 <hr/>
 
 ## Installation and Run on Local Machine
@@ -64,34 +65,35 @@ Application uses ports localhost 3000 and 8080.
 
 Click the button to download the API endpoints for our application!
 
+We have a seed file available in server/db/seeds for you to start up with faker-provided data.
+
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/e70b2104770bedd8859f)
 
 <hr/>
 
 ## Dependencies
 
-| Client Side                 | Server Side                        |
-| --------------------------- | ---------------------------------- |
-| @fullcalendar/daygrid       | @sendgrid/mail                     |
-| @fullcalendar/interaction   | bcryptjs                           |
-| @fullcalendar/react         | cloudinary                         |
-| @fullcalendar/timegrid      | concurrently                       |
-| @material-ui/core           | cookie-parser                      |
-| @material-ui/icons          | express                            |
-| @testing-library/jest-dom   | express-file-upload                |
-| @testing-library/react      | faker                              |
-| @testing-library/user-event | jsonwebtoken                       |
-| react-paypal-button-v2      | mongodb                            |
-| axios                       | mongoose                           |
-| react                       | mongoose-findorcreate              |
-| react-dom                   | passport                           |
-| react-map-jl                | passport-google-oauth20": "^2.0.0" |
-| react-router-dom            | passport-jwt                       |
-| react-scripts               | passport-local                     |
-| react-tabs                  | passport-local-mongoose            |
-| react-spinners              | react-paypal-button-v2             |
-| sweetalert                  | validator                          |
-|                             | moment                             |
+| Client Side               | Server Side             |
+| ------------------------- | ----------------------- |
+| @fullcalendar/daygrid     | @sendgrid/mail          |
+| @fullcalendar/interaction | bcryptjs                |
+| @fullcalendar/react       | cloudinary              |
+| @fullcalendar/timegrid    | concurrently            |
+| @material-ui/core         | cookie-parser           |
+| @material-ui/icons        | express                 |
+| react-scroll-to           | express-file-upload     |
+| axios                     | faker                   |
+| styled-components         | jsonwebtoken            |
+| sweetalert                | mongodb                 |
+| react-paypal-button-v2    | mongoose                |
+| react                     | mongoose-findorcreate   |
+| react-dom                 | passport                |
+| react-map-jl              | passport-local-mongoose |
+| react-router-dom          | passport-jwt            |
+| react-scripts             | passport-local          |
+| react-tabs                | validator               |
+| react-spinners            | moment                  |
+| moment                    |                         |
 
 <hr/>
 
