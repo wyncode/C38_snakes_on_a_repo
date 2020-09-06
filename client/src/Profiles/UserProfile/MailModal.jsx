@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 /* Modal Component from Material UI */
-const MailModal = ({ role, name, email, userID }) => {
+const MailModal = ({ role, name, email, pet, userID }) => {
   const [formData, setFormData] = useState();
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
@@ -39,28 +39,74 @@ const MailModal = ({ role, name, email, userID }) => {
   const handleClose = () => setOpen(false);
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post(
-        `/user/me/message?userID=${userID}&name=${name}&toEmail=${email}`,
-        formData,
-        {
+
+    if (role === 'user') {
+      axios
+        .post(
+          `/user/me/message?userID=${userID}&name=${name}&toEmail=${email}`,
+          formData,
+          { withCredentials: true }
+        )
+        .then((response) => {
+          swal('Success!', 'Message sent', 'success');
+        })
+        .catch((error) => {
+          console.log(error);
+          swal('Oops!', 'Something went wrong...', 'error');
+        });
+    } else {
+      axios
+        .post(`/pets/${pet._id}/email`, formData, {
           withCredentials: true
-        }
-      )
-      .then((response) => {
-        swal('Success!', 'Message sent', 'success');
-      })
-      .catch((error) => {
-        console.log(error);
-        swal('Oops!', 'Something went wrong...', 'error');
-      });
+        })
+        .then((response) => {
+          swal('Success!', 'Message sent', 'success');
+        })
+        .catch((error) => {
+          console.log(error);
+          swal('Oops!', 'Something went wrong...', 'error');
+        });
+    }
   };
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <Typography variant="h3">Contact Me</Typography>
       <form onSubmit={handleSubmit}>
+        {role !== 'user' ? (
+          <>
+            <Typography
+              variant="body1"
+              style={{
+                width: '100%',
+                textAlign: 'center',
+                marginBottom: '20px'
+              }}
+            >
+              Want to share this pet's information with someone? Fill out this
+              form and send it off!
+            </Typography>
+            <TextField
+              onChange={(e) =>
+                setFormData({ ...formData, [e.target.name]: e.target.value })
+              }
+              variant="outlined"
+              name="toEmail"
+              label="Recipient's Email"
+              type="text"
+            />
+          </>
+        ) : (
+          <Typography
+            variant="body1"
+            style={{ width: '100%', textAlign: 'center' }}
+          >
+            Want to send this user a message? Fill out this form and send it
+            off!
+          </Typography>
+        )}
         <TextField
+          style={{ marginTop: '20px' }}
           onChange={(e) =>
             setFormData({ ...formData, [e.target.name]: e.target.value })
           }
