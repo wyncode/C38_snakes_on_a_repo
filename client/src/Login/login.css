@@ -18,21 +18,3 @@ form .text-field {
   position: relative;
   width: 70%;
 }
-form .google {
-  background: #4285f4;
-  color: white;
-}
-form .google:hover,
-form .google:focus {
-  background: #3a78db;
-  color: white;
-}
-.google-logo {
-  position: absolute;
-  top: 1px;
-  left: 1px;
-  height: 40px;
-  width: 40px;
-  background-image: url('../Images/official-google.svg');
-  background-size: contain;
-}

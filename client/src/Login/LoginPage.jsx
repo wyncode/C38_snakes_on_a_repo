@@ -88,21 +88,6 @@ const LoginPage = ({ history }) => {
             >
               Login
             </Button>
-            <Button
-              variant="contained"
-              component={Link}
-              to="/auth/google"
-              size="large"
-              style={{
-                alignSelf: 'center',
-                marginTop: '30px',
-                width: '70%'
-              }}
-              className="card-btn google"
-            >
-              <div className="google-logo"></div>
-              Sign In With Google
-            </Button>
           </form>
         </CardContent>
       </Card>

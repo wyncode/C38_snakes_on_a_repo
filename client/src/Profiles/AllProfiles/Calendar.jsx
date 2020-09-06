@@ -146,7 +146,7 @@ const Calendar = ({ id, ownerID }) => {
         }}
         initialView="dayGridMonth"
         events={onloadEvents}
-        selectable={true}
+        selectable={!currentUser ? false : true}
         select={handleDateSelect}
         eventClick={handleEventClick}
       />

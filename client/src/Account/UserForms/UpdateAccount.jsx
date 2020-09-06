@@ -130,14 +130,14 @@ const UpdateAccount = () => {
         <div className="user-tab-grid">
           <Button
             type="submit"
-            className="header-card-btn"
-            style={{ width: '100%', height: '50px' }}
+            className="card-btn"
+            style={{ width: '100%', height: '50px', margin: '20px' }}
           >
             Submit Changes
           </Button>
           <Button
             onClick={handleDelete}
-            className="header-card-btn"
+            className="card-btn"
             style={{ width: '100%', height: '50px', background: 'red' }}
           >
             Delete Account

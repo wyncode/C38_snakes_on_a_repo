@@ -96,12 +96,12 @@ const PetLinks = ({ selectID, petUpdate }) => {
           type="text"
           name="url"
         />
-        <Button type="submit" className="add-btn header-card-btn">
+        <Button type="submit" className="add-btn card-btn">
           Submit Form
         </Button>
         <Button
           onClick={() => setCurrentLink(null)}
-          className="add-btn header-card-btn"
+          className="add-btn card-btn"
         >
           Clear Form to Create New Link?
         </Button>
