@@ -124,7 +124,7 @@ const Map = () => {
         <Popup
           latitude={selectedSitter.latitude}
           longitude={selectedSitter.longitude}
-          closeButton={true}
+          closeButton
           closeOnClick={false}
           onClose={() => {
             setSelectedSitter(null);
@@ -148,8 +148,8 @@ const Map = () => {
         <Popup
           latitude={selectedOwner.latitude}
           longitude={selectedOwner.longitude}
-          closeButton={true}
-          closeOnClick={true}
+          closeButton
+          closeOnClick={false}
           onClose={() => {
             setSelectedSitter(null);
           }}
