@@ -2,7 +2,7 @@ import React from 'react';
 import './profiles.css';
 import '../../colors.css';
 import Button from '@material-ui/core/Button';
-import MailModal from '../UserProfile/MailModal';
+import MailModal from './MailModal';
 import { Link, useHistory } from 'react-router-dom';
 
 const ProfileButton = ({ role, ownerID, email, userID, name, pet }) => {
