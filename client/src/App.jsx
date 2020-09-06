@@ -5,8 +5,8 @@ import Landing from './Landing Page/Landing';
 import LoginPage from './Login/LoginPage';
 import RegisterPage from './Login/RegisterPage';
 import AccountPage from './Account/AccountPage';
-import LocationSearchPage from './SearchMap/LocationSearchPage';
-import SearchPage from './SearchMap/SearchPage';
+import LocationSearchPage from './Map/LocationSearchPage';
+import SearchPage from './Search/SearchPage';
 import UserProfilePage from './Profiles/UserProfile/UserProfilePage';
 import PetProfilePage from './Profiles/PetProfile/PetProfilePage';
 import SecureRoute from './Routes/SecureRoute';
@@ -23,6 +23,7 @@ const App = () => {
   return (
     <AppContextProvider>
       <Router>
+        <ScrollToTop />
         <Nav />
         <Switch>
           <Route exact path="/" component={Landing} />

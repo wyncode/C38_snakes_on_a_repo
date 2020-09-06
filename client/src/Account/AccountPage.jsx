@@ -25,23 +25,25 @@ const AccountPage = () => {
             </Link>
             <Logout styleType={{ fontWeight: 'bold', padding: '0' }} />
           </Typography>
-          <Typography className="header-pets" variant="body1">
-            Your Pets:
-          </Typography>
-          <Typography
-            component="div"
-            variant="button"
-            className="header-pets-list"
-          >
-            {currentUser?.owner &&
-              currentUser?.ownedPets?.map((pet) => {
-                return (
-                  <Link key={pet._id} to={`/petprofile/${pet?._id}`}>
-                    {pet?.name}
-                  </Link>
-                );
-              })}
-          </Typography>
+          {currentUser?.owner && (
+            <>
+              <Typography className="header-pets" variant="body1">
+                Your Pets:
+              </Typography>
+              <Typography
+                component="div"
+                variant="button"
+                className="header-pets-list"
+              >
+                {currentUser?.owner &&
+                  currentUser?.ownedPets?.map((pet) => {
+                    return (
+                      <Link to={`/petprofile/${pet?._id}`}>{pet?.name}</Link>
+                    );
+                  })}
+              </Typography>
+            </>
+          )}
         </CardContent>
       </Card>
 
