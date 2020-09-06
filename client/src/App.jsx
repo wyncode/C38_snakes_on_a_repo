@@ -16,6 +16,7 @@ import UpdatePassword from './Login/UpdatePassword';
 import { AppContextProvider } from './context/AppContext';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import VideoChat from './VideoChat/VideoChat';
+import AboutUs from './About/AboutUs';
 import Chat from './Chat/Chat';
 
 const App = () => {
@@ -36,6 +37,7 @@ const App = () => {
 					<SecureRoute exact path="/map" component={LocationSearchPage} />
 					<SecureRoute exact path="/videochat" component={VideoChat} />
 					<SecureRoute exact path="/chat" component={Chat} />
+          <Route exact path="/about-us" component={AboutUs} />
 				</Switch>
 			</Router>
 		</AppContextProvider>

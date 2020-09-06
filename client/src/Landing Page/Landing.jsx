@@ -3,7 +3,6 @@ import './landing.css';
 import '../index.css';
 import AboutTheSite from './AboutTheSite';
 import TitleContainer from './TitleContainer';
-import AboutUs from './AboutUs';
 import { ScrollTo } from 'react-scroll-to';
 
 const Landing = () => {
@@ -31,9 +30,6 @@ const Landing = () => {
       </div>
       <div id="landing-mid">
         <AboutTheSite />
-      </div>
-      <div id="landing-bottom">
-        <AboutUs />
       </div>
     </div>
   );
