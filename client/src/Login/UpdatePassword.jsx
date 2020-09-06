@@ -50,12 +50,12 @@ const UpdatePassword = ({ history }) => {
         { withCredentials: true }
       );
     } catch (error) {
+      console.log(error);
       return swal(
         'Wait!',
         'Something went wrong! Make sure you are entering the password correctly.',
         'error'
       );
-      console.log(error);
     }
     history.push('/login');
   };
