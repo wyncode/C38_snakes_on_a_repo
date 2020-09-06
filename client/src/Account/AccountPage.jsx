@@ -1,13 +1,25 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Typography, Card, CardContent } from '@material-ui/core';
 import { AppContext } from '../context/AppContext';
 import Logout from '../Login/Logout';
 import TabPane from './TabPane';
 import './account.css';
+import axios from 'axios';
 
 const AccountPage = () => {
   const { currentUser } = useContext(AppContext);
+  const [petList, setPetList] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get('/user/me', { withCredentials: true })
+      .then((res) => {
+        let pets = res.data.ownedPets;
+        setPetList([...petList, ...pets]);
+      })
+      .catch((error) => console.log(error));
+  }, [setPetList]);
 
   return (
     <div id="acct-container">
@@ -35,8 +47,12 @@ const AccountPage = () => {
                 variant="button"
                 className="header-pets-list"
               >
-                {currentUser?.ownedPets?.map((pet) => {
-                  return <Link to={`/petprofile/${pet._id}`}>{pet.name}</Link>;
+                {petList?.map((pet) => {
+                  return (
+                    <Link key={pet._id} to={`/petprofile/${pet._id}`}>
+                      {pet.name}
+                    </Link>
+                  );
                 })}
               </Typography>
             </>
