@@ -126,7 +126,11 @@ const MailModal = ({ role, name, email, pet, userID }) => {
           rows="5"
           label="type your message here..."
         />
-        <Button type="submit" className="header-card-btn">
+        <Button
+          type="submit"
+          className="card-btn"
+          style={{ marginTop: '20px' }}
+        >
           Send
         </Button>
       </form>
