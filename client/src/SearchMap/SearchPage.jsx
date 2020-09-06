@@ -81,7 +81,11 @@ const SearchPage = () => {
                 onChange={(e) => setSearch(e.target.value)}
               />
             </FormControl>
-            <Button className="header-card-btn" type="submit">
+            <Button
+              className="card-btn"
+              style={{ margin: '20px' }}
+              type="submit"
+            >
               Search
             </Button>
           </form>

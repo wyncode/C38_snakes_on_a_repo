@@ -112,13 +112,13 @@ const AddPet = ({
 
       {/* SUBMIT FORM */}
       <div className="pet-info-submit">
-        <Button type="submit" className="header-card-btn pet-btn">
+        <Button type="submit" className="card-btn pet-btn">
           Submit Changes
         </Button>
         {petUpdate && (
           <Button
             onClick={deletePet}
-            className="header-card-btn pet-btn"
+            className="card-btn pet-btn"
             style={{ background: 'red' }}
           >
             Delete Pet

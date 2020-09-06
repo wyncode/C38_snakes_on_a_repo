@@ -17,36 +17,6 @@ passport.deserializeUser(function (id, done) {
   });
 });
 
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.CLIENT_ID,
-      clientSecret: process.env.CLIENT_SECRET,
-      callbackURL:
-        process.env.URL || `${process.env.APP_URL}/auth/google/users`,
-      userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
-    },
-    function (accessToken, refreshToken, profile, cb) {
-      User.findOrCreate({ googleId: profile.id }, function (err, user) {
-        return cb(err, user);
-      });
-    }
-  )
-);
-
-router.get(
-  '/auth/google',
-  passport.authenticate('google', { scope: ['profile'] })
-);
-
-router.get(
-  '/auth/google/users',
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  function (req, res) {
-    res.redirect('/users');
-  }
-);
-
 /*****************/
 /* SEARCH ROUTES */
 /*****************/

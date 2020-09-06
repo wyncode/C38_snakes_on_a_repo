@@ -18,7 +18,8 @@ const Avatar = ({ role, petUpdate }) => {
     setImage(event.target.files[0]);
   };
 
-  const handleImage = () => {
+  const handleImage = (e) => {
+    e.preventDefault();
     setLoading(true);
     const avatar = new FormData();
     avatar.append('avatar', image, image.name);
@@ -31,9 +32,9 @@ const Avatar = ({ role, petUpdate }) => {
         setPreview(null);
         getBackgroundImage();
         setLoading(false);
+        swal('Success!', 'Your avatar was updated successfully!', 'success');
       })
       .catch((error) => console.log(error));
-    swal('Success!', 'Your avatar was updated successfully!', 'success');
   };
 
   const getBackgroundImage = () => {
@@ -60,7 +61,9 @@ const Avatar = ({ role, petUpdate }) => {
         style={{ backgroundImage: `url('${getBackgroundImage()}')` }}
         className="avatar-preview profile-image"
       />
-      <label htmlFor="avatar">Upload an avatar:</label>
+      <label htmlFor="avatar" style={{ marginTop: '10px' }}>
+        Upload an avatar:
+      </label>
       <input
         onChange={handleChange}
         type="file"
@@ -71,8 +74,8 @@ const Avatar = ({ role, petUpdate }) => {
       />
       <Button
         type="submit"
-        className="header-card-btn"
-        style={{ marginBottom: '30px' }}
+        className="card-btn"
+        style={{ margin: '20px auto 30px' }}
       >
         Upload Avatar
       </Button>

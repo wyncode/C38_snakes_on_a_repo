@@ -162,7 +162,8 @@
   width: 50px;
   margin: 5px;
 }
-.add-btn.header-card-btn {
+.add-btn.card-btn {
+  margin: 10px;
   justify-self: center;
   color: white;
   width: 50%;

@@ -135,19 +135,6 @@ const RegisterPage = ({ history }) => {
             >
               Register
             </Button>
-            <Button
-              variant="contained"
-              size="large"
-              style={{
-                alignSelf: 'center',
-                marginTop: '30px',
-                width: '70%'
-              }}
-              className="card-btn"
-            >
-              <div className="google-logo"></div>
-              Sign Up With Google
-            </Button>
           </form>
         </CardContent>
       </Card>

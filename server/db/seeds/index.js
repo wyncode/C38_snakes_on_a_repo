@@ -80,7 +80,7 @@ const dbReset = async () => {
     const pet = new Pet({
       name: `${faker.name.firstName()}`,
       type: randomType,
-      avatar: faker.image.animals(),
+      // avatar: faker.image.animals(),
       description: faker.lorem.paragraph(),
       feeding: faker.lorem.paragraph(),
       cleaning: faker.lorem.paragraph(),
@@ -100,6 +100,41 @@ const dbReset = async () => {
       ],
       owner: randomUser
     });
+
+    switch (pet.type) {
+      case 'reptile':
+        pet.avatar =
+          'https://res.cloudinary.com/ozlizard/image/upload/v1599411307/site%20avatars/banana2.jpg';
+        break;
+      case 'bird':
+        pet.avatar =
+          'https://res.cloudinary.com/ozlizard/image/upload/v1599411316/site%20avatars/bird2.jpg';
+        break;
+      case 'fish':
+        pet.avatar =
+          'https://res.cloudinary.com/ozlizard/image/upload/v1599411322/site%20avatars/fish.jpg';
+        break;
+      case 'mammal':
+        pet.avatar =
+          'https://res.cloudinary.com/ozlizard/image/upload/v1599411327/site%20avatars/hamster.jpg';
+        break;
+      case 'amphibian':
+        pet.avatar =
+          'https://res.cloudinary.com/ozlizard/image/upload/v1599411406/site%20avatars/frog.jpg';
+        break;
+      case 'insect/arachnid':
+        pet.avatar =
+          'https://res.cloudinary.com/ozlizard/image/upload/v1599411337/site%20avatars/spider.jpg';
+        break;
+      case 'other':
+        pet.avatar =
+          'https://res.cloudinary.com/ozlizard/image/upload/v1599411398/site%20avatars/crab.jpg';
+        break;
+      default:
+        pet.avatar = faker.image.animals();
+        break;
+    }
+
     pet.save();
 
     petArray.push(pet);
