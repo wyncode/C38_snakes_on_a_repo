@@ -20,28 +20,29 @@ import AboutUs from './About/AboutUs';
 import Chat from './Chat/Chat';
 
 const App = () => {
-	return (
-		<AppContextProvider>
-			<Router>
-				<Nav />
-				<Switch>
-					<Route exact path="/" component={Landing} />
-					<Route exact path="/search" component={SearchPage} />
-					<Route exact path="/userprofile/:id" component={UserProfilePage} />
-					<Route exact path="/petprofile/:id" component={PetProfilePage} />
-					<Route exact path="/password" component={ForgetPassword} />
-					<Route exact path="/update-password" component={UpdatePassword} />
-					<LoggedInRoute exact path="/login" component={LoginPage} />
-					<LoggedInRoute exact path="/register" component={RegisterPage} />
-					<SecureRoute exact path="/account" component={AccountPage} />
-					<SecureRoute exact path="/map" component={LocationSearchPage} />
-					<SecureRoute exact path="/videochat" component={VideoChat} />
-					<SecureRoute exact path="/chat" component={Chat} />
+  return (
+    <AppContextProvider>
+      <Router>
+        <Nav />
+        <Switch>
+          <Route exact path="/" component={Landing} />
           <Route exact path="/about-us" component={AboutUs} />
-				</Switch>
-			</Router>
-		</AppContextProvider>
-	);
+          <Route exact path="/search" component={SearchPage} />
+          <Route exact path="/userprofile/:id" component={UserProfilePage} />
+          <Route exact path="/petprofile/:id" component={PetProfilePage} />
+          <Route exact path="/password" component={ForgetPassword} />
+          <Route exact path="/update-password" component={UpdatePassword} />
+          <LoggedInRoute exact path="/login" component={LoginPage} />
+          <LoggedInRoute exact path="/register" component={RegisterPage} />
+          <SecureRoute exact path="/account" component={AccountPage} />
+          <SecureRoute exact path="/map" component={LocationSearchPage} />
+          <SecureRoute exact path="/videochat" component={VideoChat} />
+          {/* <SecureRoute exact path="/chat" component={Chat} /> */}
+          <Route exact path="/chat" component={Chat} />
+        </Switch>
+      </Router>
+    </AppContextProvider>
+  );
 };
 
 export default App;
