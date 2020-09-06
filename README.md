@@ -12,6 +12,8 @@ Specific features include:
 - Users can search for each other via text search or with a map that displays other users near their location.
 - Users can save their favorite pet or user profile for easy future reference.
 
+<hr/>
+
 ## Overview
 
 -We used the MERN stack for our app: MongoDB to store data, Express for our server, React for our front end and Node.js as our runtime.
@@ -28,9 +30,19 @@ Specific features include:
 - Cloudinary to upload and manage user images.
 - To keep track of login information, we used JWT-based token authentication, bcrypt for password hashing, and Passport for user authentication.
 
+<hr/>
+
 ## Screenshots
 
-<img src="./client/src/Images/landingScreenshot.png" width="500" />
+<img src="./screenshots/landing.png" width="400" />
+<img src="./screenshots/pet_profile.png" width="400" />
+<img src="./screenshots/sitter_profile.png" width="400" />
+<img src="./screenshots/owner_profile.png" width="400" />
+<img src="./screenshots/pet_form.png" width="400" />
+<img src="./screenshots/pet_form_2.png" width="400" />
+<img src="./screenshots/search_results.png" width="400" />
+<img src="./screenshots/landing.png" width="400" />
+<hr/>
 
 ## Installation and Run on Local Machine
 
@@ -46,11 +58,15 @@ Application uses ports localhost 3000 and 8080.
     #start both front and back end severs on one command
     cd .. && yarn dev
 
+<hr/>
+
 ## Back End Usage
 
 Click the button to download the API endpoints for our application!
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/e70b2104770bedd8859f)
+
+<hr/>
 
 ## Dependencies
 
@@ -77,6 +93,8 @@ Click the button to download the API endpoints for our application!
 | sweetalert                  | validator                          |
 |                             | moment                             |
 
+<hr/>
+
 ## About Us
 
 We are a group of three Wyncode students who wanted to use this opportunity to offer exotic pet owners and sitters a convenient way to find, communicate and share information with each other online.
@@ -86,6 +104,8 @@ We are a group of three Wyncode students who wanted to use this opportunity to o
 **Erialbania L.** Full Stack Web Development student from Wyncode's Cohort 38. Former digital marketing coordinator looking to make a career change into the tech industry. Find my GitHub profile [here](https://github.com/Erialbania)!
 
 **Juan P.** Full Stack Web Development student from Wyncode's Cohort 38 -- with a background in hospitality and IT Support, I'm always interested in learning more about technology. Find my GitHub profile [here](https://github.com/juanjpayan)!
+
+<hr/>
 
 ## Deployment
 
