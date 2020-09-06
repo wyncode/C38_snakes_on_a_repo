@@ -17,27 +17,26 @@ const ForgetPassword = ({ history }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
-    console.log(formData);
     if (!formData) {
       return swal('Wait!', 'Please enter an email', 'error');
     }
     axios
       .get(`/password?email=${formData}`)
       .then((res) => {
+        form.reset();
         return swal(
           'Success!',
           'Thank you! Please check your email for the reset link',
           'success'
         );
-        form.reset();
       })
       .catch((error) => {
+        console.log(error);
         return swal(
           'Wait!',
           "Something went wrong! Please make sure you're entering the correct email",
           'error'
         );
-        console.log(error);
       });
   };
 
@@ -83,7 +82,7 @@ const ForgetPassword = ({ history }) => {
                 marginTop: '30px',
                 width: '70%'
               }}
-              className="header-card-btn"
+              className="card-btn"
             >
               Reset Password
             </Button>

@@ -11,7 +11,7 @@ const AboutTheSite = () => {
     // Must wrap component in fragment
     // so that CSS selectors target elements correctly
     <>
-      <div id="lb-title">
+      <div id="about-site-title">
         <Typography variant="h3" component="div">
           <b className="aboutus-title">Petster Exotic:</b>
           <Typography variant="h6">
@@ -19,7 +19,7 @@ const AboutTheSite = () => {
           </Typography>
         </Typography>
       </div>
-      <div id="lb-info">
+      <div id="about-site-info">
         <Typography variant="h6" component="div">
           <p>
             Own an exotic animal? Wish it was easier to find a pet sitter, or to
@@ -34,7 +34,7 @@ const AboutTheSite = () => {
           </p>
         </Typography>
       </div>
-      <div id="lb-list">
+      <div id="about-site-list">
         <Typography variant="h6" component="div">
           With Petster Exotic, you can:
           <ul className="emoji">
@@ -49,16 +49,16 @@ const AboutTheSite = () => {
           </ul>
         </Typography>
       </div>
-      <div id="lb-signup">
-        <div id="lb-signup-upper">
+      <div id="about-site-signup">
+        <div id="about-site-signup-upper">
           <Typography variant="h4" component="h5">
             Register with us now!
             <hr />
           </Typography>
         </div>
-        <div id="lb-signup-lower">
+        <div id="about-site-signup-lower">
           <img src={ferret} alt="ferret" />
-          <div id="landing-mid-btns">
+          <div id="landing-about-site-btns">
             <Button
               onClick={() => {
                 history.push('/register');

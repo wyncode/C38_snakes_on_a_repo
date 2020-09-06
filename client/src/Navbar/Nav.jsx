@@ -111,7 +111,6 @@ const Nav = () => {
             <ListItem
               button
               key={el.text}
-              className="drawer-text"
               to={el.link}
               component={Link}
               style={el.secure && viewLink}
@@ -119,7 +118,7 @@ const Nav = () => {
               <ListItemIcon className="drawer-icon">
                 {iconList(el.text)}
               </ListItemIcon>
-              <ListItemText primary={el.text} />
+              <ListItemText className="drawer-text" primary={el.text} />
             </ListItem>
           ))}
         </List>

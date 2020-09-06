@@ -17,11 +17,25 @@
   width: 100vw;
 }
 #landing-title-container {
-  padding-top: 20px;
+  padding: 5px 5px 10px;
+}
+@media only screen and (min-width: 1000px) {
+  #landing-title-container {
+    max-width: 40vw;
+    padding: 30px;
+    margin-top: 10vh;
+    margin-left: 5vw;
+    border-radius: 20px;
+  }
 }
 #landing-title-container .lt-title {
   font-size: 50px;
   font-family: 'Rowdies';
+}
+@media only screen and (min-width: 1000px) {
+  #landing-title-container .lt-title {
+    font-size: 80px;
+  }
 }
 #landing-title-container .lt-subtitle {
   margin: auto;
@@ -37,6 +51,14 @@
   font-weight: 300;
   font-family: 'Rowdies';
 }
+@media only screen and (min-width: 1000px) {
+  #landing-title-container .home-btn {
+    margin: 30px 15px;
+    padding: 15px 60px;
+    width: 150px;
+  }
+}
+
 /*ARROW*/
 .arrow-container {
   position: absolute;
@@ -48,6 +70,12 @@
   height: 70px;
   margin: 0 auto;
   cursor: pointer;
+}
+@media only screen and (min-width: 1000px) {
+  /*ARROW*/
+  .arrow-container {
+    left: 50%;
+  }
 }
 .arrow {
   position: absolute;
@@ -62,58 +90,18 @@
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
 }
-/* BOTTOM SECTION */
-#landing-mid {
+
+/* ABOUT THE SITE*/
+#landing-about-site {
   margin-top: 10vh;
+  max-width: 95vw;
+  margin: 5%;
   display: flex;
   flex-direction: column;
   text-align: left;
 }
-#lb-title,
-#lb-signup {
-  text-align: center;
-}
-#lb-title,
-#lb-info,
-#lb-list,
-#lb-signup {
-  padding: 30px;
-}
-#landing-mid-btns {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 30px;
-}
-#landing-mid-btns button {
-  margin-bottom: 60px;
-  transform: scale(1.5, 1.5);
-}
-
 @media only screen and (min-width: 1000px) {
-  /*TOP*/
-  #landing-title-container {
-    max-width: 40vw;
-    padding: 30px;
-    margin-top: 10vh;
-    margin-left: 5vw;
-    border-radius: 20px;
-  }
-  #landing-title-container .lt-title {
-    font-size: 80px;
-  }
-  #landing-title-container .home-btn {
-    margin: 30px 15px;
-    padding: 15px 60px;
-    width: 150px;
-  }
-  /*ARROW*/
-  .arrow-container {
-    left: 50%;
-  }
-  /*MID*/
-  #landing-mid {
+  #landing-about-site {
     width: 100%;
     min-height: 90vh;
     align-self: center;
@@ -127,33 +115,56 @@
       'one two';
     text-align: left;
   }
-  #lb-title {
+}
+#about-site-title,
+#about-site-signup {
+  text-align: center;
+}
+#about-site-title,
+#about-site-info,
+#about-site-list,
+#about-site-signup {
+  padding: 30px;
+}
+#landing-about-site-btns {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 30px;
+}
+#landing-about-site-btns button {
+  margin-bottom: 60px;
+  transform: scale(1.5, 1.5);
+}
+@media only screen and (min-width: 1000px) {
+  #about-site-title {
     grid-area: title;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: left;
   }
-  #lb-info {
+  #about-site-info {
     grid-area: info;
     padding: 10px;
   }
-  #lb-list,
-  #lb-signup {
+  #about-site-list,
+  #about-site-signup {
     margin-top: 100px;
     padding: 40px;
   }
-  #lb-list {
+  #about-site-list {
     grid-area: one;
   }
-  #lb-signup {
+  #about-site-signup {
     grid-area: two;
     margin-top: 130px;
     width: 100%;
     display: flex;
     flex-direction: column;
   }
-  #lb-signup-lower {
+  #about-site-signup-lower {
     display: flex;
     flex-direction: row;
     justify-content: center;
