@@ -30,7 +30,7 @@ const SearchPage = () => {
     } else if (!search) {
       swal('Oops!', 'Must type a search term', 'error');
     } else {
-      fetch(`/search/${searchModel}?query=${search}`)
+      fetch(`/api/search/${searchModel}?query=${search}`)
         .then((res) => res.json())
         .then((results) => {
           setResults(results);

@@ -13,7 +13,7 @@ const PetLinks = ({ selectID, petUpdate }) => {
   const addLink = () => {
     setLoading(true);
     axios
-      .post(`/pets/${selectID}/link`, currentLink)
+      .post(`/api/pets/${selectID}/link`, currentLink)
       .then(() => {
         swal('Success!', 'Link added!', 'success');
       })
@@ -26,7 +26,7 @@ const PetLinks = ({ selectID, petUpdate }) => {
   const editLink = () => {
     setLoading(true);
     axios
-      .put(`/pets/${selectID}/link/${currentLink?._id}`, currentLink)
+      .put(`/api/pets/${selectID}/link/${currentLink?._id}`, currentLink)
       .then(() => {
         swal('Success!', 'Link edited!', 'success');
       })
@@ -53,7 +53,7 @@ const PetLinks = ({ selectID, petUpdate }) => {
   const deleteLink = (id) => {
     setLoading(true);
     axios
-      .delete(`/pets/${selectID}/link/${id}`)
+      .delete(`/api/pets/${selectID}/link/${id}`)
       .then(() => {})
       .catch((error) => {
         console.log(error);

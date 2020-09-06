@@ -11,7 +11,7 @@ const AppContextProvider = ({ children }) => {
   useEffect(() => {
     if (user && !currentUser) {
       axios
-        .get('/user/me', { withCredentials: true })
+        .get('/api/user/me', { withCredentials: true })
         .then((res) => {
           setCurrentUser(res.data);
           setCurrentPets(res.data.ownedPets);

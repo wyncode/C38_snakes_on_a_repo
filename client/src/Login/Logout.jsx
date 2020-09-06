@@ -10,7 +10,7 @@ const Logout = ({ styleType }) => {
 
   const handleLogOut = () => {
     axios
-      .post('/user/logout', { withCredentials: true })
+      .post('/api/user/logout', { withCredentials: true })
       .then(() => {
         setCurrentUser(null);
         setCurrentPets(null);

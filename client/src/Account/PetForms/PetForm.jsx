@@ -22,7 +22,7 @@ const PetForm = ({ form }) => {
   useEffect(() => {
     if (petUpdateID) {
       axios
-        .get(`/pets/${petUpdateID?.id}`)
+        .get(`/api/pets/${petUpdateID?.id}`)
         .then(({ data }) => {
           setPetUpdate({ ...petUpdate, data });
           setType(data.type);
@@ -37,7 +37,7 @@ const PetForm = ({ form }) => {
     }
 
     axios
-      .post('/pets', formData)
+      .post('/api/pets', formData)
       .then(() => {
         swal('Awesome!', 'Successfully added pet', 'success');
       })
@@ -52,7 +52,7 @@ const PetForm = ({ form }) => {
       swal('Something is missing', 'Please select a pet to update!', 'error');
     }
     axios
-      .put(`/pets/${selectID}`, formData)
+      .put(`/api/pets/${selectID}`, formData)
       .then(() => {
         swal('Awesome!', 'Successfully updated pet', 'success');
       })
@@ -68,7 +68,7 @@ const PetForm = ({ form }) => {
     );
     setLoading(true);
     axios
-      .delete(`/pets/${selectID}`)
+      .delete(`/api/pets/${selectID}`)
       .then(() => {
         swal('Success!', 'Pet deleted!', 'success');
         setLoading(false);

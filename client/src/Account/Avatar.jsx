@@ -24,9 +24,13 @@ const Avatar = ({ role, petUpdate }) => {
     const avatar = new FormData();
     avatar.append('avatar', image, image.name);
     axios
-      .post(`/${role}/avatar/${petUpdate ? petUpdate.data._id : ''}`, avatar, {
-        withCredentials: true
-      })
+      .post(
+        `/api/${role}/avatar/${petUpdate ? petUpdate.data._id : ''}`,
+        avatar,
+        {
+          withCredentials: true
+        }
+      )
       .then((response) => {
         setCurrentUser({ ...currentUser, avatar: response.data.secure_url });
         setPreview(null);
