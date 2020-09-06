@@ -35,8 +35,7 @@ const AccountPage = () => {
                 variant="button"
                 className="header-pets-list"
               >
-                {currentUser?.owner &&
-                  currentUser?.ownedPets?.map((pet) => {
+                {currentUser?.ownedPets?.map((pet) => {
                     return (
                       <Link to={`/petprofile/${pet?._id}`}>{pet?.name}</Link>
                     );
