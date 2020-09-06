@@ -12,10 +12,27 @@
   justify-content: space-between;
   font-weight: bold;
   padding-top: 15px;
+  padding-bottom: 15px;
   margin-top: 15px;
 }
 .account-card {
   margin: 30px;
+}
+.header-pets {
+  margin-top: 10px;
+  padding-top: 10px;
+  text-align: left;
+}
+.header-pets-list {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  text-align: left;
+}
+.header-pets-list a,
+.header-pets-list a:visited {
+  padding: 10px;
+  font-weight: bold;
 }
 
 /* AVATAR IMAGE */

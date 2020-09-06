@@ -91,6 +91,13 @@
 }
 .heart {
   position: absolute;
+  top: 15px;
+  left: 35px;
+  background: white;
+  padding: 5px;
+  border-radius: 100%;
+  cursor: pointer;
+  transform: scale(1.5, 1.5);
 }
 #profile-btn-wrapper {
   grid-area: btns;

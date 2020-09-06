@@ -30,12 +30,15 @@ const UserProfilePage = ({ match }) => {
   return (
     <div id="profile-container">
       <div id="topleft">
-        <ProfileImg imgURL={userProfile.avatar || defaultAvatar} />
+        <ProfileImg
+          imgURL={userProfile.avatar || defaultAvatar}
+          heartRole="user"
+          id={userProfile._id}
+          role={userProfile.owner ? 'pet owner' : 'pet sitter'}
+        />
         <ProfileName
           name={userProfile.name}
           role={userProfile.owner ? 'pet owner' : 'pet sitter'}
-          heartRole="user"
-          id={userProfile._id}
         />
         <ProfileButtons
           role="user"

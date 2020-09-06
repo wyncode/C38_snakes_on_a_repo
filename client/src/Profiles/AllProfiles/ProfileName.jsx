@@ -1,106 +1,11 @@
-import React, { useEffect, useRef, useState, useContext } from 'react';
+import React from 'react';
 import './profiles.css';
 import '../../colors.css';
-import axios from 'axios';
-import { AppContext } from '../../context/AppContext';
-import { Typography, Card, CardContent, Popover } from '@material-ui/core/';
-import FavoriteTwoToneIcon from '@material-ui/icons/FavoriteTwoTone';
+import { Typography, Card, CardContent } from '@material-ui/core/';
 
-const ProfileName = ({ id, role, name, heartRole }) => {
-  const { currentUser, user, loading } = useContext(AppContext);
-  const heart = useRef(null);
-  const [popoverMessage, setPopoverMessage] = useState('');
-
-  useEffect(() => {
-    if (!currentUser && !user) {
-      heart.current.style.color = 'gray';
-    } else {
-      axios
-        .get('/user/me', { withCredentials: true })
-        .then(({ data }) => {
-          if (data.favPets.indexOf(id) > -1 && heartRole === 'pet') {
-            heart.current.style.color = 'red';
-          } else if (data.favUsers.indexOf(id) > -1 && heartRole === 'user') {
-            heart.current.style.color = 'red';
-          } else {
-            heart.current.style.color = 'gray';
-          }
-        })
-        .catch((error) => console.log(error));
-    }
-  }, [currentUser, user, loading]);
-
-  const toggleFav = () => {
-    if (!currentUser || !user) {
-      return setPopoverMessage(
-        'In order to set favorites, you must be logged in!'
-      );
-    }
-    let profile = 'favPets';
-    if (role === 'pet owner' || role === 'pet sitter') {
-      profile = 'favUsers';
-    }
-    axios
-      .put(`/user/me/favorites?id=${id}&profile=${profile}`, {
-        withCredentials: true
-      })
-      .then(({ data }) => console.log(data))
-      .catch((error) => console.log(error));
-    console.log(heart.current.style.color);
-    if (heart.current.style.color === 'red') {
-      heart.current.style.color = 'gray';
-      setPopoverMessage('Removed from favorites');
-    } else {
-      heart.current.style.color = 'red';
-      setPopoverMessage('Added to favorites');
-    }
-  };
-
-  // Materials UI Library to handle Popover
-  const [anchorEl, setAnchorEl] = useState(null);
-  const handleClick = (event) => {
-    toggleFav();
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  const open = Boolean(anchorEl);
-  const popID = open ? 'simple-popover' : undefined;
-
+const ProfileName = ({ role, name }) => {
   return (
     <Card className="gradient-border" id="profile-name" elevation={3}>
-      <FavoriteTwoToneIcon
-        aria-describedby={popID}
-        ref={heart}
-        className="heart"
-        style={{ cursor: 'pointer', transform: 'scale(1.5,1.5)' }}
-        onClick={handleClick}
-      />
-      <Popover
-        id={popID}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center'
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center'
-        }}
-      >
-        <Typography
-          style={{ padding: '20px', border: '4px double rgb(53, 87, 167)' }}
-          component="div"
-          variant="button"
-          elevation={3}
-          className="popover"
-        >
-          {popoverMessage}
-        </Typography>
-      </Popover>
       <CardContent className="card-inside">
         <Typography
           gutterBottom
