@@ -27,7 +27,6 @@ passport.use(
       userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
     },
     function (accessToken, refreshToken, profile, cb) {
-      console.log(profile);
       User.findOrCreate({ googleId: profile.id }, function (err, user) {
         return cb(err, user);
       });
@@ -48,6 +47,9 @@ router.get(
   }
 );
 
+/*****************/
+/* SEARCH ROUTES */
+/*****************/
 // Search Pet by Name OR Description
 router.get('/search/pet', async (req, res) => {
   const { query } = req.query;
@@ -88,6 +90,9 @@ router.get('/search/user', async (req, res) => {
   }
 });
 
+/*****************/
+/* GET PETS      */
+/*****************/
 // Get All Pets
 router.get('/pets', async (req, res) => {
   try {
@@ -116,6 +121,9 @@ router.get('/pets/:id', async (req, res) => {
   }
 });
 
+/*****************/
+/* GET EVENTS    */
+/*****************/
 // Get Events by PetID
 router.get('/pets/:id/events', async (req, res) => {
   try {
@@ -144,6 +152,9 @@ router.get('/users/:id/events', async (req, res) => {
   }
 });
 
+/*****************/
+/* GET USERS     */
+/*****************/
 // Get All Users
 router.get('/users', async (req, res) => {
   try {
@@ -172,6 +183,9 @@ router.get('/users/:id', async (req, res) => {
   }
 });
 
+/*************************/
+/* CREATE ACCOUNT, LOGIN */
+/*************************/
 // Create New User
 router.post('/users', async (req, res) => {
   const { email } = req.body;
@@ -192,8 +206,8 @@ router.post('/users', async (req, res) => {
     const token = await newUser.generateAuthToken();
     res.cookie('jwt', token, {
       httpOnly: true,
-      sameSite: 'Strict',
-      secure: process.env.NODE_ENV !== 'production' ? false : true
+      sameSite: 'Strict'
+      // secure: process.env.NODE_ENV !== 'production' ? false : yatrue
     });
     res.status(201).json(newUser);
   } catch (err) {
@@ -209,8 +223,8 @@ router.post('/user/login', async (req, res) => {
     const token = await user.generateAuthToken();
     res.cookie('jwt', token, {
       httpOnly: true,
-      sameSite: 'Strict',
-      secure: process.env.NODE_ENV !== 'production' ? false : true
+      sameSite: 'Strict'
+      // secure: process.env.NODE_ENV !== 'production' ? false : true
     });
     res.status(200).json({ message: 'Logged in!', data: user });
   } catch (err) {
@@ -218,6 +232,9 @@ router.post('/user/login', async (req, res) => {
   }
 });
 
+/******************/
+/* RESET PASSWORD */
+/******************/
 // Password Reset
 router.get('/password', async (req, res) => {
   try {
@@ -231,8 +248,7 @@ router.get('/password', async (req, res) => {
         expiresIn: '10m'
       }
     );
-
-    console.log('sending out token', token);
+    // console.log('sending out token', token);
     ForgotPassword(email, token);
     res.json({ message: 'reset password email sent' });
   } catch (error) {

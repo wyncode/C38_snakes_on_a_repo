@@ -39,9 +39,17 @@ a:hover {
 .card-inside {
   background: var(--white);
 }
+@media only screen and (max-width: 600px) {
+  .gradient-border {
+    max-width: 95vw;
+  }
+  .card-inside {
+    overflow: scroll;
+  }
+}
 /*LANDING PAGE*/
 #top-container,
-#landing-mid {
+#landing-about-site {
   border-bottom: 3px solid var(--dark);
 }
 #landing-title-container {
@@ -70,21 +78,21 @@ a:hover {
 #landing-title-container .home-btn:nth-of-type(2):hover {
   background: rgba(255, 255, 255, 0.2);
 }
-#landing-mid-btns button:first-of-type {
+#landing-about-site-btns button:first-of-type {
   background: var(--btn-gradient);
   color: var(--less-white);
   transition: all 0.5s;
 }
-#landing-mid-btns button:first-of-type:hover {
+#landing-about-site-btns button:first-of-type:hover {
   transform: scale(2.3, 2.3);
   color: var(--white);
 }
-#landing-mid-btns button:nth-of-type(2) {
+#landing-about-site-btns button:nth-of-type(2) {
   background: var(--mid);
   color: var(--less-white);
   transition: all 0.5s;
 }
-#landing-mid-btns button:nth-of-type(2):hover {
+#landing-about-site-btns button:nth-of-type(2):hover {
   transform: scale(2.3, 2.3);
   color: var(--white);
 }
@@ -120,14 +128,14 @@ a:hover {
 #account-menu a:visited {
   color: var(--black);
 }
-.drawer-icon {
+.drawer-text {
   color: var(--mid);
 }
-.drawer-icon a,
-.drawer-icon a:visited {
+.drawer-text a,
+.drawer-text a:visited {
   color: var(--mid);
 }
-.drawer-icon a:hover {
+.drawer-text a:hover {
   color: var(--mid-darker);
   transition: all 0.3s;
 }
@@ -187,14 +195,16 @@ a:hover {
 /*BUTTON PAIR UNDERNEATH PROFILE NAME + LOGIN  & SEARCH BUTTONS*/
 #btn1,
 #btn2,
-form .header-card-btn {
+form .card-btn,
+#input-container .chat-btn {
   color: var(--less-white);
   background: var(--mid);
   transition: all 0.3s ease-in;
 }
 #btn1:hover,
 #btn2:hover,
-form .header-card-btn:hover {
+form .card-btn:hover,
+#input-container .chat-btn {
   color: var(--yellow);
   background: var(--mid);
 }
@@ -217,6 +227,9 @@ form .header-card-btn:hover {
 #account-header-subtitle {
   color: var(--dark);
 }
+.header-pets {
+  border-top: 2px solid var(--mid);
+}
 /* SEARCH */
 fieldset.search-form-control {
   border: 1px solid var(--mid);
@@ -237,5 +250,12 @@ a:visited.result-link {
 }
 a:hover.result-link,
 a:focus.result-link {
+  color: var(--mid-darker);
+}
+/* CHAT */
+.message span:first-of-type {
+  color: var(--dark);
+}
+.message span:nth-of-type(2) {
   color: var(--mid-darker);
 }

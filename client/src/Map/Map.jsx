@@ -124,6 +124,26 @@ const Map = () => {
 					</div>
 				</Popup>
 			) : null}
+
+			{selectedOwner ? (
+				<Popup
+					latitude={selectedOwner.latitude}
+					longitude={selectedOwner.longitude}
+					closeButton={true}
+					closeOnClick={false}
+					onClose={() => {
+						setSelectedSitter(null);
+					}}
+				>
+					<div>
+						<img src={selectedOwner.avatar} alt="avatar" />
+						<h2>{selectedOwner.name}</h2>
+						<Link to={`/userprofile/${selectedOwner._id}`} target="_blank">
+							Visit profile
+						</Link>
+					</div>
+				</Popup>
+			) : null}
 		</ReactMapGL>
 	);
 };

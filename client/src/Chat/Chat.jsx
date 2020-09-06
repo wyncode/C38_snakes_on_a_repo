@@ -1,156 +1,103 @@
-import React, { useState, useEffect, useRef } from 'react';
-import styled from 'styled-components';
-import io from 'socket.io-client';
-
-const Page = styled.div`
-	display: flex;
-	height: 100vh;
-	width: 100%;
-	align-items: center;
-	background-color: #46516e;
-	flex-direction: column;
-`;
-
-const Container = styled.div`
-	display: flex;
-	flex-direction: column;
-	height: 500px;
-	max-height: 500px;
-	overflow: auto;
-	width: 400px;
-	border: 1px solid yellow;
-	border-radius: 10px;
-	padding-bottom: 10px;
-	margin-top: 105px;
-`;
-
-const TextArea = styled.textarea`
-	width: 98%;
-	height: 100px;
-	border-radius: 10px;
-	margin-top: 10px;
-	padding-left: 10px;
-	padding-top: 10px;
-	font-size: 17px;
-	background-color: transparent;
-	border: 1px solid yellow;
-	outline: none;
-	color: lightgray;
-	letter-spacing: 1px;
-	line-height: 20px;
-	::placeholder {
-		color: orange;
-	}
-`;
-
-const Button = styled.button`
-	background-color: green;
-	width: 100%;
-	border: none;
-	height: 50px;
-	border-radius: 10px;
-	color: #46516e;
-	font-size: 17px;
-`;
-
-const Form = styled.form`width: 400px;`;
-
-const MyRow = styled.div`
-	width: 100%;
-	display: flex;
-	justify-content: flex-end;
-	margin-top: 10px;
-`;
-
-const MyMessage = styled.div`
-	width: 45%;
-	background-color: green;
-	color: #46516e;
-	padding: 10px;
-	margin-right: 5px;
-	text-align: center;
-	border-top-right-radius: 10%;
-	border-bottom-right-radius: 10%;
-`;
-
-const PartnerRow = styled(MyRow)`
-  justify-content: flex-start;
-`;
-
-const PartnerMessage = styled.div`
-	width: 45%;
-	background-color: transparent;
-	color: lightgray;
-	border: 1px solid yellow;
-	padding: 10px;
-	margin-left: 5px;
-	text-align: center;
-	border-top-left-radius: 10%;
-	border-bottom-left-radius: 10%;
-`;
+import React, { useState, useEffect } from 'react';
+import '../colors.css';
+import './chat.css';
+import socketIo from '../utils/socket-io';
+import {
+  Typography,
+  TextField,
+  Button,
+  Card,
+  CardContent
+} from '@material-ui/core';
 
 const Chat = () => {
-	const [ yourID, setYourID ] = useState();
-	const [ messages, setMessages ] = useState([]);
-	const [ message, setMessage ] = useState('');
+  const [username, setUsername] = useState('');
+  const [message, setMessage] = useState('');
+  const [chats, setChats] = useState([]);
 
-	const socketRef = useRef();
+  useEffect(() => {
+    socketIo.on('receive message', (data) => {
+      // console.log('receive message', data);
+      addMessage(data);
+    });
+  }, [chats]);
 
-	useEffect(() => {
-		socketRef.current = io.connect('/chat');
+  const addMessage = (msg) => {
+    setChats(chats.concat({ author: msg.author, message: msg.message }));
+  };
 
-		socketRef.current.on('your id', (id) => {
-			setYourID(id);
-		});
+  const sendMessage = (event) => {
+    event.preventDefault();
+    socketIo.emit('send message', { author: username, message: message });
+    setMessage('');
+  };
 
-		socketRef.current.on('message', (message) => {
-			console.log('here');
-			receivedMessage(message);
-		});
-	}, []);
-
-	function receivedMessage(message) {
-		setMessages((oldMsgs) => [ ...oldMsgs, message ]);
-	}
-
-	function sendMessage(e) {
-		e.preventDefault();
-		const messageObject = {
-			body: message,
-			id: yourID
-		};
-		setMessage('');
-		socketRef.current.emit('send message', messageObject);
-	}
-
-	function handleChange(e) {
-		setMessage(e.target.value);
-	}
-
-	return (
-		<Page>
-			<Container>
-				{messages.map((message, index) => {
-					if (message.id === yourID) {
-						return (
-							<MyRow key={index}>
-								<MyMessage>{message.body}</MyMessage>
-							</MyRow>
-						);
-					}
-					return (
-						<PartnerRow key={index}>
-							<PartnerMessage>{message.body}</PartnerMessage>
-						</PartnerRow>
-					);
-				})}
-			</Container>
-			<Form onSubmit={sendMessage}>
-				<TextArea value={message} onChange={handleChange} placeholder="Say something..." />
-				<Button>Send</Button>
-			</Form>
-		</Page>
-	);
+  return (
+    <div id="chat-container">
+      <Card elevation={3} className="gradient-border chat-display" id="about">
+        <CardContent className="card-inside">
+          <Typography variant="body1" component="div">
+            <div className="message">
+              <span>Author:</span>
+              <span>
+                MessageMessageMessageMessageMessageMessageMessageMessageMessageMessageMessageMessageMessageMessageMessageMessageMessageMessageMessageMessageMessageMessageMessageMessageMessageMessage
+              </span>
+            </div>
+            <div className="message">
+              <span>Author:</span>
+              <span>Message</span>
+            </div>
+            <div className="message">
+              <span>Author:</span>
+              <span>Message</span>
+            </div>
+            <div className="message">
+              <span>Author:</span>
+              <span>Message</span>
+            </div>
+            <div className="message">
+              <span>Author:</span>
+              <span>Message</span>
+            </div>
+            {chats.map((chat) => {
+              return (
+                <div className="message">
+                  <span>{chat.author}:</span>
+                  <span>{chat.message}</span>
+                </div>
+              );
+            })}
+          </Typography>
+        </CardContent>
+      </Card>
+      <div id="input-container">
+        <TextField
+          className="input"
+          onChange={(e) => setUsername(e.target.value)}
+          variant="outlined"
+          value={username}
+          id="password"
+          type="text"
+          label="Username"
+          placeholder="Username"
+        />
+        <TextField
+          className="input"
+          placeholder="Message"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          variant="outlined"
+          type="text"
+          label="Message"
+          multiline
+          rows={3}
+        />
+        <Button className="card-btn chat-btn" onClick={sendMessage}>
+          Send
+        </Button>
+      </div>
+    </div>
+  );
 };
 
 export default Chat;

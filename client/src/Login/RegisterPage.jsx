@@ -131,7 +131,7 @@ const RegisterPage = ({ history }) => {
                 marginTop: '30px',
                 width: '70%'
               }}
-              className="header-card-btn"
+              className="card-btn"
             >
               Register
             </Button>
@@ -143,7 +143,7 @@ const RegisterPage = ({ history }) => {
                 marginTop: '30px',
                 width: '70%'
               }}
-              className="header-card-btn"
+              className="card-btn"
             >
               <div className="google-logo"></div>
               Sign Up With Google

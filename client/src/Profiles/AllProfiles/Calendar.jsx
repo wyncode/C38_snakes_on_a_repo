@@ -116,12 +116,12 @@ const Calendar = ({ id, ownerID }) => {
       swal({
         title: `Event: ${clickInfo.event.title}`,
         text: `From: ${start}\nTo: ${end}`,
-        buttons: [true, 'Delete'],
+        buttons: true,
         dangerMode: true
       }).then((willDelete) => {
-        deleteEvent(clickedEventID);
-        clickInfo.event.remove();
         if (willDelete) {
+          deleteEvent(clickedEventID);
+          clickInfo.event.remove();
           swal('Your event has been deleted!', {
             icon: 'success'
           });

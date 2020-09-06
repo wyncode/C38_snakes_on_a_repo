@@ -68,16 +68,11 @@ const Favorites = () => {
   };
 
   const toggleFav = (e, profile, id) => {
-    console.log(profile);
-    console.log(id);
-
     axios
       .put(`/user/me/favorites?id=${id}&profile=${profile}`, {
         withCredentials: true
       })
-      .then(({ data }) => {
-        console.log(data);
-      })
+      .then(({ data }) => {})
       .catch((error) => console.log(error))
       .finally(() => {
         setCurrentFavOwners([]);

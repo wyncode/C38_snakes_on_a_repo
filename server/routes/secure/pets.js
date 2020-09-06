@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const cloudinary = require('cloudinary').v2;
+const { PetEmail } = require('../../emails/index');
 const Pet = require('../../db/models/pet');
 const User = require('../../db/models/user');
 
@@ -180,6 +181,23 @@ router.post('/pets/:id/events', async (req, res) => {
     pet.events.push(req.body.events);
     await pet.save();
     res.status(201).json(pet.events);
+  } catch (err) {
+    res.status(500).json({ err: err.toString() });
+  }
+});
+
+/*************************************************/
+/** Send Email to Share Pet Info                 */
+/*************************************************/
+// Send Message
+router.post('/pets/:id/email', async (req, res) => {
+  const { subject, message, toEmail } = req.body;
+  const fromID = req.user._id;
+  const name = req.user.name;
+  try {
+    let pet = await Pet.findById(req.params.id);
+    PetEmail(subject, message, toEmail, name, pet, fromID);
+    res.status(200).json(pet);
   } catch (err) {
     res.status(500).json({ err: err.toString() });
   }
