@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import PetsIcon from '@material-ui/icons/Pets';
 import './map.css';
-import { IconButton } from '@material-ui/core';
+import { IconButton, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { PacmanLoader } from 'react-spinners';
 import { useContext } from 'react';
@@ -68,7 +68,12 @@ const Map = () => {
     setCurrentUserLocation();
   }, []);
 
-  if (!viewport) return <PacmanLoader size={100} color={'#138704'} />;
+  if (!viewport)
+    return (
+      <div id="pacman">
+        <PacmanLoader size={100} color={'rgb(53, 87, 167)'} />
+      </div>
+    );
 
   return (
     <ReactMapGL
@@ -119,14 +124,18 @@ const Map = () => {
         <Popup
           latitude={selectedSitter.latitude}
           longitude={selectedSitter.longitude}
-          closeButton={true}
+          closeButton
           closeOnClick={false}
           onClose={() => {
             setSelectedSitter(null);
           }}
         >
           <div>
-            <img src={selectedSitter.avatar} alt="avatar" />
+            <img
+              className="avatar-img"
+              src={selectedSitter.avatar}
+              alt="avatar"
+            />
             <h2>{selectedSitter.name}</h2>
             <Link to={`/userprofile/${selectedSitter._id}`} target="_blank">
               Visit profile
@@ -139,19 +148,31 @@ const Map = () => {
         <Popup
           latitude={selectedOwner.latitude}
           longitude={selectedOwner.longitude}
-          closeButton={true}
+          closeButton
           closeOnClick={false}
           onClose={() => {
             setSelectedSitter(null);
           }}
         >
-          <div>
-            <img src={selectedOwner.avatar} alt="avatar" />
-            <h2>{selectedOwner.name}</h2>
+          <Typography
+            component="div"
+            variant="body1"
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center'
+            }}
+          >
+            <img
+              className="avatar-img"
+              src={selectedOwner.avatar}
+              alt="avatar"
+            />
+            <Typography variant="h6">{selectedOwner.name}</Typography>
             <Link to={`/userprofile/${selectedOwner._id}`} target="_blank">
               Visit profile
             </Link>
-          </div>
+          </Typography>
         </Popup>
       ) : null}
     </ReactMapGL>
