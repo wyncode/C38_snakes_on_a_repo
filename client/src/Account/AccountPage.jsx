@@ -36,10 +36,8 @@ const AccountPage = () => {
                 className="header-pets-list"
               >
                 {currentUser?.ownedPets?.map((pet) => {
-                    return (
-                      <Link to={`/petprofile/${pet._id}`}>{pet.name}</Link>
-                    );
-                  })}
+                  return <Link to={`/petprofile/${pet._id}`}>{pet.name}</Link>;
+                })}
               </Typography>
             </>
           )}
