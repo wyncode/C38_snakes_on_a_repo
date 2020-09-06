@@ -18,7 +18,7 @@ const AppContextProvider = ({ children }) => {
         })
         .catch((error) => console.log(error));
     }
-  }, [user, currentPets, setCurrentUser, setLoading]);
+  }, [currentUser, user, currentPets, setCurrentUser, setLoading]);
 
   return (
     <AppContext.Provider
