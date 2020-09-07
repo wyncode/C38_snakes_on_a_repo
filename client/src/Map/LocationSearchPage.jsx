@@ -15,11 +15,16 @@ const LocationSearchPage = () => {
           <Typography variant="h2">Map Search</Typography>
           <Typography
             variant="body1"
-            style={{ margin: '20px', maxWidth: '400px' }}
+            style={{ margin: '20px', maxWidth: '450px' }}
           >
-            Search by location! The map displays all the pet
-            {currentUser?.owner ? ' sitters' : ' owners'} near you. Click on a
-            marker to view that user's information and a link to their profile.
+            Search by location! The map displays all the
+            <b className="map-bold">
+              {' '}
+              pet
+              {currentUser?.owner ? ' sitters' : ' owners'}
+            </b>{' '}
+            near you. Click on a marker to view that user's information and a
+            link to their profile.
           </Typography>
         </CardContent>
       </Card>
