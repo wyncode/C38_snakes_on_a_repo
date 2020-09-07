@@ -12,7 +12,7 @@ const AboutTheSite = () => {
     // so that CSS selectors target elements correctly
     <>
       <div id="about-site-title">
-        <Typography variant="h3" component="div">
+        <Typography id="inner-title" variant="h3" component="div">
           <b className="aboutus-title">Petster Exotic:</b>
           <Typography variant="h6">
             a site built for exotic pet owners and sitters!
@@ -36,8 +36,10 @@ const AboutTheSite = () => {
       </div>
       <div id="about-site-list">
         <Typography variant="h6" component="div">
-          With Petster Exotic, you can:
-          <ul className="emoji">
+          <span className="aboutus-title" style={{ fontWeight: 'bold' }}>
+            With Petster Exotic, you can:
+          </span>
+          <ul>
             <li>Contact fellow users by email or video chat</li>
             <li>
               Search for pet owners and pet sitters by location or information
@@ -51,7 +53,12 @@ const AboutTheSite = () => {
       </div>
       <div id="about-site-signup">
         <div id="about-site-signup-upper">
-          <Typography variant="h4" component="h5">
+          <Typography
+            style={{ fontWeight: 'bold' }}
+            variant="h4"
+            className="aboutus-title"
+            component="h5"
+          >
             Register with us now!
             <hr />
           </Typography>

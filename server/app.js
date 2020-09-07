@@ -9,8 +9,6 @@ const express = require('express'),
   cors = require('cors');
 const passport = require('./middleware/authentication');
 const app = express();
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
 
 //Middleware
 app.use(
@@ -27,19 +25,6 @@ app.use(
 );
 app.use(express.json());
 app.use(cookieParser());
-
-//Chat
-// io.on('connection', (socket) => {
-//   console.log('a user is connected', socket.id);
-
-//   socket.on('send message', function (msg) {
-//     io.emit('receive message', msg);
-//   });
-
-//   socket.on('disconnect', () => {
-//     console.log('...and disconnected');
-//   });
-// });
 
 // Unauthenticated routes
 app.use(openRoutes);

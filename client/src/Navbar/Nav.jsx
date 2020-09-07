@@ -22,7 +22,6 @@ import ExitToApp from '@material-ui/icons/ExitToApp';
 import EditIcon from '@material-ui/icons/Edit';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import AccountBox from '@material-ui/icons/AccountBox';
-import ChatIcon from '@material-ui/icons/Chat';
 import PersonPinCircleIcon from '@material-ui/icons/PersonPinCircle';
 import { makeStyles } from '@material-ui/core/styles';
 import { useLocation } from 'react-router-dom';
@@ -80,8 +79,6 @@ const Nav = () => {
         return <SearchIcon />;
       case 'Location Search':
         return <PersonPinCircleIcon />;
-      case 'Chat':
-        return <ChatIcon />;
       case 'About Us':
         return <InfoIcon />;
       default:
@@ -105,7 +102,6 @@ const Nav = () => {
             { text: 'Home & About', link: '/' },
             { text: 'Search', link: '/search' },
             { text: 'Location Search', link: '/map', secure: true },
-            { text: 'Chat', link: '/chat' },
             { text: 'About Us', link: '/about-us' }
           ].map((el) => (
             <ListItem

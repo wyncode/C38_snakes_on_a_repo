@@ -79,6 +79,17 @@ a:hover {
   background: rgba(255, 255, 255, 0.2);
 }
 /* ABOUT SITE */
+#about-site-title #inner-title {
+  padding: 30px;
+  text-align: center;
+  outline: 15px solid var(--mid);
+  outline-style: ridge;
+  background: white;
+}
+#about-site-list:first-child {
+  border-top: 3px solid var(--mid);
+  border-radius: 10%;
+}
 #landing-about-site-btns button:first-of-type {
   background: var(--btn-gradient);
   color: var(--less-white);

@@ -58,7 +58,7 @@ const Map = () => {
         longitude,
         width: '100vw',
         height: '100vh',
-        zoom: 10
+        zoom: 12
       });
     });
   };

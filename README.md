@@ -15,11 +15,7 @@ Specific features include:
 
 <hr/>
 
-## Overview
-
--We used the MERN stack for our app: MongoDB to store data, Express for our server, React for our front end and Node.js as our runtime.
-
-- Used the MongoDB database to store our information. We have two models/collections: pets and users. Users who are pet owners can have many pets but pets can only have one owner.
+## APIs & Frameworks
 
 We integrated several APIs and frameworks into our site:
 
@@ -58,6 +54,22 @@ Application uses ports localhost 3000 and 8080.
 
     #start both front and back end severs on one command
     cd .. && yarn dev
+
+<hr/>
+
+## Data
+
+-We used the MERN stack for our app: MongoDB to store data, Express for our server, React for our front end and Node.js as our runtime.
+
+- Used the MongoDB database to store our information. We have two models/collections: pets and users, who can be classified as either pet owners or pet sitters. Pets can have only one owner, but a pet owner can have many pets.
+
+### Sample Owner:
+
+<img src="./screenshots/petownerdata.png" />
+
+### Sample Pet:
+
+<img src="./screenshots/petdata.png" />
 
 <hr/>
 
