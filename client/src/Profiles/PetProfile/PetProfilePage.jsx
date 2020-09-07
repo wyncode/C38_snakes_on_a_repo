@@ -24,8 +24,8 @@ const PetProfilePage = ({ match }) => {
   return (
     <div id="profile-container">
       <div id="topleft">
-        <ProfileImg imgURL={pet.avatar || defaultPet} id={id} />
-        <ProfileName name={pet.name} role={pet.type} id={id} heartRole="pet" />
+        <ProfileImg imgURL={pet.avatar || defaultPet} id={id} heartRole="pet" />
+        <ProfileName name={pet.name} role={pet.type} id={id} />
         <ProfileButtons ownerID={pet.owner} owner={pet.owner} pet={pet} />
       </div>
       <div id="right">
