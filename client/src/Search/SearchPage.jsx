@@ -27,8 +27,6 @@ const SearchPage = () => {
     e.preventDefault();
     if (!searchModel) {
       swal('Oops!', 'Must select pets or users', 'error');
-    } else if (!search) {
-      swal('Oops!', 'Must type a search term', 'error');
     } else {
       fetch(`/search/${searchModel}?query=${search}`)
         .then((res) => res.json())

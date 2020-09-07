@@ -130,17 +130,17 @@ const Map = () => {
             setSelectedSitter(null);
           }}
         >
-          <div>
+          <Typography variant="body1" component="div">
             <img
               className="avatar-img"
               src={selectedSitter.avatar}
               alt="avatar"
             />
-            <h2>{selectedSitter.name}</h2>
+            <Typography variant="h6">{selectedSitter.name}</Typography>
             <Link to={`/userprofile/${selectedSitter._id}`} target="_blank">
               Visit profile
             </Link>
-          </div>
+          </Typography>
         </Popup>
       ) : null}
 

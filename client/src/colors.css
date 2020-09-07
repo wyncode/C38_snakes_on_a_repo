@@ -78,6 +78,7 @@ a:hover {
 #landing-title-container .home-btn:nth-of-type(2):hover {
   background: rgba(255, 255, 255, 0.2);
 }
+/* ABOUT SITE */
 #landing-about-site-btns button:first-of-type {
   background: var(--btn-gradient);
   color: var(--less-white);
@@ -96,6 +97,7 @@ a:hover {
   transform: scale(2.3, 2.3);
   color: var(--white);
 }
+/* ABOUT US */
 .aboutus-title,
 .card-text h4 {
   color: var(--dark);
@@ -258,4 +260,8 @@ a:focus.result-link {
 }
 .message span:nth-of-type(2) {
   color: var(--mid-darker);
+}
+/* MAP */
+.map-bold {
+  color: var(--dark);
 }

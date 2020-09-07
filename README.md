@@ -2,15 +2,16 @@
 
 ## Intro
 
-Petster Exotic is a user-friendly web app for exotic pet owners and sitters for exotic pets to connect online. Users can store information, search for other users, and can contact each other via email and video calls.
+Petster Exotic is a user-friendly web app for exotic pet owners and sitters for exotic pets to connect online. Users can store information, search for other users, and can contact each other via email and video calls. This makes it nice and easy for pet owners to share care instructions for difficult-to-care-for pets, and for pet sitters experienced with exotic animals to offer their services to pet owners in need of a sitter.
 
 Specific features include:
 
 - Pet sitters can be paid through a PayPal interface on the site.
-- Pet owners can store care instructions and pet data so that their pet sitters can easily reference pet information for difficult-to-care-for pets.
+- Pet owners can store and share care instructions/pet data so that pet sitters can easily reference pet information for the pets they are looking after.
 - Users can update a calendar to show their availability or provide information about appointments or important dates.
 - Users can search for each other via text search or with a map that displays other users near their location.
-- Users can save their favorite pet or user profile for easy future reference.
+- Users can save their favorite pet and user profiles for easy future reference.
+- Users can email each other through the site or share a pet profile over email
 
 <hr/>
 
@@ -20,29 +21,28 @@ Specific features include:
 
 - Used the MongoDB database to store our information. We have two models/collections: pets and users. Users who are pet owners can have many pets but pets can only have one owner.
 
--We integrated several APIs and frameworks into our site:
+We integrated several APIs and frameworks into our site:
 
-- Mapbox for the geolocation map interface.
-- Jitsi for the video call functionality.
-- Fullcalendar.io as our calendar framework.
-- Sendgrid for our email functionality.
-- Materials-UI for the front end components and design.
-- Cloudinary to upload and manage user images.
+- [Mapbox](https://www.mapbox.com/) for the geolocation map interface.
+- [Jitsi](https://jitsi.org/) for the video call functionality.
+- [Fullcalendar](https://fullcalendar.io/) as our calendar framework.
+- [Sendgrid](https://sendgrid.com/) for our email functionality.
+- [Material-UI](https://material-ui.com/) for the front end components and design.
+- [Cloudinary](https://cloudinary.com/) to upload and manage user images.
 - To keep track of login information, we used JWT-based token authentication, bcrypt for password hashing, and Passport for user authentication.
 
 <hr/>
 
 ## Screenshots
 
-<img src="./screenshots/landing.png" width="400" />
-<img src="./screenshots/pet_profile.png" width="400" />
-<img src="./screenshots/sitter_profile.png" width="400" />
-<img src="./screenshots/owner_profile.png" width="400" />
-<img src="./screenshots/pet_form.png" width="400" />
-<img src="./screenshots/pet_form_2.png" width="400" />
-<img src="./screenshots/search_results.png" width="400" />
-<img src="./screenshots/map.png" width="400" />
-<img src="./screenshots/video.png" width="400" />
+|                                                            |                                                           |
+| ---------------------------------------------------------- | --------------------------------------------------------- |
+| <img src="./screenshots/landing.png" width="500" />        | <img src="./screenshots/pet_profile.png" width="500" />   |
+| <img src="./screenshots/sitter_profile.png" width="500" /> | <img src="./screenshots/owner_profile.png" width="500" /> |
+| <img src="./screenshots/pet_form.png" width="500" />       | <img src="./screenshots/pet_form_2.png" width="500" />    |
+| <img src="./screenshots/search_results.png" width="500" /> | <img src="./screenshots/map.png" width="500" />           |
+| <img src="./screenshots/video.png" width="500" />          | <img src="./screenshots/aboutus.png" width="500" />       |
+
 <hr/>
 
 ## Installation and Run on Local Machine
@@ -65,7 +65,7 @@ Application uses ports localhost 3000 and 8080.
 
 Click the button to download the API endpoints for our application!
 
-We have a seed file available in server/db/seeds for you to start up with faker-provided data.
+We have a seed file available in server/db/seeds/index.js for you to start up with faker-provided data.
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/e70b2104770bedd8859f)
 
@@ -93,7 +93,7 @@ We have a seed file available in server/db/seeds for you to start up with faker-
 | react-scripts             | passport-local          |
 | react-tabs                | validator               |
 | react-spinners            | moment                  |
-| moment                    |                         |
+| moment                    | cors                    |
 
 <hr/>
 
