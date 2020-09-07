@@ -103,12 +103,13 @@
 @media only screen and (min-width: 1000px) {
   #landing-about-site {
     width: 100%;
-    min-height: 90vh;
+    height: 75vh;
     align-self: center;
     display: grid;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    grid-row-gap: 90px;
+    grid-column-gap: 10px;
     grid-template: repeat(2, 30%) / repeat(2, 50%);
     grid-template-areas:
       'title info'
@@ -125,6 +126,9 @@
 #about-site-list,
 #about-site-signup {
   padding: 30px;
+}
+#about-site-list ul li {
+  list-style-type: square;
 }
 #landing-about-site-btns {
   display: flex;
