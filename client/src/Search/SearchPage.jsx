@@ -28,7 +28,7 @@ const SearchPage = () => {
     if (!searchModel) {
       swal('Oops!', 'Must select pets or users', 'error');
     } else {
-      fetch(`/api/search/${searchModel}?query=${search}`)
+      fetch(`/search/${searchModel}?query=${search}`)
         .then((res) => res.json())
         .then((results) => {
           setResults(results);

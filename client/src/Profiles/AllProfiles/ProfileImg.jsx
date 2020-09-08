@@ -16,7 +16,7 @@ const ProfileImg = ({ id, role, heartRole, imgURL }) => {
       heart.current.style.color = 'gray';
     } else {
       axios
-        .get('/api/user/me', { withCredentials: true })
+        .get('/user/me', { withCredentials: true })
         .then(({ data }) => {
           if (data.favPets.indexOf(id) > -1 && heartRole === 'pet') {
             heart.current.style.color = 'red';
@@ -41,7 +41,7 @@ const ProfileImg = ({ id, role, heartRole, imgURL }) => {
       profile = 'favUsers';
     }
     axios
-      .put(`/api/user/me/favorites?id=${id}&profile=${profile}`, {
+      .put(`/user/me/favorites?id=${id}&profile=${profile}`, {
         withCredentials: true
       })
       .then(({ data }) => {})

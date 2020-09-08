@@ -17,7 +17,7 @@ const PetCard = ({ petID }) => {
   const [petCard, setPetCard] = useState({});
 
   useEffect(() => {
-    fetch(`/api/pets/${petID}`)
+    fetch(`/pets/${petID}`)
       .then((res) => res.json())
       .then((petCard) => {
         setPetCard(petCard);

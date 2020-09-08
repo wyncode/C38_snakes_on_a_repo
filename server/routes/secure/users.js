@@ -9,7 +9,7 @@ const Pet = require('../../db/models/pet');
 /*************************************************/
 
 // Get Current User
-router.get('/api/user/me', async (req, res) => {
+router.get('/user/me', async (req, res) => {
   try {
     req.user.ownedPets = await Pet.find({ owner: req.user._id });
     res.json(req.user);
@@ -19,7 +19,7 @@ router.get('/api/user/me', async (req, res) => {
 });
 
 // Update Current User
-router.put('/api/user/me', async (req, res) => {
+router.put('/user/me', async (req, res) => {
   const updates = Object.keys(req.body);
   const allowedUpdates = [
     'name',
@@ -48,7 +48,7 @@ router.put('/api/user/me', async (req, res) => {
 });
 
 // Delete Current User
-router.delete('/api/user/me', async (req, res) => {
+router.delete('/user/me', async (req, res) => {
   try {
     CancellationEmail(req.user.email);
     await req.user.remove();
@@ -63,7 +63,7 @@ router.delete('/api/user/me', async (req, res) => {
 /** GET & TOGGLE CURRENT USER FAVORITES          */
 /*************************************************/
 // Get Current User's Favorites
-router.get('/api/user/me/favorites', async (req, res) => {
+router.get('/user/me/favorites', async (req, res) => {
   try {
     const favorites = [];
     // get current user's fav users, get the info of those users, split into owner/sitter
@@ -89,7 +89,7 @@ router.get('/api/user/me/favorites', async (req, res) => {
 });
 
 // Toggle Favorite
-router.put('/api/user/me/favorites', async (req, res) => {
+router.put('/user/me/favorites', async (req, res) => {
   // value of profile needs to be 'favUsers' or 'favPets'
   let { id, profile } = req.query;
   try {
@@ -109,7 +109,7 @@ router.put('/api/user/me/favorites', async (req, res) => {
 /** ADD & DELETE CURRENT USER'S EVENTS          **/
 /*************************************************/
 // Add Events
-router.post('/api/user/me/events', async (req, res) => {
+router.post('/user/me/events', async (req, res) => {
   try {
     req.user.events.push(req.body.events);
     req.user.save();
@@ -120,7 +120,7 @@ router.post('/api/user/me/events', async (req, res) => {
 });
 
 // Delete Events
-router.delete('/api/user/me/events/:id', async (req, res) => {
+router.delete('/user/me/events/:id', async (req, res) => {
   try {
     const event = await req.user.events.id(req.params.id);
     event.remove();
@@ -135,7 +135,7 @@ router.delete('/api/user/me/events/:id', async (req, res) => {
 /** Send Email from Current User to another User */
 /*************************************************/
 // Send Message
-router.post('/api/user/me/message', async (req, res) => {
+router.post('/user/me/message', async (req, res) => {
   const { subject, message } = req.body;
   const { toEmail, name, userID } = req.query;
   try {
@@ -150,7 +150,7 @@ router.post('/api/user/me/message', async (req, res) => {
 /** Upload User Avatar                          **/
 /*************************************************/
 // Upload User Avatar
-router.post('/api/user/avatar', async (req, res) => {
+router.post('/user/avatar', async (req, res) => {
   try {
     const response = await cloudinary.uploader.upload(
       req.files.avatar.tempFilePath
@@ -167,7 +167,7 @@ router.post('/api/user/avatar', async (req, res) => {
 /** LOGOUT & RESET PASSWORD                     **/
 /*************************************************/
 // User Logout
-router.post('/api/user/logout', async (req, res) => {
+router.post('/user/logout', async (req, res) => {
   try {
     req.user.tokens = req.user.tokens.filter((token) => {
       return token.token !== req.token;
@@ -181,7 +181,7 @@ router.post('/api/user/logout', async (req, res) => {
 });
 
 // User Logout (all devices)
-router.post('/api/user/logoutAll', async (req, res) => {
+router.post('/user/logoutAll', async (req, res) => {
   try {
     req.user.tokens = [];
     await req.user.save();
@@ -193,7 +193,7 @@ router.post('/api/user/logoutAll', async (req, res) => {
 });
 
 // Update Password
-router.put('/api/password', async (req, res) => {
+router.put('/password', async (req, res) => {
   try {
     req.user.password = req.body.password;
     await req.user.save();

@@ -18,14 +18,14 @@ const Calendar = ({ id, ownerID }) => {
   useEffect(() => {
     if (ownerID) {
       axios
-        .get(`/api/pets/${id}/events`)
+        .get(`/pets/${id}/events`)
         .then(({ data }) => {
           setOnloadEvents(data.events);
         })
         .catch((err) => console.log(err));
     } else {
       axios
-        .get(`/api/users/${id}/events`)
+        .get(`/users/${id}/events`)
         .then(({ data }) => {
           setOnloadEvents(data.events);
         })
@@ -61,7 +61,7 @@ const Calendar = ({ id, ownerID }) => {
     setRefetch(true);
     if (ownerID) {
       axios
-        .post(`/api/pets/${id}/events`, {
+        .post(`/pets/${id}/events`, {
           events: {
             title: eventObj.title,
             start: eventObj.start,
@@ -77,7 +77,7 @@ const Calendar = ({ id, ownerID }) => {
         });
     } else {
       axios
-        .post('/api/user/me/events', {
+        .post('/user/me/events', {
           events: {
             title: eventObj.title,
             start: eventObj.start,
@@ -97,11 +97,11 @@ const Calendar = ({ id, ownerID }) => {
   const deleteEvent = (eventID) => {
     if (!ownerID) {
       axios
-        .delete(`/api/user/me/events/${eventID}`)
+        .delete(`/user/me/events/${eventID}`)
         .catch((error) => console.log(error));
     } else {
       axios
-        .delete(`/api/pets/${id}/events/${eventID}`)
+        .delete(`/pets/${id}/events/${eventID}`)
         .catch((error) => console.log(error));
     }
   };

@@ -13,7 +13,7 @@ const PetProfilePage = ({ match }) => {
   const [pet, setPet] = useState({ owner: '', links: [] });
 
   useEffect(() => {
-    fetch(`/api/pets/${id}`)
+    fetch(`/pets/${id}`)
       .then((res) => res.json())
       .then((pet) => {
         setPet(pet);
