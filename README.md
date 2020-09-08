@@ -123,4 +123,4 @@ We are a group of three Wyncode students who wanted to use this opportunity to o
 
 ## Deployment
 
-This project is deployed via heroku at [petster-exotic.herokuapp.com](www.petster-exotic.herokuapp.com)
+This project is deployed via heroku at [petster-exotic.herokuapp.com](https://petster-exotic.herokuapp.com/)
