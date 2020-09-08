@@ -13,7 +13,7 @@ const UpdatePet = ({ setPetUpdateID, petUpdateID, setSelectID, selectID }) => {
 
   useEffect(() => {
     axios
-      .get('/api/user/me', { withCredentials: true })
+      .get('/user/me', { withCredentials: true })
       .then((res) => {
         let pets = res.data.ownedPets;
         setPetList([...petList, ...pets]);

@@ -8,7 +8,7 @@ const User = require('../../db/models/user');
 /** CREATE, DELETE, UPDATE CURRENT USER'S PETS**/
 /*************************************************/
 // Create New Pet For Current User
-router.post('/api/pets', async (req, res) => {
+router.post('/pets', async (req, res) => {
   const {
     name,
     type,
@@ -52,7 +52,7 @@ router.post('/api/pets', async (req, res) => {
 });
 
 // Delete Pet by ID
-router.delete('/api/pets/:id', async (req, res) => {
+router.delete('/pets/:id', async (req, res) => {
   try {
     let pet = await Pet.findById(req.params.id);
     let owner = await User.findByIdAndUpdate(req.user._id, {
@@ -66,7 +66,7 @@ router.delete('/api/pets/:id', async (req, res) => {
 });
 
 // Update Pet by ID
-router.put('/api/pets/:id', async (req, res) => {
+router.put('/pets/:id', async (req, res) => {
   const updates = Object.keys(req.body);
   const allowedUpdates = [
     'name',
@@ -103,7 +103,7 @@ router.put('/api/pets/:id', async (req, res) => {
 /** GET, EDIT, ADD PET'S LINKS*/
 /*************************************************/
 // Add Pet Link
-router.post('/api/pets/:id/link', async (req, res) => {
+router.post('/pets/:id/link', async (req, res) => {
   try {
     const pet = await Pet.findById(req.params.id);
     const { links } = pet;
@@ -116,7 +116,7 @@ router.post('/api/pets/:id/link', async (req, res) => {
 });
 
 // Edit Pet Link By ID
-router.put('/api/pets/:id/link/:linkID', async (req, res) => {
+router.put('/pets/:id/link/:linkID', async (req, res) => {
   try {
     const pet = await Pet.findById(req.params.id);
     const { links } = pet;
@@ -131,7 +131,7 @@ router.put('/api/pets/:id/link/:linkID', async (req, res) => {
 });
 
 // Get Pet Link by ID
-router.get('/api/pets/:id/link/:linkID', async (req, res) => {
+router.get('/pets/:id/link/:linkID', async (req, res) => {
   try {
     const pet = await Pet.findById(req.params.id);
     const link = await pet.links.id(req.params.linkID);
@@ -142,7 +142,7 @@ router.get('/api/pets/:id/link/:linkID', async (req, res) => {
 });
 
 // Delete Pet Link by ID
-router.delete('/api/pets/:id/link/:linkID', async (req, res) => {
+router.delete('/pets/:id/link/:linkID', async (req, res) => {
   try {
     const pet = await Pet.findById(req.params.id);
     const link = await pet.links.id(req.params.linkID);
@@ -159,7 +159,7 @@ router.delete('/api/pets/:id/link/:linkID', async (req, res) => {
 /*************************************************/
 
 // Delete Pet Event
-router.delete('/api/pets/:id/events/:eventID', async (req, res) => {
+router.delete('/pets/:id/events/:eventID', async (req, res) => {
   try {
     const pet = await Pet.findById(req.params.id);
     const event = await pet.events.id(req.params.eventID);
@@ -175,7 +175,7 @@ router.delete('/api/pets/:id/events/:eventID', async (req, res) => {
 });
 
 // Add Pet Events
-router.post('/api/pets/:id/events', async (req, res) => {
+router.post('/pets/:id/events', async (req, res) => {
   try {
     const pet = await Pet.findById(req.params.id);
     pet.events.push(req.body.events);
@@ -190,7 +190,7 @@ router.post('/api/pets/:id/events', async (req, res) => {
 /** Send Email to Share Pet Info                 */
 /*************************************************/
 // Send Message
-router.post('/api/pets/:id/email', async (req, res) => {
+router.post('/pets/:id/email', async (req, res) => {
   const { subject, message, toEmail } = req.body;
   const fromID = req.user._id;
   const name = req.user.name;
@@ -207,7 +207,7 @@ router.post('/api/pets/:id/email', async (req, res) => {
 /** PET AVATAR                                  **/
 /*************************************************/
 // Upload Pet Avatar
-router.post('/api/pets/avatar/:id', async (req, res) => {
+router.post('/pets/avatar/:id', async (req, res) => {
   try {
     const pet = await Pet.findById(req.params.id);
     if (!pet) {

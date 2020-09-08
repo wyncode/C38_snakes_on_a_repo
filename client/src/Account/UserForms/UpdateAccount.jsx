@@ -51,7 +51,7 @@ const UpdateAccount = () => {
       checkPasswords();
     }
     axios
-      .put('/api/user/me', formData, { withCredentials: true })
+      .put('/user/me', formData, { withCredentials: true })
       .then((response) => {
         setCurrentUser(response.data);
         swal('Success!', 'Successfully updated account', 'success');
@@ -68,7 +68,7 @@ const UpdateAccount = () => {
       'Warning: this action is permanent. Are you SURE you want to delete your account forever?'
     );
     axios
-      .delete(`/api/user/me`, { withCredentials: true })
+      .delete(`/user/me`, { withCredentials: true })
       .then(() => {
         setCurrentUser(null);
         sessionStorage.removeItem('user');

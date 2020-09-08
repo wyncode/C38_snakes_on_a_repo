@@ -13,7 +13,7 @@ const Payment = () => {
           'success'
         );
 
-        return fetch('/api/paypal-transaction-complete', {
+        return fetch('/paypal-transaction-complete', {
           method: 'post',
           body: JSON.stringify({
             orderID: data.orderID

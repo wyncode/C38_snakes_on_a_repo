@@ -14,7 +14,7 @@ const Favorites = () => {
 
   useEffect(() => {
     axios
-      .get('/api/user/me/favorites', { withCredentials: true })
+      .get('/user/me/favorites', { withCredentials: true })
       .then(({ data }) => {
         const favPets = data[0].pets;
         const favOwners = data[1].owners;
@@ -69,7 +69,7 @@ const Favorites = () => {
 
   const toggleFav = (e, profile, id) => {
     axios
-      .put(`/api/user/me/favorites?id=${id}&profile=${profile}`, {
+      .put(`/user/me/favorites?id=${id}&profile=${profile}`, {
         withCredentials: true
       })
       .then(({ data }) => {})
