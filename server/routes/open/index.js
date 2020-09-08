@@ -21,7 +21,7 @@ passport.deserializeUser(function (id, done) {
 /* SEARCH ROUTES */
 /*****************/
 // Search Pet by Name OR Description
-router.get('/search/pet', async (req, res) => {
+router.get('/api/search/pet', async (req, res) => {
   const { query } = req.query;
   try {
     const pets = await Pet.find({
@@ -30,6 +30,7 @@ router.get('/search/pet', async (req, res) => {
         { description: { $regex: `${query}`, $options: 'i' } }
       ]
     });
+
     if (!pets) {
       res.sendStatus(410).json('nothing found');
     } else {
@@ -41,7 +42,7 @@ router.get('/search/pet', async (req, res) => {
 });
 
 // Search User by Name OR Description
-router.get('/search/user', async (req, res) => {
+router.get('/api/search/user', async (req, res) => {
   const { query } = req.query;
   try {
     const users = await User.find({
@@ -64,7 +65,7 @@ router.get('/search/user', async (req, res) => {
 /* GET PETS      */
 /*****************/
 // Get All Pets
-router.get('/pets', async (req, res) => {
+router.get('/api/pets', async (req, res) => {
   try {
     const pets = await Pet.find();
     if (!pets) {
@@ -78,7 +79,7 @@ router.get('/pets', async (req, res) => {
 });
 
 // Get Pet by ID
-router.get('/pets/:id', async (req, res) => {
+router.get('/api/pets/:id', async (req, res) => {
   try {
     const pet = await Pet.findById(req.params.id);
     if (!pet) {
@@ -95,7 +96,7 @@ router.get('/pets/:id', async (req, res) => {
 /* GET EVENTS    */
 /*****************/
 // Get Events by PetID
-router.get('/pets/:id/events', async (req, res) => {
+router.get('/api/pets/:id/events', async (req, res) => {
   try {
     const events = await Pet.findById(req.params.id, 'events');
     if (!events) {
@@ -109,7 +110,7 @@ router.get('/pets/:id/events', async (req, res) => {
 });
 
 // Get Events by User ID
-router.get('/users/:id/events', async (req, res) => {
+router.get('/api/users/:id/events', async (req, res) => {
   try {
     const events = await User.findById(req.params.id, 'events');
     if (!events) {
@@ -126,7 +127,7 @@ router.get('/users/:id/events', async (req, res) => {
 /* GET USERS     */
 /*****************/
 // Get All Users
-router.get('/users', async (req, res) => {
+router.get('/api/users', async (req, res) => {
   try {
     const users = await User.find();
     if (!users) {
@@ -140,7 +141,7 @@ router.get('/users', async (req, res) => {
 });
 
 // Get User by ID
-router.get('/users/:id', async (req, res) => {
+router.get('/api/users/:id', async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) {
@@ -157,7 +158,7 @@ router.get('/users/:id', async (req, res) => {
 /* CREATE ACCOUNT, LOGIN */
 /*************************/
 // Create New User
-router.post('/users', async (req, res) => {
+router.post('/api/users', async (req, res) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
   if (user) {
@@ -186,7 +187,7 @@ router.post('/users', async (req, res) => {
 });
 
 // User Login
-router.post('/user/login', async (req, res) => {
+router.post('/api/user/login', async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findByCredentials(email, password);
@@ -206,7 +207,7 @@ router.post('/user/login', async (req, res) => {
 /* RESET PASSWORD */
 /******************/
 // Password Reset
-router.get('/password', async (req, res) => {
+router.get('/api/password', async (req, res) => {
   try {
     const { email } = req.query,
       user = await User.findOne({ email });
@@ -218,7 +219,6 @@ router.get('/password', async (req, res) => {
         expiresIn: '10m'
       }
     );
-    // console.log('sending out token', token);
     ForgotPassword(email, token);
     res.json({ message: 'reset password email sent' });
   } catch (error) {
@@ -227,7 +227,7 @@ router.get('/password', async (req, res) => {
 });
 
 // Password Redirect
-router.get('/password/:token', (req, res) => {
+router.get('/api/password/:token', (req, res) => {
   const { token } = req.params;
   try {
     const [parsedToken] = token.split('++target=');
@@ -239,7 +239,7 @@ router.get('/password/:token', (req, res) => {
       maxAge: 600000,
       sameSite: 'Strict'
     });
-    res.redirect(process.env.URL + '/update-password');
+    res.redirect(process.env.URL + '/api/update-password');
   } catch (error) {
     res.status(401).json({ error: error.toString() });
   }

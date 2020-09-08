@@ -32,7 +32,7 @@ const RegisterPage = ({ history }) => {
       return swal('Wait!', 'Please select an account type!', 'error');
     }
     axios
-      .post('/users/', formData)
+      .post('/api/users/', formData)
       .then((response) => {
         sessionStorage.setItem('user', response.data);
         setCurrentUser(response.data);

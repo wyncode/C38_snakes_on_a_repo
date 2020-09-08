@@ -64,7 +64,7 @@ const MailModal = ({ role, name, email, pet, userID }) => {
         });
     } else {
       axios
-        .post(`/pets/${pet._id}/email`, formData, {
+        .post(`/api/pets/${pet._id}/email`, formData, {
           withCredentials: true
         })
         .then((response) => {

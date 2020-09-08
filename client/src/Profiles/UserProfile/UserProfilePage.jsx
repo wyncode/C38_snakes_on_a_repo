@@ -19,7 +19,7 @@ const UserProfilePage = ({ match }) => {
   });
 
   useEffect(() => {
-    fetch(`/users/${id}`)
+    fetch(`/api/users/${id}`)
       .then((res) => res.json())
       .then((user) => {
         setUserProfile(user);

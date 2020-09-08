@@ -33,7 +33,7 @@ const Map = () => {
   const fetchUserLocation = () => {
     const sittersArr = [];
     const ownersArr = [];
-    fetch('/users')
+    fetch('/api/users')
       .then((response) => response.json())
       .then((data) => {
         data.map((obj) => {

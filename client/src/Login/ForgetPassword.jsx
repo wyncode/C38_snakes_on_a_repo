@@ -21,7 +21,7 @@ const ForgetPassword = ({ history }) => {
       return swal('Wait!', 'Please enter an email', 'error');
     }
     axios
-      .get(`/password?email=${formData}`)
+      .get(`/api/password?email=${formData}`)
       .then((res) => {
         form.reset();
         return swal(
